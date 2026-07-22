@@ -247,6 +247,14 @@
         .confirm-modal-cancel-btn { background: rgba(255,255,255,0.08); color: var(--text-color); border: 1px solid rgba(255,255,255,0.2) !important; }
         .confirm-modal-delete-btn { background: linear-gradient(135deg, #ff4444, #b91c1c); color: #fff; box-shadow: 0 0.25rem 0.625rem rgba(255,68,68,0.35); }
 
+        .dev-pass-icon { background: rgba(247,200,115,0.15); border-color: rgba(247,200,115,0.4); color: var(--gold); }
+        .dev-pass-input { background: rgba(0,0,0,0.3); border: 1px solid var(--gold); border-radius: 3.125rem; padding: 0.625rem 1.25rem; color: var(--text-color); width: 100%; margin-bottom: 0.75rem; outline: none; text-align: center; font-family: 'Tajawal', sans-serif; letter-spacing: 0.0625rem; }
+        .dev-pass-input.shake { animation: devPassShake 0.4s ease; border-color: #ff4444; }
+        .dev-pass-error { color: #ff8080; font-size: 0.75rem; margin: -0.375rem 0 0.75rem; display: none; }
+        .dev-pass-error.show { display: block; }
+        .confirm-modal-confirm-btn { background: linear-gradient(135deg, var(--gold), #c9974f); color: var(--dark); box-shadow: 0 0.25rem 0.625rem rgba(247,200,115,0.35); }
+        @keyframes devPassShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-0.375rem); } 75% { transform: translateX(0.375rem); } }
+
         .load-more-btn { display: flex; flex-direction: column; align-items: center; gap: 0.5625rem; width: 100%; margin: 1.25rem 0 0.625rem 0; padding: 0.9375rem 1.25rem; background: linear-gradient(135deg, rgba(247, 200, 115, 0.14), rgba(247, 200, 115, 0.03)); border: 1px solid rgba(247, 200, 115, 0.45); color: var(--gold); border-radius: 1.25rem; cursor: pointer; box-shadow: 0 0.25rem 0.9375rem rgba(0,0,0,0.15); transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease; }
         .load-more-btn:hover { border-color: var(--gold); background: linear-gradient(135deg, rgba(247, 200, 115, 0.24), rgba(247, 200, 115, 0.06)); box-shadow: 0 0.375rem 1.125rem rgba(0,0,0,0.2); }
         .load-more-btn:active { transform: scale(0.96); }
@@ -498,6 +506,33 @@
             <div class="menu-item" onclick="openSharawiFavorites()"><i class="fas fa-feather-pointed"></i><span>الخواطر المفضلة</span></div>
             <div class="menu-item" onclick="openScreen('quizAnsweredScreen')"><i class="fas fa-brain"></i><span>أسئلة التحدي المجابة</span></div>
             <div class="menu-item" onclick="openScreen('aboutDevScreen')"><i class="fas fa-user-tie"></i><span>لمحة عن المبرمج</span></div>
+            <div class="menu-item" onclick="openDevPanelPrompt()"><i class="fas fa-lock"></i><span>لوحة المطور</span></div>
+        </div>
+    </div>
+
+    <div id="devPanelScreen" class="content-screen">
+        <h2 style="color:var(--gold); text-align: center; margin-bottom: 0.9375rem;"><i class="fas fa-screwdriver-wrench"></i> لوحة المطور</h2>
+
+        <div class="daily-card" style="margin-bottom: 0.9375rem;">
+            <h3><i class="fas fa-plug"></i> إعدادات الاتصال بـ GitHub</h3>
+            <div class="daily-content" style="margin-bottom: 0.75rem;">أدخل بيانات المستودع مرة واحدة، وهتتحفظ في المتصفح ده بس.</div>
+            <input type="text" id="ghOwner" class="dev-pass-input" style="text-align:right;" value="esamelbanna149-sys" placeholder="اسم المستخدم / المنظمة (Owner)">
+            <input type="text" id="ghRepo" class="dev-pass-input" style="text-align:right;" value="mysite" placeholder="اسم المستودع (Repo)">
+            <input type="text" id="ghBranch" class="dev-pass-input" style="text-align:right;" value="main" placeholder="اسم الفرع (Branch) - مثال: main">
+            <input type="text" id="ghPath" class="dev-pass-input" style="text-align:right;" value="index.html" placeholder="مسار الملف - مثال: index.html">
+            <input type="password" id="ghToken" class="dev-pass-input" style="text-align:right;" placeholder="GitHub Personal Access Token">
+            <button type="button" class="copy-hadith-btn" onclick="saveDevPanelSettings()"><i class="fas fa-floppy-disk"></i><span>حفظ الإعدادات</span></button>
+        </div>
+
+        <div class="daily-card" style="margin-bottom: 0.9375rem;">
+            <h3><i class="fas fa-code"></i> محرر الكود</h3>
+            <div class="daily-content" style="margin-bottom: 0.75rem;">اسحب أحدث نسخة من الملف، عدّل الكود، وارفعه تاني على GitHub. التحديث بيظهر مباشرة على GitHub Pages بعد الرفع.</div>
+            <textarea id="devCodeEditor" spellcheck="false" style="width:100%; min-height: 16rem; background: rgba(0,0,0,0.35); border: 1px solid var(--gold); border-radius: 0.9375rem; color: var(--text-color); padding: 0.75rem; font-family: monospace; font-size: 0.75rem; line-height: 1.6; direction: ltr; text-align: left; resize: vertical;" placeholder="هيظهر هنا كود الملف بعد التحميل من GitHub..."></textarea>
+            <div id="devPanelStatus" style="font-size: 0.8125rem; margin: 0.625rem 0; min-height: 1.2rem; text-align:center;"></div>
+            <div style="display:flex; gap: 0.625rem;">
+                <button type="button" class="copy-hadith-btn" style="flex:1;" onclick="fetchFileFromGitHub()"><i class="fas fa-download"></i><span>تحميل الملف الحالي</span></button>
+                <button type="button" class="copy-hadith-btn" style="flex:1;" onclick="pushFileToGitHub()"><i class="fas fa-upload"></i><span>حفظ ورفع التحديث</span></button>
+            </div>
         </div>
     </div>
 
@@ -831,6 +866,20 @@
 </div>
 
 <button type="button" id="taJumpToCurrentBtn" class="ta-jump-btn" onclick="scrollToCurrentTaAyah()"><i class="fas fa-location-arrow"></i> اذهب إلى الآية الحالية</button>
+
+<div id="devPassOverlay" class="confirm-modal-overlay" onclick="if(event.target===this) closeDevPanelPrompt()">
+    <div class="confirm-modal-box">
+        <div class="confirm-modal-icon dev-pass-icon"><i class="fas fa-lock"></i></div>
+        <div class="confirm-modal-title">دخول لوحة المطور</div>
+        <div class="confirm-modal-text">من فضلك أدخل كلمة المرور للمتابعة</div>
+        <input type="password" id="devPassInput" class="dev-pass-input" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter') checkDevPanelPassword()">
+        <div id="devPassError" class="dev-pass-error">كلمة المرور غير صحيحة</div>
+        <div class="confirm-modal-actions">
+            <button type="button" class="confirm-modal-cancel-btn" onclick="closeDevPanelPrompt()">إلغاء</button>
+            <button type="button" class="confirm-modal-confirm-btn" onclick="checkDevPanelPassword()">دخول</button>
+        </div>
+    </div>
+</div>
 
 <div id="confirmModalOverlay" class="confirm-modal-overlay" onclick="if(event.target===this) closeConfirmModal()">
     <div class="confirm-modal-box">
@@ -1603,6 +1652,142 @@
         updateMiniPlayer();
         updateRadioMiniPlayer();
         updateTaMiniPlayer();
+    }
+
+    const DEV_PANEL_PASSWORD = 'mano5112006';
+    let devPanelFileSha = null;
+
+    function b64EncodeUnicode(str) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1)));
+    }
+    function b64DecodeUnicode(str) {
+        return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+    }
+
+    const DEV_PANEL_DEFAULTS = { owner: 'esamelbanna149-sys', repo: 'mysite', branch: 'main', path: 'index.html' };
+
+    function loadDevPanelSettings() {
+        try {
+            const s = JSON.parse(localStorage.getItem('devPanelGhSettings') || '{}');
+            document.getElementById('ghOwner').value = s.owner || DEV_PANEL_DEFAULTS.owner;
+            document.getElementById('ghRepo').value = s.repo || DEV_PANEL_DEFAULTS.repo;
+            document.getElementById('ghBranch').value = s.branch || DEV_PANEL_DEFAULTS.branch;
+            document.getElementById('ghPath').value = s.path || DEV_PANEL_DEFAULTS.path;
+            document.getElementById('ghToken').value = s.token || '';
+        } catch(e) {}
+    }
+
+    function saveDevPanelSettings() {
+        const s = {
+            owner: document.getElementById('ghOwner').value.trim(),
+            repo: document.getElementById('ghRepo').value.trim(),
+            branch: document.getElementById('ghBranch').value.trim() || 'main',
+            path: document.getElementById('ghPath').value.trim() || 'index.html',
+            token: document.getElementById('ghToken').value.trim()
+        };
+        localStorage.setItem('devPanelGhSettings', JSON.stringify(s));
+        setDevPanelStatus('تم حفظ الإعدادات ✓', '#7fd88a');
+    }
+
+    function setDevPanelStatus(msg, color) {
+        const el = document.getElementById('devPanelStatus');
+        el.textContent = msg;
+        el.style.color = color || 'var(--gold)';
+    }
+
+    function getDevPanelSettings() {
+        return {
+            owner: document.getElementById('ghOwner').value.trim(),
+            repo: document.getElementById('ghRepo').value.trim(),
+            branch: document.getElementById('ghBranch').value.trim() || 'main',
+            path: document.getElementById('ghPath').value.trim() || 'index.html',
+            token: document.getElementById('ghToken').value.trim()
+        };
+    }
+
+    async function fetchFileFromGitHub() {
+        const s = getDevPanelSettings();
+        if (!s.owner || !s.repo || !s.token) { setDevPanelStatus('من فضلك أكمل بيانات GitHub واحفظها أولاً', '#ff8080'); return; }
+        setDevPanelStatus('جاري تحميل الملف...', 'var(--gold)');
+        try {
+            const res = await fetch(`https://api.github.com/repos/${s.owner}/${s.repo}/contents/${encodeURIComponent(s.path)}?ref=${encodeURIComponent(s.branch)}`, {
+                headers: { 'Authorization': `Bearer ${s.token}`, 'Accept': 'application/vnd.github+json' }
+            });
+            if (!res.ok) { setDevPanelStatus(`فشل التحميل: ${res.status} ${res.statusText}`, '#ff8080'); return; }
+            const data = await res.json();
+            devPanelFileSha = data.sha;
+            document.getElementById('devCodeEditor').value = b64DecodeUnicode(data.content.replace(/\n/g, ''));
+            setDevPanelStatus('تم تحميل الملف بنجاح ✓', '#7fd88a');
+        } catch(e) {
+            setDevPanelStatus('حدث خطأ أثناء التحميل: ' + e.message, '#ff8080');
+        }
+    }
+
+    async function pushFileToGitHub() {
+        const s = getDevPanelSettings();
+        if (!s.owner || !s.repo || !s.token) { setDevPanelStatus('من فضلك أكمل بيانات GitHub واحفظها أولاً', '#ff8080'); return; }
+        const code = document.getElementById('devCodeEditor').value;
+        if (!code) { setDevPanelStatus('محرر الكود فاضي، حمّل الملف أو اكتب الكود أولاً', '#ff8080'); return; }
+        setDevPanelStatus('جاري رفع التحديث...', 'var(--gold)');
+        try {
+            if (!devPanelFileSha) {
+                const meta = await fetch(`https://api.github.com/repos/${s.owner}/${s.repo}/contents/${encodeURIComponent(s.path)}?ref=${encodeURIComponent(s.branch)}`, {
+                    headers: { 'Authorization': `Bearer ${s.token}`, 'Accept': 'application/vnd.github+json' }
+                });
+                if (meta.ok) { const metaData = await meta.json(); devPanelFileSha = metaData.sha; }
+            }
+            const body = {
+                message: 'تحديث من لوحة المطور - ' + new Date().toISOString(),
+                content: b64EncodeUnicode(code),
+                branch: s.branch
+            };
+            if (devPanelFileSha) body.sha = devPanelFileSha;
+            const res = await fetch(`https://api.github.com/repos/${s.owner}/${s.repo}/contents/${encodeURIComponent(s.path)}`, {
+                method: 'PUT',
+                headers: { 'Authorization': `Bearer ${s.token}`, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            const resData = await res.json();
+            if (!res.ok) { setDevPanelStatus(`فشل الرفع: ${resData.message || res.statusText}`, '#ff8080'); return; }
+            devPanelFileSha = resData.content ? resData.content.sha : devPanelFileSha;
+            setDevPanelStatus('تم رفع التحديث بنجاح على GitHub ✓', '#7fd88a');
+            if ('vibrate' in navigator) navigator.vibrate([40, 20, 40]);
+        } catch(e) {
+            setDevPanelStatus('حدث خطأ أثناء الرفع: ' + e.message, '#ff8080');
+        }
+    }
+
+    function openDevPanelPrompt() {
+        const overlay = document.getElementById('devPassOverlay');
+        const input = document.getElementById('devPassInput');
+        const error = document.getElementById('devPassError');
+        input.value = '';
+        error.classList.remove('show');
+        input.classList.remove('shake');
+        overlay.classList.add('active');
+        setTimeout(() => input.focus(), 100);
+    }
+
+    function closeDevPanelPrompt() {
+        document.getElementById('devPassOverlay').classList.remove('active');
+    }
+
+    function checkDevPanelPassword() {
+        const input = document.getElementById('devPassInput');
+        const error = document.getElementById('devPassError');
+        if (input.value === DEV_PANEL_PASSWORD) {
+            closeDevPanelPrompt();
+            openScreen('devPanelScreen');
+            loadDevPanelSettings();
+            devPanelFileSha = null;
+            if ('vibrate' in navigator) navigator.vibrate(40);
+        } else {
+            error.classList.add('show');
+            input.classList.remove('shake');
+            void input.offsetWidth;
+            input.classList.add('shake');
+            if ('vibrate' in navigator) navigator.vibrate([50, 30, 50]);
+        }
     }
 
     function openScreen(screenId) {
