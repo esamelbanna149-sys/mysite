@@ -1227,14 +1227,6 @@
 
         watchAudioNetworkErrors(document.getElementById('mainAudio'), 'القرآن الكريم');
         watchAudioNetworkErrors(document.getElementById('radioAudio'), 'إذاعة القرآن الكريم', () => { if (window.showRadioOffline) window.showRadioOffline(); });
-        // لو الإنترنت شغّال لكن خادم الإذاعة الحالي بايظ/متوقف، نجرب خادم بديل تلقائيًا بدل ما نوقف البث
-        (function () {
-            const radioAudioEl2 = document.getElementById('radioAudio');
-            if (!radioAudioEl2) return;
-            radioAudioEl2.addEventListener('error', () => {
-                if (navigator.onLine && window.tryNextRadioMirror) window.tryNextRadioMirror();
-            });
-        })();
         watchAudioNetworkErrors(document.getElementById('taAudio'), 'القرآن بالنص والصوت', () => showTaPlayerOffline());
         window.watchAudioNetworkErrors = watchAudioNetworkErrors;
     })();
@@ -1548,16 +1540,6 @@
     }
     let currentHadiths = [];
     let radioStarted = false;
-    // خوادم بديلة (mirrors) لنفس بث إذاعة القرآن الكريم على radiojar
-    // بعض هذه الخوادم (n0a, n05, n12...) قد يتوقف من وقت لآخر، فنجرب التالي تلقائيًا عند الفشل
-    const RADIO_MIRRORS = [
-        "https://n0a.radiojar.com/8s5u5tpdtwzuv",
-        "https://n12.radiojar.com/8s5u5tpdtwzuv",
-        "https://n05.radiojar.com/8s5u5tpdtwzuv",
-        "https://stream.radiojar.com/8s5u5tpdtwzuv"
-    ];
-    let radioMirrorIndex = 0;
-    let radioRetrying = false;
 
     function normalizeArabic(text) { if (!text) return ""; return text.replace(/[\u064B-\u0652]/g, "").replace(/[أإآا]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي"); }
 
@@ -1905,27 +1887,9 @@
         const audio = document.getElementById('radioAudio');
         if (!audio) return;
         if (!navigator.onLine) { showRadioOffline(); return; }
-        if (!audio.currentSrc) audio.src = RADIO_MIRRORS[radioMirrorIndex];
         audio.play().catch(() => {});
         updateRadioMiniPlayer();
     }
-
-    // عند فشل تشغيل الخادم الحالي (والاتصال بالإنترنت موجود)، جرّب الخادم البديل التالي في القائمة تلقائيًا
-    function tryNextRadioMirror() {
-        if (radioRetrying) return;
-        radioMirrorIndex++;
-        if (radioMirrorIndex >= RADIO_MIRRORS.length) {
-            radioMirrorIndex = 0;
-            radioRetrying = false;
-            showRadioOffline('تعذّر الاتصال بالإذاعة حاليًا، حاول لاحقًا');
-            return;
-        }
-        radioRetrying = true;
-        const audio = document.getElementById('radioAudio');
-        audio.src = RADIO_MIRRORS[radioMirrorIndex];
-        audio.play().then(() => { radioRetrying = false; }).catch(() => { radioRetrying = false; tryNextRadioMirror(); });
-    }
-    window.tryNextRadioMirror = tryNextRadioMirror;
 
     function updateRadioMiniPlayer() {
         const mp = document.getElementById('radioMiniPlayer');
@@ -1935,7 +1899,7 @@
     function toggleRadioMiniPlay() {
         const audio = document.getElementById('radioAudio');
         if (!navigator.onLine) { showRadioOffline(); return; }
-        if (audio.paused) { if (!audio.currentSrc) audio.src = RADIO_MIRRORS[radioMirrorIndex]; audio.play(); } else audio.pause();
+        if (audio.paused) audio.play(); else audio.pause();
     }
 
     function closeRadioMiniPlayer() {
@@ -1943,8 +1907,7 @@
         audio.pause();
         audio.removeAttribute('src');
         audio.load();
-        radioMirrorIndex = 0;
-        audio.src = RADIO_MIRRORS[radioMirrorIndex];
+        audio.src = "https://n0a.radiojar.com/8s5u5tpdtwzuv";
         radioStarted = false;
         hideRadioOffline();
         updateRadioMiniPlayer();
