@@ -75,6 +75,8 @@
         .menu-list { display: flex; flex-direction: column; gap: 0.625rem; padding: 0.625rem 0; }
         .menu-item { background: rgba(42, 95, 81, 0.4); padding: 1.125rem; border-radius: 1.25rem; display: flex; align-items: center; gap: 0.9375rem; cursor: pointer; border: 1px solid rgba(247, 200, 115, 0.1); color: inherit; }
         .menu-item i { font-size: 1.375rem; color: var(--gold); width: 1.875rem; text-align: center; }
+        .series-ep-item.active-ep { background: rgba(247,200,115,0.22); border-color: var(--gold); }
+        .series-ep-item.active-ep i { color: #fff3d6; }
 
         .about-dev-photo-wrap { display: flex; justify-content: center; margin: 0.625rem 0 1.25rem; }
         .about-dev-photo-wrap img { width: 13rem; height: 13rem; object-fit: cover; border-radius: 1.5rem; border: 0.125rem solid var(--gold); box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.35); }
@@ -379,6 +381,17 @@
         .loading-spinner { width: 1rem; height: 1rem; border: 2px solid rgba(247, 200, 115, 0.25); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; flex-shrink: 0; }
         .player-loading { display: none; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.75rem; color: var(--gold); margin-top: 0.5rem; opacity: 0; transition: opacity 0.25s ease; }
         .player-loading.show { display: flex; opacity: 1; }
+
+        /* غلاف مشغل المسلسلات/الأفلام: يخفي واجهة يوتيوب قبل الضغط على تشغيل ويظهر بستايل التطبيق نفسه */
+        .series-player-cover { position: absolute; inset: 0; z-index: 3; background: #000; display: flex; align-items: center; justify-content: center; }
+        .series-player-cover.hidden { display: none; }
+        .series-player-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+        .series-play-btn { position: relative; z-index: 2; width: 4.5rem; height: 4.5rem; border-radius: 50%; background: radial-gradient(circle, rgba(247,200,115,0.95), rgba(199,148,79,0.95)); border: 2px solid var(--gold); color: var(--dark); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 1.25rem rgba(247,200,115,0.55); }
+        .series-play-btn:active { transform: scale(0.94); }
+        .series-player-loading { position: absolute; inset: 0; z-index: 4; background: #000; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 0.625rem; }
+        .series-player-loading.show { display: flex; }
+        .series-player-loading .loading-spinner { width: 1.75rem; height: 1.75rem; border-width: 3px; }
+        .series-player-loading span { color: var(--gold); font-size: 0.8125rem; }
     </style>
 </head>
 <body>
@@ -635,18 +648,47 @@
 
     <div id="seriesScreen" class="content-screen">
         <h2 style="color:var(--gold); text-align: center; margin-bottom: 0.9375rem;"><i class="fas fa-film"></i> مسلسلات وأفلام دينية</h2>
-        <div class="daily-card" style="padding: 0.875rem;">
-            <div style="position: relative; width: 100%; padding-top: 56.25%; border-radius: 1.125rem; overflow: hidden; background: #000;">
-                <iframe
-                    src="https://www.youtube.com/embed/EFuMPCMKLRU"
-                    title="مسلسلات وأفلام دينية"
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
+        <div id="seriesIndexArea">
+            <div class="glimpse-tabs">
+                <button type="button" class="glimpse-tab-btn active" data-tab="series" onclick="switchSeriesTab('series')"><i class="fas fa-clapperboard"></i> مسلسلات</button>
+                <button type="button" class="glimpse-tab-btn" data-tab="movies" onclick="switchSeriesTab('movies')"><i class="fas fa-video"></i> أفلام</button>
+            </div>
+            <div id="seriesTabSeries" class="glimpse-subpanel active">
+                <div id="seriesSeriesList" class="menu-list"></div>
+            </div>
+            <div id="seriesTabMovies" class="glimpse-subpanel">
+                <div id="seriesMoviesList" class="menu-list"></div>
             </div>
         </div>
+        <div id="seriesEpisodesArea" style="display:none;">
+            <button class="back-btn" style="background: rgba(0,0,0,0.3); border: 1px solid var(--gold); color: var(--gold); padding: 0.5rem 1.25rem; border-radius: 3.125rem; cursor: pointer; margin-bottom: 0.9375rem;" onclick="backToSeriesIndex()"><i class="fas fa-arrow-right"></i> العودة للفهرس</button>
+            <h2 id="seriesPlayerTitle" style="color:var(--gold); text-align: center; margin-bottom: 0.9375rem;"></h2>
+            <div style="position: sticky; top: 0; z-index: 5; background: var(--bg-gradient); padding-bottom: 0.75rem;">
+                <div class="daily-card" style="padding: 0.875rem; margin-bottom: 0;">
+                    <div style="position: relative; width: 100%; padding-top: 56.25%; border-radius: 1.125rem; overflow: hidden; background: #000;">
+                        <iframe
+                            id="seriesPlayerIframe"
+                            src=""
+                            title="مشغل الفيديو"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                        <div id="seriesPlayerLoading" class="series-player-loading">
+                            <div class="loading-spinner"></div>
+                            <span>جاري تحميل الفيديو...</span>
+                        </div>
+                        <div id="seriesPlayerCover" class="series-player-cover hidden">
+                            <img id="seriesPlayerThumb" src="" alt="">
+                            <button type="button" class="series-play-btn" onclick="startSeriesPlayback()"><i class="fas fa-play"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="seriesEpisodesList" class="menu-list" style="margin-top: 0.75rem; padding-bottom: 1.25rem;"></div>
+        </div>
     </div>
+
 
     <div id="quranTextScreen" class="content-screen">
         <div id="quranTextHeader">
@@ -1693,6 +1735,9 @@
         if (currentScreenId === 'prayerScreen' && screenId !== 'prayerScreen' && typeof disableLiveCompass === 'function') {
             disableLiveCompass();
         }
+        if (currentScreenId === 'seriesScreen' && screenId !== 'seriesScreen') {
+            resetSeriesPlayer();
+        }
         // زر "اذهب إلى الآية الحالية" لازم يفضل مخفي في أي شاشة غير شاشة القرآن بالنص والصوت
         if (screenId !== 'quranTextAudioScreen') {
             const jumpBtn = document.getElementById('taJumpToCurrentBtn');
@@ -1709,6 +1754,7 @@
         if (screenId === 'namesScreen') loadNames();
         if (screenId === 'sharawiScreen') loadSharawi();
         if (screenId === 'glimpseScreen') _showGlimpseIndexUI();
+        if (screenId === 'seriesScreen') _showSeriesIndexUI();
         if (screenId === 'fullStoriesScreen') _showFullStoriesIndexUI();
         if (screenId === 'quizScreen') initQuizScreen();
         if (screenId === 'quizAnsweredScreen') initQuizAnsweredScreen();
@@ -1855,11 +1901,14 @@
 
     function openScreen(screenId) {
         _showScreenUI(screenId);
-        pushNav({ screen: screenId, view: (screenId === 'quranTextScreen' || screenId === 'fullStoriesScreen' || screenId === 'glimpseScreen' || screenId === 'quranTextAudioScreen') ? 'index' : undefined });
+        pushNav({ screen: screenId, view: (screenId === 'quranTextScreen' || screenId === 'fullStoriesScreen' || screenId === 'glimpseScreen' || screenId === 'quranTextAudioScreen' || screenId === 'seriesScreen') ? 'index' : undefined });
     }
 
     function _showHomeUI() {
         clearScreenSearches(currentScreenId);
+        if (currentScreenId === 'seriesScreen') {
+            resetSeriesPlayer();
+        }
         document.querySelectorAll('.content-screen').forEach(s => s.classList.remove('active'));
         document.getElementById('homeScreen').classList.add('active');
         document.getElementById('mainBackBtn').style.display = 'none';
@@ -1893,6 +1942,8 @@
             _showGlimpseReadingUI(state.index);
         } else if (state.screen === 'quranTextAudioScreen' && state.view === 'reading' && state.suraNum) {
             _showTextAudioReadingUI(state.suraNum, state.name);
+        } else if (state.screen === 'seriesScreen' && state.view === 'reading' && state.seriesId) {
+            _showSeriesReadingUI(state.seriesId, state.epNum);
         }
     }
 
@@ -2576,6 +2627,144 @@
         // so this button and the device back button stay perfectly in sync.
         if (historyDepth > 0) { history.back(); } else { _showSuraIndexUI(); }
     }
+
+    /* ============================================================
+       مسلسلات وأفلام دينية
+       ============================================================ */
+    const seriesData = {
+        bukhariSeries: {
+            title: "مسلسل صحيح البخاري",
+            type: "series",
+            episodes: [
+                { ep: 1, youtubeId: "EFuMPCMKLRU" }
+                // باقي الحلقات (٢ إلى ٣٠) هتتضاف هنا بنفس الشكل: { ep: N, youtubeId: "..." }
+            ]
+        }
+        // الأفلام الدينية هتتضاف هنا بنفس الشكل مع type: "movie"
+    };
+    let currentSeriesId = null;
+
+    function switchSeriesTab(tab) {
+        document.querySelectorAll('#seriesIndexArea .glimpse-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+        document.getElementById('seriesTabSeries').classList.toggle('active', tab === 'series');
+        document.getElementById('seriesTabMovies').classList.toggle('active', tab === 'movies');
+    }
+
+    function buildSeriesIndexLists() {
+        const icons = { series: 'fa-clapperboard', movie: 'fa-video' };
+        const seriesIds = Object.keys(seriesData).filter(id => seriesData[id].type === 'series');
+        const movieIds = Object.keys(seriesData).filter(id => seriesData[id].type === 'movie');
+
+        const seriesContainer = document.getElementById('seriesSeriesList');
+        seriesContainer.innerHTML = seriesIds.length
+            ? seriesIds.map(id => `<div class="menu-item" onclick="openSeriesItem('${id}')"><i class="fas ${icons.series}"></i><span>${seriesData[id].title}</span></div>`).join('')
+            : '<p style="text-align:center; color:var(--gold);">لا توجد مسلسلات حاليًا</p>';
+
+        const moviesContainer = document.getElementById('seriesMoviesList');
+        moviesContainer.innerHTML = movieIds.length
+            ? movieIds.map(id => `<div class="menu-item" onclick="openSeriesItem('${id}')"><i class="fas ${icons.movie}"></i><span>${seriesData[id].title}</span></div>`).join('')
+            : '<p style="text-align:center; color:var(--gold);">لا توجد أفلام حاليًا، هتُضاف قريبًا</p>';
+    }
+
+    function buildSeriesEpisodesList(seriesId) {
+        const series = seriesData[seriesId];
+        const container = document.getElementById('seriesEpisodesList');
+        let html = '';
+        for (let i = 1; i <= 30; i++) {
+            const epData = series.episodes.find(e => e.ep === i);
+            const available = !!(epData && epData.youtubeId);
+            html += `<div class="menu-item series-ep-item" id="seriesEp-${i}" data-ep="${i}" style="${available ? '' : 'opacity:0.5;'}" onclick="playSeriesEpisode('${seriesId}', ${i})"><i class="fas fa-circle-play"></i><span>الحلقة ${toArabicDigits(i)}</span>${available ? '' : '<span style="margin-inline-start:auto; font-size:0.75rem;">قريبًا</span>'}</div>`;
+        }
+        container.innerHTML = html;
+    }
+
+    let pendingSeriesVideoId = null;
+
+    // تصفير كامل لمشغل المسلسلات/الأفلام: بيوقف الفيديو ويرجع الحاوية لحالتها الأولى (من غير غلاف ولا سبينر تحميل)
+    function resetSeriesPlayer() {
+        const iframe = document.getElementById('seriesPlayerIframe');
+        const cover = document.getElementById('seriesPlayerCover');
+        const loading = document.getElementById('seriesPlayerLoading');
+        if (iframe) { iframe.onload = null; iframe.src = ''; }
+        if (cover) cover.classList.add('hidden');
+        if (loading) loading.classList.remove('show');
+        pendingSeriesVideoId = null;
+    }
+
+    function playSeriesEpisode(seriesId, epNum) {
+        const series = seriesData[seriesId];
+        const epData = series.episodes.find(e => e.ep === epNum);
+        if (!epData || !epData.youtubeId) {
+            if ('vibrate' in navigator) navigator.vibrate([40, 30, 40]);
+            return;
+        }
+
+        // بنوقف أي تشغيل حالي ونرجع نعرض الغلاف الخاص بالتطبيق بدل ما نحمّل مشغل يوتيوب على طول
+        const iframe = document.getElementById('seriesPlayerIframe');
+        const cover = document.getElementById('seriesPlayerCover');
+        const loading = document.getElementById('seriesPlayerLoading');
+        const thumb = document.getElementById('seriesPlayerThumb');
+        iframe.src = '';
+        loading.classList.remove('show');
+        pendingSeriesVideoId = epData.youtubeId;
+        thumb.src = `https://i.ytimg.com/vi/${epData.youtubeId}/hqdefault.jpg`;
+        cover.classList.remove('hidden');
+
+        document.querySelectorAll('.series-ep-item').forEach(el => el.classList.remove('active-ep'));
+        const activeEl = document.getElementById(`seriesEp-${epNum}`);
+        if (activeEl) activeEl.classList.add('active-ep');
+        document.getElementById('seriesEpisodesArea').scrollTop = 0;
+        if (history.state && history.state.screen === 'seriesScreen' && history.state.view === 'reading') {
+            history.replaceState({ screen: 'seriesScreen', view: 'reading', seriesId, epNum }, '', location.href);
+        }
+    }
+
+    // بتشتغل لما المستخدم يضغط على زر التشغيل فوق الغلاف: هنا بس بيتحمّل الفيديو الفعلي
+    function startSeriesPlayback() {
+        if (!pendingSeriesVideoId) return;
+        const iframe = document.getElementById('seriesPlayerIframe');
+        const cover = document.getElementById('seriesPlayerCover');
+        const loading = document.getElementById('seriesPlayerLoading');
+
+        cover.classList.add('hidden');
+        loading.classList.add('show');
+
+        // بارامترات بتقلل أي عناصر واجهة خارجية (فيديوهات مقترحة، شعارات إضافية...) عشان يحس المستخدم إنه مشغل داخلي
+        const src = `https://www.youtube.com/embed/${pendingSeriesVideoId}?autoplay=1&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&fs=1&color=white`;
+        iframe.onload = () => { loading.classList.remove('show'); };
+        iframe.src = src;
+    }
+
+    // بترسم واجهة قائمة الحلقات فقط (من غير أي تعامل مع الـ history)، بيستخدمها كل من فتح المسلسل والرجوع بزر الرجوع
+    function _showSeriesReadingUI(seriesId, epNum) {
+        const series = seriesData[seriesId];
+        if (!series) return;
+        currentSeriesId = seriesId;
+        document.getElementById('seriesPlayerTitle').innerText = series.title;
+        buildSeriesEpisodesList(seriesId);
+        document.getElementById('seriesIndexArea').style.display = 'none';
+        document.getElementById('seriesEpisodesArea').style.display = 'block';
+        playSeriesEpisode(seriesId, epNum || 1);
+    }
+
+    function _showSeriesIndexUI() {
+        resetSeriesPlayer();
+        document.getElementById('seriesEpisodesArea').style.display = 'none';
+        document.getElementById('seriesIndexArea').style.display = 'block';
+        buildSeriesIndexLists();
+    }
+
+    function openSeriesItem(seriesId) {
+        _showSeriesReadingUI(seriesId, 1);
+        pushNav({ screen: 'seriesScreen', view: 'reading', seriesId, epNum: 1 });
+    }
+
+    function backToSeriesIndex() {
+        // يرجع خطوة واحدة بس في الـ history، عشان زر الرجوع (سواء اللي في الشاشة أو زر الموبايل) يتصرف بنفس المنطق
+        if (historyDepth > 0) { history.back(); } else { _showSeriesIndexUI(); }
+    }
+
+
 
     /* ============================================================
        القرآن بالنص والصوت: قراءة الآيات مع الاستماع لها آية آية
