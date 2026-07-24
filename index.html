@@ -149,6 +149,30 @@
         .glimpse-tab-btn.active { background: var(--gold); color: var(--dark); opacity: 1; }
         .glimpse-subpanel { display: none; flex-direction: column; min-height: 0; }
         .glimpse-subpanel.active { display: flex; }
+
+        .qibla-card { background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25)); padding: 1.5rem 1.25rem; border-radius: 1.625rem; border-right: 0.3125rem solid var(--gold); box-shadow: 0 0.4375rem 1.125rem rgba(0,0,0,0.25); display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+        .qibla-title { color: var(--gold); font-size: 1.0625rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .qibla-compass { position: relative; width: 13rem; height: 13rem; max-width: 80vw; max-height: 80vw; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(247,200,115,0.08), rgba(0,0,0,0.35)); border: 0.125rem solid var(--gold); display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 1.25rem rgba(0,0,0,0.4), 0 0.375rem 1.25rem rgba(0,0,0,0.35); }
+        .qibla-compass-marks { position: absolute; inset: 0; }
+        .qibla-compass-marks span { position: absolute; color: var(--gold); font-weight: 900; font-size: 0.9375rem; opacity: 0.85; }
+        .qibla-compass-marks .qc-n { top: 0.5rem; left: 50%; transform: translateX(-50%); }
+        .qibla-compass-marks .qc-s { bottom: 0.5rem; left: 50%; transform: translateX(-50%); }
+        .qibla-compass-marks .qc-e { top: 50%; right: 0.5rem; transform: translateY(-50%); }
+        .qibla-compass-marks .qc-w { top: 50%; left: 0.5rem; transform: translateY(-50%); }
+        .qibla-needle { position: absolute; top: 50%; left: 50%; width: 0.3125rem; height: 45%; background: linear-gradient(180deg, var(--gold), rgba(247,200,115,0.15)); border-radius: 0.3125rem; transform-origin: bottom center; transform: translate(-50%, -100%) rotate(0deg); transition: transform 0.6s ease; }
+        .qibla-needle i { position: absolute; top: -0.9rem; left: 50%; transform: translateX(-50%); color: var(--gold); font-size: 1.375rem; filter: drop-shadow(0 0 0.5rem rgba(247,200,115,0.5)); }
+        .qibla-degree { color: var(--text-color); font-size: 0.9375rem; font-weight: 700; }
+        .qibla-degree span { color: var(--gold); font-size: 1.125rem; }
+        .qibla-note { font-size: 0.75rem; opacity: 0.8; line-height: 1.8; color: inherit; }
+        .qibla-compass-marks { transition: transform 0.4s ease; }
+        .qibla-compass.aligned { border-color: #4caf50; box-shadow: inset 0 0 1.25rem rgba(76,175,80,0.35), 0 0 1.5rem rgba(76,175,80,0.55); }
+        .qibla-compass.aligned .qibla-needle { background: linear-gradient(180deg, #4caf50, rgba(76,175,80,0.15)); }
+        .qibla-compass.aligned .qibla-needle i { color: #7fd88a; filter: drop-shadow(0 0 0.5rem rgba(76,175,80,0.6)); }
+        .qibla-enable-btn { display: flex; align-items: center; gap: 0.4375rem; background: rgba(247,200,115,0.12); border: 1px solid var(--gold); color: var(--gold); font-family: 'Tajawal', sans-serif; font-size: 0.8125rem; font-weight: 700; padding: 0.625rem 1.125rem; border-radius: 3.125rem; cursor: pointer; }
+        .qibla-enable-btn:active { background: rgba(247,200,115,0.22); }
+        .qibla-enable-btn.on { background: rgba(76,175,80,0.18); border-color: #4caf50; color: #7fd88a; }
+        .qibla-status { font-size: 0.8125rem; font-weight: 700; color: var(--gold); min-height: 1.2rem; line-height: 1.7; }
+        .qibla-status.ok { color: #7fd88a; }
         .glimpse-card-list { display: flex; flex-direction: column; padding: 0.625rem 0; }
 
         .reciter-current-mini { width: 100%; display: flex; align-items: center; gap: 0.625rem; background: linear-gradient(135deg, rgba(247,200,115,0.14), rgba(0,0,0,0.3)); border: 1px solid var(--gold); border-radius: 3.125rem; padding: 0.5625rem 1.125rem; cursor: pointer; font-family: 'Tajawal', sans-serif; margin-bottom: 0.9375rem; }
@@ -758,9 +782,34 @@
     </div>
 
     <div id="prayerScreen" class="content-screen">
-        <input type="text" id="countrySearch" class="search-box" placeholder="ابحث عن دولة..." onkeyup="filterCountries()">
-        <div id="egyptFixedData"><p style="text-align:center;">جاري تحميل مواقيت مصر...</p></div>
-        <div id="countryListContainer" class="menu-list" style="margin-bottom: 0.9375rem;"></div>
+        <div class="glimpse-tabs">
+            <button type="button" class="glimpse-tab-btn active" data-tab="times" onclick="switchPrayerTab('times')"><i class="fas fa-clock"></i> مواقيت مصر</button>
+            <button type="button" class="glimpse-tab-btn" data-tab="qibla" onclick="switchPrayerTab('qibla')"><i class="fas fa-kaaba"></i> اتجاه القبلة</button>
+        </div>
+        <div id="prayerTabTimes" class="glimpse-subpanel active">
+            <input type="text" id="countrySearch" class="search-box" placeholder="ابحث عن دولة..." onkeyup="filterCountries()">
+            <div id="egyptFixedData"><p style="text-align:center;">جاري تحميل مواقيت مصر...</p></div>
+            <div id="countryListContainer" class="menu-list" style="margin-bottom: 0.9375rem;"></div>
+        </div>
+        <div id="prayerTabQibla" class="glimpse-subpanel">
+            <div class="qibla-card">
+                <div class="qibla-title"><i class="fas fa-kaaba"></i> اتجاه القبلة من مصر (القاهرة)</div>
+                <div class="qibla-compass">
+                    <div class="qibla-compass-marks">
+                        <span class="qc-n">ش</span>
+                        <span class="qc-e">ق</span>
+                        <span class="qc-s">ج</span>
+                        <span class="qc-w">غ</span>
+                    </div>
+                    <div class="qibla-needle" id="qiblaNeedle">
+                        <i class="fas fa-kaaba"></i>
+                    </div>
+                </div>
+                <div class="qibla-degree">الزاوية: <span id="qiblaDegree">--</span> من الشمال (باتجاه الشرق)</div>
+                <p class="qibla-status" id="qiblaStatus">حرّك الموبايل ودوّر بيه في مكانك، وهنقولّك أول ما توصل للاتجاه الصح.</p>
+                <p class="qibla-note">البوصلة بتتحرك تلقائيًا مع حساس الاتجاه في موبايلك، والاتجاه محسوب بالنسبة لمدينة القاهرة، عاصمة مصر.</p>
+            </div>
+        </div>
     </div>
 
     <div id="namesScreen" class="content-screen">
@@ -1630,6 +1679,9 @@
         clearScreenSearches(currentScreenId);
         if (currentScreenId === 'prayerScreen' && screenId !== 'prayerScreen' && typeof activeCountdowns !== 'undefined') {
             Object.keys(activeCountdowns).forEach(stopCountdown);
+        }
+        if (currentScreenId === 'prayerScreen' && screenId !== 'prayerScreen' && typeof disableLiveCompass === 'function') {
+            disableLiveCompass();
         }
         // زر "اذهب إلى الآية الحالية" لازم يفضل مخفي في أي شاشة غير شاشة القرآن بالنص والصوت
         if (screenId !== 'quranTextAudioScreen') {
@@ -3682,6 +3734,144 @@
         selectedCountryIndex = null;
         renderCountryList(worldCountries);
         loadEgyptFixed();
+        switchPrayerTab('times');
+        initQiblaCompass();
+    }
+
+    function switchPrayerTab(tab) {
+        document.querySelectorAll('#prayerScreen .glimpse-tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
+        document.getElementById('prayerTabTimes').classList.toggle('active', tab === 'times');
+        document.getElementById('prayerTabQibla').classList.toggle('active', tab === 'qibla');
+        if (tab === 'qibla') { enableLiveCompass(); } else { disableLiveCompass(); }
+    }
+
+    // إحداثيات القاهرة (عاصمة مصر) والكعبة المشرفة، لحساب اتجاه القبلة بشكل ثابت دون طلب صلاحية الموقع
+    const CAIRO_COORDS = { lat: 30.0444, lng: 31.2357 };
+    const KAABA_COORDS = { lat: 21.4225, lng: 39.8262 };
+
+    function computeQiblaBearing(fromLat, fromLng, toLat, toLng) {
+        const toRad = deg => deg * Math.PI / 180;
+        const toDeg = rad => rad * 180 / Math.PI;
+        const φ1 = toRad(fromLat), φ2 = toRad(toLat);
+        const Δλ = toRad(toLng - fromLng);
+        const y = Math.sin(Δλ) * Math.cos(φ2);
+        const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
+        let θ = toDeg(Math.atan2(y, x));
+        return (θ + 360) % 360;
+    }
+
+    let qiblaBearingValue = 0;
+    let liveCompassActive = false;
+    let wasQiblaAligned = false;
+    let compassHasAbsolute = false;
+    let compassGotData = false;
+    let compassNoDataTimer = null;
+    const QIBLA_TOLERANCE_DEG = 6;
+
+    function initQiblaCompass() {
+        const needle = document.getElementById('qiblaNeedle');
+        const degreeEl = document.getElementById('qiblaDegree');
+        if (!needle || !degreeEl) return;
+        qiblaBearingValue = computeQiblaBearing(CAIRO_COORDS.lat, CAIRO_COORDS.lng, KAABA_COORDS.lat, KAABA_COORDS.lng);
+        degreeEl.textContent = `${Math.round(qiblaBearingValue)}°`;
+        if (!liveCompassActive) {
+            needle.style.transform = `translate(-50%, -100%) rotate(${qiblaBearingValue}deg)`;
+        }
+    }
+
+    function normalizeAngle180(angle) {
+        let a = ((angle + 180) % 360 + 360) % 360 - 180;
+        return a;
+    }
+
+    function enableLiveCompass() {
+        const statusEl = document.getElementById('qiblaStatus');
+        if (liveCompassActive) return;
+        if (typeof DeviceOrientationEvent === 'undefined') {
+            if (statusEl) statusEl.textContent = 'جهازك أو متصفحك لا يدعم حساس البوصلة، فالاتجاه المعروض هيفضل ثابت بالنسبة للقاهرة.';
+            return;
+        }
+        compassHasAbsolute = false;
+        compassGotData = false;
+        liveCompassActive = true;
+        window.addEventListener('deviceorientationabsolute', onAbsoluteOrientation, true);
+        window.addEventListener('deviceorientation', onRelativeOrientation, true);
+        if (statusEl) statusEl.textContent = 'جاري البحث عن إشارة البوصلة... حرّك الموبايل شوية.';
+
+        if (compassNoDataTimer) clearTimeout(compassNoDataTimer);
+        compassNoDataTimer = setTimeout(() => {
+            if (!compassGotData && statusEl) {
+                const insecure = !window.isSecureContext;
+                statusEl.textContent = insecure
+                    ? 'المتصفح بيمنع الوصول لحساس البوصلة لأن الصفحة مش شغالة على https. افتح الصفحة كموقع آمن (https) عشان البوصلة الحية تشتغل.'
+                    : 'مش قادرين نوصل لإشارة حساس البوصلة في جهازك دلوقتي. الاتجاه الثابت بالنسبة للقاهرة هو الظاهر فوق.';
+            }
+        }, 3000);
+    }
+
+    function disableLiveCompass() {
+        if (!liveCompassActive) return;
+        window.removeEventListener('deviceorientationabsolute', onAbsoluteOrientation, true);
+        window.removeEventListener('deviceorientation', onRelativeOrientation, true);
+        if (compassNoDataTimer) { clearTimeout(compassNoDataTimer); compassNoDataTimer = null; }
+        liveCompassActive = false;
+        wasQiblaAligned = false;
+        compassHasAbsolute = false;
+        compassGotData = false;
+        const statusEl = document.getElementById('qiblaStatus');
+        const compassEl = document.querySelector('#prayerTabQibla .qibla-compass');
+        const marks = document.querySelector('#prayerTabQibla .qibla-compass-marks');
+        if (statusEl) { statusEl.classList.remove('ok'); statusEl.textContent = 'حرّك الموبايل ودوّر بيه في مكانك، وهنقولّك أول ما توصل للاتجاه الصح.'; }
+        if (compassEl) compassEl.classList.remove('aligned');
+        if (marks) marks.style.transform = '';
+        initQiblaCompass();
+    }
+
+    function onAbsoluteOrientation(event) {
+        if (event.alpha === null || event.alpha === undefined) return;
+        compassHasAbsolute = true;
+        compassGotData = true;
+        if (compassNoDataTimer) { clearTimeout(compassNoDataTimer); compassNoDataTimer = null; }
+        const heading = typeof event.webkitCompassHeading === 'number' ? event.webkitCompassHeading : (360 - event.alpha);
+        applyCompassHeading(heading);
+    }
+
+    function onRelativeOrientation(event) {
+        // لو وصلتنا قراءة مطلقة (deviceorientationabsolute) بنفضّلها ونتجاهل النسبية عشان نتفادى تعارض القراءات
+        if (compassHasAbsolute) return;
+        let heading;
+        if (typeof event.webkitCompassHeading === 'number') {
+            heading = event.webkitCompassHeading; // iOS: زاوية البوصلة الفعلية من الشمال
+        } else if (event.alpha !== null && event.alpha !== undefined) {
+            heading = 360 - event.alpha; // تقريب لزاوية البوصلة من الشمال
+        } else {
+            return;
+        }
+        compassGotData = true;
+        if (compassNoDataTimer) { clearTimeout(compassNoDataTimer); compassNoDataTimer = null; }
+        applyCompassHeading(heading);
+    }
+
+    function applyCompassHeading(heading) {
+        const marks = document.querySelector('#prayerTabQibla .qibla-compass-marks');
+        const needle = document.getElementById('qiblaNeedle');
+        const compassEl = document.querySelector('#prayerTabQibla .qibla-compass');
+        if (marks) marks.style.transform = `rotate(${-heading}deg)`;
+        if (needle) needle.style.transform = `translate(-50%, -100%) rotate(${qiblaBearingValue - heading}deg)`;
+
+        const diff = normalizeAngle180(qiblaBearingValue - heading);
+        const statusEl = document.getElementById('qiblaStatus');
+        const isAligned = Math.abs(diff) <= QIBLA_TOLERANCE_DEG;
+
+        if (compassEl) compassEl.classList.toggle('aligned', isAligned);
+        if (statusEl) {
+            statusEl.classList.toggle('ok', isAligned);
+            statusEl.textContent = isAligned ? '✅ تمام! أنت الآن متجه ناحية القبلة.' : 'كمّل تدوير لحد ما توصل للاتجاه الصح.';
+        }
+        if (isAligned && !wasQiblaAligned) {
+            if (navigator.vibrate) navigator.vibrate([120, 60, 120]);
+        }
+        wasQiblaAligned = isAligned;
     }
 
     async function loadEgyptFixed() {
