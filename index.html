@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0a2621">
     <title>البنا الإسلامي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -102,27 +98,6 @@
         .quiz-explain { background: rgba(76,175,80,0.14); border: 1px solid rgba(76,175,80,0.4); border-radius: 12px; padding: 0.7rem 0.85rem; margin: -0.4rem 0 0.5rem; font-size: 0.8125rem; line-height: 1.8; color: #dff2e0; }
         .quiz-explain strong { color: #7fd88a; display:block; margin-bottom:0.3rem; }
         .quiz-option:active { transform: scale(0.98); }
-
-        .reciter-picker { position: relative; }
-        .reciter-current { width: 100%; display: flex; align-items: center; gap: 0.625rem; background: linear-gradient(135deg, rgba(247,200,115,0.14), rgba(0,0,0,0.3)); border: 1px solid var(--gold); border-radius: 3.125rem; padding: 0.625rem 1.125rem; cursor: pointer; font-family: 'Tajawal', sans-serif; }
-        .reciter-current .rc-icon { width: 2rem; height: 2rem; border-radius: 50%; background: var(--gold); color: var(--dark); display: flex; align-items: center; justify-content: center; font-size: 0.9375rem; flex-shrink: 0; }
-        .reciter-current .rc-text { flex: 1; text-align: right; }
-        .reciter-current .rc-label { display: block; font-size: 0.625rem; color: var(--gold); opacity: 0.75; }
-        .reciter-current .rc-name { display: block; font-size: 0.9375rem; font-weight: 700; color: var(--text-color); }
-        .reciter-current .rc-caret { color: var(--gold); font-size: 0.8125rem; transition: transform 0.25s ease; }
-        .reciter-picker.open .rc-caret { transform: rotate(180deg); }
-        .reciter-dropdown { position: absolute; top: calc(100% + 0.5rem); bottom: auto; left: 0; right: 0; background: #071d1a; border: 1px solid var(--gold); border-radius: 1.125rem; padding: 0.4375rem; box-shadow: 0 0.75rem 1.875rem rgba(0,0,0,0.55); max-height: 0; overflow: hidden; opacity: 0; transform: translateY(-0.5rem); transition: max-height 0.25s ease, opacity 0.2s ease, transform 0.2s ease; z-index: 200; }
-        body.night-mode .reciter-dropdown { background: #000; }
-        .reciter-picker.open .reciter-dropdown { max-height: 21rem; opacity: 1; transform: translateY(0); overflow-y: auto; }
-        .reciter-option { display: flex; align-items: center; gap: 0.625rem; padding: 0.625rem 0.75rem; border-radius: 0.75rem; cursor: pointer; color: var(--text-color); }
-        .reciter-option + .reciter-option { margin-top: 0.125rem; }
-        .reciter-option:active { background: rgba(247,200,115,0.12); }
-        .reciter-option i.ro-avatar { width: 1.75rem; height: 1.75rem; border-radius: 50%; background: rgba(247,200,115,0.15); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 0.8125rem; flex-shrink: 0; }
-        .reciter-option .ro-name { flex: 1; font-size: 0.875rem; }
-        .reciter-option .ro-check { color: var(--gold); font-size: 0.8125rem; opacity: 0; }
-        .reciter-option.selected { background: rgba(247,200,115,0.1); }
-        .reciter-option.selected .ro-name { color: var(--gold); font-weight: 700; }
-        .reciter-option.selected .ro-check { opacity: 1; }
 
         /* الخلفية المتحركة: جسيمات ذهبية عائمة خلف التطبيق */
         .stars-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -454,6 +429,7 @@
             <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن الكريم</span></div>
             <div class="menu-item" onclick="openTaTabSmart()"><i class="fas fa-closed-captioning"></i><span>القرآن بالنص والصوت</span></div>
             <div class="menu-item" onclick="openScreen('quranTextScreen')"><i class="fas fa-book-open-reader"></i><span>المصحف المكتوب والتفسير</span></div>
+            <div class="menu-item" onclick="openScreen('seriesScreen')"><i class="fas fa-film"></i><span>مسلسلات وأفلام دينية</span></div>
             <div class="menu-item" onclick="openScreen('quizScreen')"><i class="fas fa-brain"></i><span>تحدي الأسئلة الدينية</span></div>
             <div class="menu-item" onclick="openHadithBook('bukhari')"><i class="fas fa-book"></i><span>صحيح البخاري</span></div>
             <div class="menu-item" onclick="openHadithBook('muslim')"><i class="fas fa-book"></i><span>صحيح مسلم</span></div>
@@ -655,6 +631,21 @@
             <div class="menu-item" onclick="openScreen('sharawiScreen')"><i class="fas fa-feather-pointed"></i><span>الذهاب إلى خواطر الشيخ الشعراوي</span></div>
         </div>
         <div id="sharawiFavoritesContainer" class="menu-list"></div>
+    </div>
+
+    <div id="seriesScreen" class="content-screen">
+        <h2 style="color:var(--gold); text-align: center; margin-bottom: 0.9375rem;"><i class="fas fa-film"></i> مسلسلات وأفلام دينية</h2>
+        <div class="daily-card" style="padding: 0.875rem;">
+            <div style="position: relative; width: 100%; padding-top: 56.25%; border-radius: 1.125rem; overflow: hidden; background: #000;">
+                <iframe
+                    src="https://www.youtube.com/embed/EFuMPCMKLRU"
+                    title="مسلسلات وأفلام دينية"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
     </div>
 
     <div id="quranTextScreen" class="content-screen">
@@ -1096,7 +1087,7 @@
 
     (function () {
         const TAPPABLE_SELECTOR = 'button, [onclick], .menu-item, .fav-btn, .list-fav-btn, ' +
-            '.copy-hadith-btn, .quiz-option, .reciter-option, .reciter-full-card, ' +
+            '.copy-hadith-btn, .quiz-option, .reciter-full-card, ' +
             '.reciter-current, .reciter-current-mini, .glimpse-tab-btn, .quran-tab-btn, ' +
             '.sura-card, .clear-answers-btn, .reset-all-btn, a, [role="button"]';
 
@@ -1295,139 +1286,6 @@
         watchAudioNetworkErrors(document.getElementById('radioAudio'), 'إذاعة القرآن الكريم', () => { if (window.showRadioOffline) window.showRadioOffline(); });
         watchAudioNetworkErrors(document.getElementById('taAudio'), 'القرآن بالنص والصوت', () => showTaPlayerOffline());
         window.watchAudioNetworkErrors = watchAudioNetworkErrors;
-    })();
-
-    /* ============================================================
-       التشغيل في الخلفية (Media Session API) — نظام موحّد لكل مشغلات
-       الصوت في التطبيق: القرآن الكريم، إذاعة القرآن، والقرآن بالنص والصوت.
-       كل مشغل بياخد بالظبط نفس المعاملة:
-         - يفضل شغال وصوته مستمر لو المستخدم قفل الشاشة أو رجع للخلفية
-         - تظهر معلومات التشغيل والتحكم (تشغيل/إيقاف/التالي/السابق) في
-           شاشة القفل وشريط الإشعارات وسماعات البلوتوث
-         - نفس منطق حالة الاتصال بالإنترنت المستخدم بالفعل مع كل مشغل
-           (إيقاف الصوت وإظهار رسالة عدم الاتصال) بينعكس تلقائيًا على
-           حالة جلسة الميديا برضه (حتى لا تفضل شاشة القفل تقول "تشغيل"
-           وهو متوقف فعليًا بسبب الشبكة)
-       ============================================================ */
-    (function initBackgroundPlayback() {
-        if (!('mediaSession' in navigator)) return; // الجهاز/المتصفح مش داعم، نتجاهل بهدوء
-
-        const players = {
-            main:  { audio: null, label: 'القرآن الكريم' },
-            radio: { audio: null, label: 'إذاعة القرآن الكريم' },
-            ta:    { audio: null, label: 'القرآن بالنص والصوت' }
-        };
-        let activeKey = null; // آخر مشغل اتشغل فعليًا، وهو اللي بياخد أوامر شاشة القفل
-
-        // أيقونة موحّدة (شعار التطبيق) لإشعار/شاشة قفل كل المشغلات، بدون الحاجة لصورة خارجية
-        const ARTWORK_SVG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">' +
-            '<rect width="512" height="512" fill="#0a2621"/>' +
-            '<text x="50%" y="60%" font-size="230" text-anchor="middle" fill="#f7c873" font-family="Arial, sans-serif">&#9770;</text>' +
-            '</svg>'
-        );
-
-        function setMeta(key, title, artist) {
-            activeKey = key;
-            try {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title: title || players[key].label,
-                    artist: artist || 'تطبيق البنا الإسلامي',
-                    album: 'البنا الإسلامي',
-                    artwork: [{ src: ARTWORK_SVG, sizes: '512x512', type: 'image/svg+xml' }]
-                });
-            } catch (e) { /* بعض المتصفحات القديمة ممكن ترفض MediaMetadata - نتجاهل بهدوء */ }
-        }
-
-        function setPlaybackState(key, state) {
-            if (key !== null && key !== activeKey) return;
-            try { navigator.mediaSession.playbackState = state; } catch (e) {}
-        }
-
-        function activeAudio() { return activeKey ? players[activeKey].audio : null; }
-
-        function updatePositionState(key, audio) {
-            if (key !== activeKey) return;
-            if (!('setPositionState' in navigator.mediaSession)) return;
-            if (!audio.duration || isNaN(audio.duration) || !isFinite(audio.duration)) return;
-            try {
-                navigator.mediaSession.setPositionState({
-                    duration: audio.duration,
-                    playbackRate: audio.playbackRate || 1,
-                    position: Math.min(audio.currentTime, audio.duration)
-                });
-            } catch (e) {}
-        }
-
-        // أوامر التحكم من شاشة القفل / شريط الإشعارات / سماعات البلوتوث
-        // بتتوجّه دايمًا لنفس المشغل الشغال فعليًا، بنفس السلوك المتاح جوه التطبيق بالظبط
-        navigator.mediaSession.setActionHandler('play', () => {
-            if (!navigator.onLine) return; // نفس منطق التحقق من الاتصال المستخدم مع كل مشغل
-            const a = activeAudio(); if (a) a.play().catch(() => {});
-        });
-        navigator.mediaSession.setActionHandler('pause', () => {
-            const a = activeAudio(); if (a) a.pause();
-        });
-        navigator.mediaSession.setActionHandler('stop', () => {
-            const a = activeAudio();
-            if (a) { a.pause(); a.currentTime = 0; }
-            setPlaybackState(activeKey, 'none');
-        });
-        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-            const a = activeAudio();
-            if (a) a.currentTime = Math.max(0, a.currentTime - (details.seekOffset || 10));
-        });
-        navigator.mediaSession.setActionHandler('seekforward', (details) => {
-            const a = activeAudio();
-            if (a && a.duration) a.currentTime = Math.min(a.duration, a.currentTime + (details.seekOffset || 10));
-        });
-        navigator.mediaSession.setActionHandler('previoustrack', () => {
-            if (!navigator.onLine) return;
-            if (activeKey === 'main' && window.playPrev) window.playPrev();
-            else if (activeKey === 'ta' && window.playPrevAyahAudio) window.playPrevAyahAudio();
-            else if (activeKey === 'radio' && window.loadRadioEpisode && window.pickNextRadioEpisode) {
-                window.loadRadioEpisode(window.pickNextRadioEpisode());
-                const a = players.radio.audio; if (a) a.play().catch(() => {});
-            }
-        });
-        navigator.mediaSession.setActionHandler('nexttrack', () => {
-            if (!navigator.onLine) return;
-            if (activeKey === 'main' && window.playNext) window.playNext();
-            else if (activeKey === 'ta' && window.playNextAyahAudio) window.playNextAyahAudio();
-            else if (activeKey === 'radio' && window.loadRadioEpisode && window.pickNextRadioEpisode) {
-                window.loadRadioEpisode(window.pickNextRadioEpisode());
-                const a = players.radio.audio; if (a) a.play().catch(() => {});
-            }
-        });
-
-        // بتربط أي مشغل صوت بنفس المنطق بالظبط: تشغيل في الخلفية + تحكم شاشة القفل
-        // + انعكاس حالة الاتصال بالإنترنت (لو الصوت اتوقف بسبب انقطاع الشبكة تتحدث الحالة هنا كمان)
-        function registerPlayer(key, audioEl, getMetaFn) {
-            if (!audioEl) return;
-            players[key].audio = audioEl;
-            audioEl.addEventListener('play', () => {
-                setMeta(key, ...((getMetaFn ? getMetaFn() : []) || []));
-                setPlaybackState(key, 'playing');
-            });
-            audioEl.addEventListener('pause', () => setPlaybackState(key, 'paused'));
-            audioEl.addEventListener('ended', () => setPlaybackState(key, 'none'));
-            audioEl.addEventListener('timeupdate', () => updatePositionState(key, audioEl));
-        }
-
-        registerPlayer('main', document.getElementById('mainAudio'), () => {
-            const t = document.getElementById('nowPlaying');
-            return [t ? t.innerText : 'القرآن الكريم', 'القرآن الكريم'];
-        });
-        registerPlayer('radio', document.getElementById('radioAudio'), () =>
-            ['إذاعة القرآن الكريم - بث مباشر', 'بث متجدد']);
-        registerPlayer('ta', document.getElementById('taAudio'), () => {
-            const t = document.getElementById('taNowPlayingAyah');
-            return [t ? t.innerText : 'القرآن بالنص والصوت', 'القرآن بالنص والصوت'];
-        });
-
-        // لو الشبكة اتقطعت والصوت الشغال اتوقف تلقائيًا، بنحدّث حالة جلسة الميديا فورًا
-        // بنفس الطريقة الموحّدة لكل المشغلات الثلاثة
-        window.addEventListener('offline', () => setPlaybackState(activeKey, 'paused'));
     })();
 
     const RECITERS = {
@@ -2718,7 +2576,6 @@
         // so this button and the device back button stay perfectly in sync.
         if (historyDepth > 0) { history.back(); } else { _showSuraIndexUI(); }
     }
-    function toggleNightMode() { applyNightMode(!nightModeEnabled); }
 
     /* ============================================================
        القرآن بالنص والصوت: قراءة الآيات مع الاستماع لها آية آية
