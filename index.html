@@ -1923,7 +1923,7 @@
     }
 
     function goHome() {
-        _showHomeUI();
+        if (historyDepth > 0) { history.back(); } else { _showHomeUI(); }
     }
 
     function applyNavState(state) {
@@ -2641,8 +2641,31 @@
                 { ep: 3, youtubeId: "WgwRf74xTxQ" },
                 { ep: 4, youtubeId: "C-2m_s3veRI" },
                 { ep: 5, youtubeId: "sC4HS54BvIo" },
-                { ep: 6, youtubeId: "4PLfMsn8wJg" }
-                // باقي الحلقات (٧ إلى ٣٠) هتتضاف هنا بنفس الشكل: { ep: N, youtubeId: "..." }
+                { ep: 6, youtubeId: "4PLfMsn8wJg" },
+                { ep: 7, youtubeId: "oOHvVAZxS2Q" },
+                { ep: 8, youtubeId: "sC4HS54BvIo" },
+                { ep: 9, youtubeId: "7pfwOW36XQ4" },
+                { ep: 10, youtubeId: "PXgAnqWP-FA" },
+                { ep: 11, youtubeId: "jzfbyKhQbBI" },
+                { ep: 12, youtubeId: "daPGuzavi8Q" },
+                { ep: 13, youtubeId: "88Dcb2eAqSQ" },
+                { ep: 14, youtubeId: "YsRayiKIb4U" },
+                { ep: 15, youtubeId: "tn-h4rHz8Ic" },
+                { ep: 16, youtubeId: "zDvA3frdMSU" },
+                { ep: 17, youtubeId: "UXV2fFW0K5w" },
+                { ep: 18, youtubeId: "dqrturDWLq8" },
+                { ep: 19, youtubeId: "hRjJ5ZdfTPc" },
+                { ep: 20, youtubeId: "9sHE9rXq26I" },
+                { ep: 21, youtubeId: "PTflFCEjK54" },
+                { ep: 22, youtubeId: "AqHzGNAD6Cg" },
+                { ep: 23, youtubeId: "LMeXmEe6SiQ" },
+                { ep: 24, youtubeId: "cKEigAfEtOU" },
+                { ep: 25, youtubeId: "0wOjIdxXbNg" },
+                { ep: 26, youtubeId: "k7JX3RhmZ_Y" },
+                { ep: 27, youtubeId: "Bb4-Ku9MEBI" },
+                { ep: 28, youtubeId: "iGyNf9i63LI" },
+                { ep: 29, youtubeId: "Oewg_PezPuA" },
+                { ep: 30, youtubeId: "eYBcipIWCkQ" }
             ]
         }
         // الأفلام الدينية هتتضاف هنا بنفس الشكل مع type: "movie"
