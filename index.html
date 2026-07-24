@@ -173,6 +173,15 @@
         .qibla-enable-btn.on { background: rgba(76,175,80,0.18); border-color: #4caf50; color: #7fd88a; }
         .qibla-status { font-size: 0.8125rem; font-weight: 700; color: var(--gold); min-height: 1.2rem; line-height: 1.7; }
         .qibla-status.ok { color: #7fd88a; }
+
+        .qibla-countries-title { color: var(--gold); font-size: 1rem; margin: 1.25rem 0 0.75rem; display: flex; align-items: center; gap: 0.5rem; justify-content: center; }
+        .qibla-mini-result { display: flex; align-items: center; gap: 0.9375rem; background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25)); padding: 1rem; border-radius: 1.25rem; border: 1px solid rgba(247,200,115,0.25); margin-top: 0.5rem; }
+        .qibla-mini-compass { position: relative; width: 4.5rem; height: 4.5rem; flex-shrink: 0; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(247,200,115,0.08), rgba(0,0,0,0.35)); border: 0.09375rem solid var(--gold); display: flex; align-items: center; justify-content: center; }
+        .qibla-mini-needle { position: absolute; top: 50%; left: 50%; width: 0.15625rem; height: 40%; background: linear-gradient(180deg, var(--gold), rgba(247,200,115,0.15)); border-radius: 0.15625rem; transform-origin: bottom center; }
+        .qibla-mini-needle i { position: absolute; top: -0.5rem; left: 50%; transform: translateX(-50%); color: var(--gold); font-size: 0.6875rem; }
+        .qibla-mini-info { flex: 1; }
+        .qibla-mini-info .qm-city { color: var(--gold); font-weight: 700; font-size: 0.875rem; margin-bottom: 0.25rem; }
+        .qibla-mini-info .qm-deg { color: var(--text-color); font-size: 0.8125rem; }
         .glimpse-card-list { display: flex; flex-direction: column; padding: 0.625rem 0; }
 
         .reciter-current-mini { width: 100%; display: flex; align-items: center; gap: 0.625rem; background: linear-gradient(135deg, rgba(247,200,115,0.14), rgba(0,0,0,0.3)); border: 1px solid var(--gold); border-radius: 3.125rem; padding: 0.5625rem 1.125rem; cursor: pointer; font-family: 'Tajawal', sans-serif; margin-bottom: 0.9375rem; }
@@ -449,7 +458,7 @@
             <div class="menu-item" onclick="openScreen('sharawiScreen')"><i class="fas fa-feather-pointed"></i><span>خواطر الشيخ الشعراوي</span></div>
             <div class="menu-item" onclick="openScreen('glimpseScreen')"><i class="fas fa-users"></i><span>لمحة عن الأنبياء والصحابة</span></div>
             <div class="menu-item" onclick="openScreen('fullStoriesScreen')"><i class="fas fa-scroll"></i><span>قصص الأنبياء والصحابة</span></div>
-            <div class="menu-item" onclick="openScreen('prayerScreen')"><i class="fas fa-clock"></i><span>مواقيت الصلاة</span></div>
+            <div class="menu-item" onclick="openScreen('prayerScreen')"><i class="fas fa-clock"></i><span>مواقيت الصلاة واتجاه القبلة</span></div>
             <div class="menu-item" onclick="openScreen('ruqyaScreen')"><i class="fas fa-shield-halved"></i><span>الرقية الشرعية</span></div>
             <div class="menu-item" onclick="openScreen('morningAzkarScreen')"><i class="fas fa-sun"></i><span>أذكار الصباح</span></div>
             <div class="menu-item" onclick="openScreen('eveningAzkarScreen')"><i class="fas fa-moon"></i><span>أذكار المساء</span></div>
@@ -783,7 +792,7 @@
 
     <div id="prayerScreen" class="content-screen">
         <div class="glimpse-tabs">
-            <button type="button" class="glimpse-tab-btn active" data-tab="times" onclick="switchPrayerTab('times')"><i class="fas fa-clock"></i> مواقيت مصر</button>
+            <button type="button" class="glimpse-tab-btn active" data-tab="times" onclick="switchPrayerTab('times')"><i class="fas fa-clock"></i> مواقيت الصلاة</button>
             <button type="button" class="glimpse-tab-btn" data-tab="qibla" onclick="switchPrayerTab('qibla')"><i class="fas fa-kaaba"></i> اتجاه القبلة</button>
         </div>
         <div id="prayerTabTimes" class="glimpse-subpanel active">
@@ -809,6 +818,9 @@
                 <p class="qibla-status" id="qiblaStatus">حرّك الموبايل ودوّر بيه في مكانك، وهنقولّك أول ما توصل للاتجاه الصح.</p>
                 <p class="qibla-note">البوصلة بتتحرك تلقائيًا مع حساس الاتجاه في موبايلك، والاتجاه محسوب بالنسبة لمدينة القاهرة، عاصمة مصر.</p>
             </div>
+            <h3 class="qibla-countries-title"><i class="fas fa-earth-africa"></i> اتجاه القبلة لباقي الدول</h3>
+            <input type="text" id="qiblaCountrySearch" class="search-box" placeholder="ابحث عن دولة..." onkeyup="filterQiblaCountries()">
+            <div id="qiblaCountryListContainer" class="menu-list" style="margin-bottom: 0.9375rem;"></div>
         </div>
     </div>
 
@@ -1620,7 +1632,10 @@
                 ['fullStoriesProphetsSearch', () => { if (typeof filterFullStoriesList === 'function') filterFullStoriesList('prophets'); }],
                 ['fullStoriesCompanionsSearch', () => { if (typeof filterFullStoriesList === 'function') filterFullStoriesList('companions'); }]
             ],
-            prayerScreen: [['countrySearch', () => { if (typeof filterCountries === 'function') filterCountries(); }]]
+            prayerScreen: [
+                ['countrySearch', () => { if (typeof filterCountries === 'function') filterCountries(); }],
+                ['qiblaCountrySearch', () => { if (typeof filterQiblaCountries === 'function') filterQiblaCountries(); }]
+            ]
         };
         const items = map[screenId];
         if (!items) return;
@@ -3734,6 +3749,12 @@
         selectedCountryIndex = null;
         renderCountryList(worldCountries);
         loadEgyptFixed();
+
+        const qiblaSearchBox = document.getElementById('qiblaCountrySearch');
+        if (qiblaSearchBox) qiblaSearchBox.value = '';
+        selectedQiblaCountryIndex = null;
+        renderQiblaCountryList(qiblaCountries);
+
         switchPrayerTab('times');
         initQiblaCompass();
     }
@@ -3936,6 +3957,65 @@
             resultBox.innerHTML = `<div class="prayer-grid"><div class="city-title">مواقيت ${loc.ar}</div><div class="prayer-item"><span class="prayer-name">الفجر</span><span class="prayer-time">${formatTime12(t.Fajr)}</span></div><div class="prayer-item"><span class="prayer-name">الشروق</span><span class="prayer-time">${formatTime12(t.Sunrise)}</span></div><div class="prayer-item"><span class="prayer-name">الظهر</span><span class="prayer-time">${formatTime12(t.Dhuhr)}</span></div><div class="prayer-item"><span class="prayer-name">العصر</span><span class="prayer-time">${formatTime12(t.Asr)}</span></div><div class="prayer-item"><span class="prayer-name">المغرب</span><span class="prayer-time">${formatTime12(t.Maghrib)}</span></div><div class="prayer-item"><span class="prayer-name">العشاء</span><span class="prayer-time">${formatTime12(t.Isha)}</span></div></div>${nextPrayerCardsHTML(uid)}`;
             startCountdown(uid, t, tz);
         } catch(e) { resultBox.innerHTML = `<p style="text-align:center;">خطأ في التحميل</p>`; }
+    }
+
+    // نفس قائمة الدول المستخدمة في مواقيت الصلاة، باستثناء إسرائيل صراحة كإجراء احترازي
+    const qiblaCountries = worldCountries.filter(loc => loc.en !== 'Israel' && loc.ar !== 'إسرائيل');
+    let selectedQiblaCountryIndex = null;
+
+    function renderQiblaCountryList(list) {
+        const container = document.getElementById('qiblaCountryListContainer');
+        if (!container) return;
+        if (list.length === 0) { container.innerHTML = '<p style="text-align:center; color:var(--gold);">لا توجد نتائج.</p>'; return; }
+        container.innerHTML = list.map(loc => {
+            const realIndex = qiblaCountries.indexOf(loc);
+            return `<div>
+                <div class="menu-item" style="padding:0.75rem 1.125rem;" onclick="loadQiblaFor(${realIndex})"><i class="fas fa-kaaba"></i><span>${loc.ar}</span></div>
+                <div id="qiblaResult-${realIndex}"></div>
+            </div>`;
+        }).join('');
+    }
+
+    function filterQiblaCountries() {
+        const searchInput = document.getElementById('qiblaCountrySearch').value.trim();
+        const query = normalizeArabic(searchInput);
+        if (query === "") { renderQiblaCountryList(qiblaCountries); return; }
+        const filtered = qiblaCountries.filter(loc => normalizeArabic(loc.ar).includes(query) || loc.en.toLowerCase().includes(searchInput.toLowerCase()));
+        renderQiblaCountryList(filtered);
+    }
+
+    async function loadQiblaFor(index) {
+        const resultBox = document.getElementById(`qiblaResult-${index}`);
+        if (!resultBox) return;
+
+        // لو نفس الدولة متفتوحة بالفعل، اقفلها (توجل)
+        if (selectedQiblaCountryIndex === index && resultBox.innerHTML.trim() !== '') {
+            resultBox.innerHTML = '';
+            selectedQiblaCountryIndex = null;
+            return;
+        }
+
+        document.querySelectorAll('[id^="qiblaResult-"]').forEach(el => { el.innerHTML = ''; });
+        selectedQiblaCountryIndex = index;
+        const loc = qiblaCountries[index];
+        resultBox.innerHTML = '<p style="text-align:center;">جاري حساب اتجاه القبلة...</p>';
+        try {
+            const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(loc.city)}&country=${encodeURIComponent(loc.en)}&method=4`);
+            const data = await res.json();
+            const meta = data.data.meta;
+            const lat = meta && meta.latitude, lng = meta && meta.longitude;
+            if (typeof lat !== 'number' || typeof lng !== 'number') throw new Error('no coords');
+            const bearing = computeQiblaBearing(lat, lng, KAABA_COORDS.lat, KAABA_COORDS.lng);
+            resultBox.innerHTML = `<div class="qibla-mini-result">
+                <div class="qibla-mini-compass">
+                    <div class="qibla-mini-needle" style="transform: translate(-50%, -100%) rotate(${bearing}deg);"><i class="fas fa-kaaba"></i></div>
+                </div>
+                <div class="qibla-mini-info">
+                    <div class="qm-city">اتجاه القبلة من ${loc.ar}</div>
+                    <div class="qm-deg">الزاوية: ${Math.round(bearing)}° من الشمال</div>
+                </div>
+            </div>`;
+        } catch(e) { resultBox.innerHTML = `<p style="text-align:center;">تعذّر حساب الاتجاه لهذه الدولة.</p>`; }
     }
 
     const asmaAlHusna = [
