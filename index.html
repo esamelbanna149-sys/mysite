@@ -77,6 +77,11 @@
         .series-ep-item.active-ep { background: rgba(247,200,115,0.22); border-color: var(--gold); }
         .series-ep-item.active-ep i { color: #fff3d6; }
 
+        .menu-item.menu-item-locked { cursor: not-allowed; opacity: 0.6; pointer-events: none; }
+        .menu-item.menu-item-locked i.fa-film { color: var(--gold); opacity: 0.7; }
+        .menu-locked-badge { display: flex; align-items: center; gap: 0.3125rem; margin-inline-start: auto; background: rgba(0,0,0,0.3); border: 1px solid rgba(247,200,115,0.35); color: var(--gold); font-size: 0.6875rem; font-weight: 700; padding: 0.25rem 0.625rem; border-radius: 3.125rem; white-space: nowrap; }
+        .menu-locked-badge i { font-size: 0.6875rem; color: var(--gold); width: auto; }
+
         .about-dev-photo-wrap { display: flex; justify-content: center; margin: 0.625rem 0 1.25rem; }
         .about-dev-photo-wrap img { width: 13rem; height: 13rem; object-fit: cover; border-radius: 1.5rem; border: 0.125rem solid var(--gold); box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.35); pointer-events: none; -webkit-user-drag: none; -webkit-touch-callout: none; user-select: none; }
         .about-dev-card { background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25)); padding: 1.375rem; border-radius: 1.625rem; border-right: 0.3125rem solid var(--gold); box-shadow: 0 0.4375rem 1.125rem rgba(0,0,0,0.25); }
@@ -391,11 +396,11 @@
 <div class="app-container">
     <div class="top-nav">
         <div class="nav-btn-group">
-            <div id="settingsBtn" class="fixed-mode-toggle" onclick="openSettings()">
+            <div id="settingsBtn" class="fixed-mode-toggle" onclick="openSettings(); trackDevPanelTap();">
                 <i class="fas fa-gear"></i>
             </div>
         </div>
-        <div id="mainBackBtn" class="header-back-btn" onclick="goHome()">
+        <div id="mainBackBtn" class="header-back-btn" onclick="devPanelTapCount = 0; clearTimeout(devPanelTapResetTimer); goHome();">
             <i class="fas fa-arrow-right"></i>
         </div>
     </div>
@@ -434,7 +439,7 @@
             <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن الكريم</span></div>
             <div class="menu-item" onclick="openTaTabSmart()"><i class="fas fa-closed-captioning"></i><span>القرآن بالنص والصوت</span></div>
             <div class="menu-item" onclick="openScreen('quranTextScreen')"><i class="fas fa-book-open-reader"></i><span>المصحف المكتوب والتفسير</span></div>
-            <div class="menu-item" onclick="openScreen('seriesScreen')"><i class="fas fa-film"></i><span>مسلسلات وأفلام دينية</span></div>
+            <div class="menu-item menu-item-locked"><i class="fas fa-film"></i><span>مسلسلات وأفلام دينية</span><span class="menu-locked-badge"><i class="fas fa-lock"></i> تحت التحديث</span></div>
             <div class="menu-item" onclick="openScreen('quizScreen')"><i class="fas fa-brain"></i><span>تحدي الأسئلة الدينية</span></div>
             <div class="menu-item" onclick="openHadithBook('bukhari')"><i class="fas fa-book"></i><span>صحيح البخاري</span></div>
             <div class="menu-item" onclick="openHadithBook('muslim')"><i class="fas fa-book"></i><span>صحيح مسلم</span></div>
@@ -515,7 +520,7 @@
                 <i class="fas fa-moon"></i>
                 <span class="sound-toggle-label">الوضع الليلي</span>
                 <label class="sound-switch">
-                    <input type="checkbox" id="nightModeToggle" onchange="toggleNightModeSetting(this.checked)">
+                    <input type="checkbox" id="nightModeToggle" onchange="toggleNightModeSetting(this.checked); trackDevPanelNightToggle();">
                     <span class="sound-switch-track"></span>
                 </label>
             </div>
@@ -526,7 +531,7 @@
             <div class="menu-item" onclick="openScreen('quizAnsweredScreen')"><i class="fas fa-brain"></i><span>أسئلة التحدي المجابة</span></div>
             <div class="menu-item" onclick="openScreen('aboutAppScreen')"><i class="fas fa-mosque"></i><span>لمحة عن التطبيق</span></div>
             <div class="menu-item" onclick="openScreen('aboutDevScreen')"><i class="fas fa-user-tie"></i><span>لمحة عن المبرمج</span></div>
-            <div class="menu-item" onclick="openDevPanelPrompt()"><i class="fas fa-lock"></i><span>لوحة المطور</span></div>
+            <div class="menu-item" id="devPanelMenuItem" onclick="openDevPanelPrompt()" style="display:none;"><i class="fas fa-lock"></i><span>لوحة المطور</span></div>
         </div>
     </div>
 
@@ -1029,6 +1034,7 @@
         soundEffectsEnabled = !!enabled;
         localStorage.setItem('soundEffectsEnabled', soundEffectsEnabled ? 'true' : 'false');
         if (soundEffectsEnabled) playDropTapSound();
+        trackDevPanelSoundToggle();
     }
 
     function initSoundEffectsToggleUI() {
@@ -1056,6 +1062,53 @@
         applyNightMode(nightModeEnabled);
     }
     document.addEventListener('DOMContentLoaded', initNightModeUI);
+
+    /* إظهار خيار "لوحة المطور" داخل الإعدادات بشكل مخفي على مرحلتين، من غير أي عداد ظاهر على الشاشة:
+       1) تضغط على ترس الإعدادات 5 مرات ورا بعض.
+       2) بعدين تفعّل/تقفل مفتاح "التأثيرات الصوتية" 5 مرات ورا بعض.
+       وبيختفي كل ده تاني تلقائيًا أول ما تخرج من شاشة الإعدادات. */
+    let devPanelTapCount = 0;
+    let devPanelTapResetTimer = null;
+    let devPanelStage1Done = false;
+    let devPanelSoundToggleCount = 0;
+    let devPanelSoundToggleResetTimer = null;
+
+    function trackDevPanelTap() {
+        devPanelTapCount++;
+        clearTimeout(devPanelTapResetTimer);
+        // لو استنى أكتر من ثانيتين بين ضغطة وتانية، يتصفر العداد ولازم يبدأ من الأول
+        devPanelTapResetTimer = setTimeout(() => { devPanelTapCount = 0; }, 2000);
+        if (devPanelTapCount >= 5) {
+            devPanelTapCount = 0;
+            clearTimeout(devPanelTapResetTimer);
+            devPanelStage1Done = true;
+        }
+    }
+
+    function trackDevPanelSoundToggle() {
+        // العداد ده بيشتغل بس بعد ما مرحلة الترس (5 ضغطات) تتم
+        if (!devPanelStage1Done) return;
+        devPanelSoundToggleCount++;
+        clearTimeout(devPanelSoundToggleResetTimer);
+        devPanelSoundToggleResetTimer = setTimeout(() => { devPanelSoundToggleCount = 0; }, 2000);
+        if (devPanelSoundToggleCount >= 5) {
+            devPanelSoundToggleCount = 0;
+            devPanelStage1Done = false;
+            clearTimeout(devPanelSoundToggleResetTimer);
+            const item = document.getElementById('devPanelMenuItem');
+            if (item) item.style.display = 'flex';
+        }
+    }
+
+    function hideDevPanelMenuItem() {
+        const item = document.getElementById('devPanelMenuItem');
+        if (item) item.style.display = 'none';
+        devPanelTapCount = 0;
+        clearTimeout(devPanelTapResetTimer);
+        devPanelStage1Done = false;
+        devPanelSoundToggleCount = 0;
+        clearTimeout(devPanelSoundToggleResetTimer);
+    }
 
     let __audioCtx;
     function getAppAudioCtx() {
@@ -1763,6 +1816,9 @@
         if (currentScreenId === 'seriesScreen' && screenId !== 'seriesScreen') {
             resetSeriesPlayer();
         }
+        if (currentScreenId === 'settingsScreen' && screenId !== 'settingsScreen') {
+            hideDevPanelMenuItem();
+        }
         // زر "اذهب إلى الآية الحالية" لازم يفضل مخفي في أي شاشة غير شاشة القرآن بالنص والصوت
         if (screenId !== 'quranTextAudioScreen') {
             const jumpBtn = document.getElementById('taJumpToCurrentBtn');
@@ -1933,6 +1989,9 @@
         clearScreenSearches(currentScreenId);
         if (currentScreenId === 'seriesScreen') {
             resetSeriesPlayer();
+        }
+        if (currentScreenId === 'settingsScreen') {
+            hideDevPanelMenuItem();
         }
         document.querySelectorAll('.content-screen').forEach(s => s.classList.remove('active'));
         document.getElementById('homeScreen').classList.add('active');
@@ -2362,7 +2421,10 @@
     }
 
     function openSettings() {
-        openScreen('settingsScreen');
+        // لو أصلاً في شاشة الإعدادات، مفيش داعي نفتحها تاني ونزود التاريخ (ده كان سبب احتياج ضغط زرار الرجوع أكتر من مرة بعد ضغط الترس كذا مرة ورا بعض)
+        if (currentScreenId !== 'settingsScreen') {
+            openScreen('settingsScreen');
+        }
     }
 
     function openFavorites() {
