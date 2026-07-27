@@ -28,7 +28,6 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; transition: background 0.3s, color 0.3s; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
-        html { -webkit-tap-highlight-color: transparent; }
         a, button, input, textarea, [onclick], [role="button"] { -webkit-tap-highlight-color: transparent; outline: none; }
         input, textarea { user-select: text; -webkit-user-select: text; }
         body { background: var(--bg-gradient); color: var(--text-color); padding: 0.9375rem; min-height: 100vh; }
@@ -134,7 +133,7 @@
         .qibla-card { background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25)); padding: 1.5rem 1.25rem; border-radius: 1.625rem; border-right: 0.3125rem solid var(--gold); box-shadow: 0 0.4375rem 1.125rem rgba(0,0,0,0.25); display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
         .qibla-title { color: var(--gold); font-size: 1.0625rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
         .qibla-compass { position: relative; width: 13rem; height: 13rem; max-width: 80vw; max-height: 80vw; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(247,200,115,0.08), rgba(0,0,0,0.35)); border: 0.125rem solid var(--gold); display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 1.25rem rgba(0,0,0,0.4), 0 0.375rem 1.25rem rgba(0,0,0,0.35); }
-        .qibla-compass-marks { position: absolute; inset: 0; }
+        .qibla-compass-marks { position: absolute; inset: 0; transition: transform 0.4s ease; }
         .qibla-compass-marks span { position: absolute; color: var(--gold); font-weight: 900; font-size: 0.9375rem; opacity: 0.85; }
         .qibla-compass-marks .qc-n { top: 0.5rem; left: 50%; transform: translateX(-50%); }
         .qibla-compass-marks .qc-s { bottom: 0.5rem; left: 50%; transform: translateX(-50%); }
@@ -145,13 +144,9 @@
         .qibla-degree { color: var(--text-color); font-size: 0.9375rem; font-weight: 700; }
         .qibla-degree span { color: var(--gold); font-size: 1.125rem; }
         .qibla-note { font-size: 0.75rem; opacity: 0.8; line-height: 1.8; color: inherit; }
-        .qibla-compass-marks { transition: transform 0.4s ease; }
         .qibla-compass.aligned { border-color: #4caf50; box-shadow: inset 0 0 1.25rem rgba(76,175,80,0.35), 0 0 1.5rem rgba(76,175,80,0.55); }
         .qibla-compass.aligned .qibla-needle { background: linear-gradient(180deg, #4caf50, rgba(76,175,80,0.15)); }
         .qibla-compass.aligned .qibla-needle i { color: #7fd88a; filter: drop-shadow(0 0 0.5rem rgba(76,175,80,0.6)); }
-        .qibla-enable-btn { display: flex; align-items: center; gap: 0.4375rem; background: rgba(247,200,115,0.12); border: 1px solid var(--gold); color: var(--gold); font-family: 'Tajawal', sans-serif; font-size: 0.8125rem; font-weight: 700; padding: 0.625rem 1.125rem; border-radius: 3.125rem; cursor: pointer; }
-        .qibla-enable-btn:active { background: rgba(247,200,115,0.22); }
-        .qibla-enable-btn.on { background: rgba(76,175,80,0.18); border-color: #4caf50; color: #7fd88a; }
         .qibla-status { font-size: 0.8125rem; font-weight: 700; color: var(--gold); min-height: 1.2rem; line-height: 1.7; }
         .qibla-status.ok { color: #7fd88a; }
 
@@ -319,9 +314,6 @@
         .ayah-play-btn.active { background: #fff; color: var(--dark); }
         .ayah-unit.ta-playing { background: rgba(247,200,115,0.16); border-radius: 0.75rem; transition: background 0.3s ease; }
 
-        .ta-player-bar { position: relative; display: flex; align-items: center; gap: 0.9375rem; background: #071d1a; border: 1px solid var(--gold); border-radius: 1.25rem; padding: 0.625rem 1rem; margin: 0.75rem auto; z-index: 5; width: 100%; max-width: 21.875rem; animation: taBarPop 0.25s ease; }
-        @keyframes taBarPop { from { opacity: 0; transform: translateY(-0.5rem); } to { opacity: 1; transform: translateY(0); } }
-        body.night-mode .ta-player-bar { background: #000; }
         .ta-play-btn { width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--gold); color: var(--dark); border: none; font-size: 1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
         .ta-player-info { flex: 1; text-align: center; color: var(--gold); font-size: 0.8125rem; font-weight: 700; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
         .ta-nav-btn { background: transparent; border: none; color: var(--gold); font-size: 1rem; cursor: pointer; position: relative; }
@@ -681,9 +673,11 @@
                 <button type="button" class="glimpse-tab-btn" data-tab="movies" onclick="switchSeriesTab('movies')"><i class="fas fa-video"></i> أفلام</button>
             </div>
             <div id="seriesTabSeries" class="glimpse-subpanel active">
+                <input type="text" id="seriesSearch" class="search-box" placeholder="ابحث عن مسلسل..." onkeyup="filterSeriesList('series')">
                 <div id="seriesSeriesList" class="menu-list"></div>
             </div>
             <div id="seriesTabMovies" class="glimpse-subpanel">
+                <input type="text" id="moviesSearch" class="search-box" placeholder="ابحث عن فيلم..." onkeyup="filterSeriesList('movies')">
                 <div id="seriesMoviesList" class="menu-list"></div>
             </div>
         </div>
@@ -2736,13 +2730,26 @@
 
         const seriesContainer = document.getElementById('seriesSeriesList');
         seriesContainer.innerHTML = seriesIds.length
-            ? seriesIds.map(id => `<div class="menu-item" onclick="openSeriesItem('${id}')"><i class="fas ${icons.series}"></i><span>${seriesData[id].title}</span></div>`).join('')
+            ? seriesIds.map(id => `<div class="menu-item series-index-item" data-name="${normalizeArabic(seriesData[id].title)}" onclick="openSeriesItem('${id}')"><i class="fas ${icons.series}"></i><span>${seriesData[id].title}</span></div>`).join('')
             : '<p style="text-align:center; color:var(--gold);">لا توجد مسلسلات حاليًا</p>';
 
         const moviesContainer = document.getElementById('seriesMoviesList');
         moviesContainer.innerHTML = movieIds.length
-            ? movieIds.map(id => `<div class="menu-item" onclick="openSeriesItem('${id}')"><i class="fas ${icons.movie}"></i><span>${seriesData[id].title}</span></div>`).join('')
+            ? movieIds.map(id => `<div class="menu-item series-index-item" data-name="${normalizeArabic(seriesData[id].title)}" onclick="openSeriesItem('${id}')"><i class="fas ${icons.movie}"></i><span>${seriesData[id].title}</span></div>`).join('')
             : '<p style="text-align:center; color:var(--gold);">لا توجد أفلام حاليًا، هتُضاف قريبًا</p>';
+    }
+
+    // فلترة قائمة المسلسلات أو الأفلام حسب نص البحث (نفس فكرة filterGlimpseList بالظبط)
+    function filterSeriesList(which) {
+        const boxId = which === 'series' ? 'seriesSearch' : 'moviesSearch';
+        const listId = which === 'series' ? 'seriesSeriesList' : 'seriesMoviesList';
+        const box = document.getElementById(boxId);
+        if (!box) return;
+        const query = normalizeArabic(box.value.trim());
+        document.querySelectorAll(`#${listId} .series-index-item`).forEach(item => {
+            const matches = query === "" || (item.getAttribute('data-name') || '').includes(query);
+            item.style.display = matches ? 'flex' : 'none';
+        });
     }
 
     function buildSeriesEpisodesList(seriesId) {
