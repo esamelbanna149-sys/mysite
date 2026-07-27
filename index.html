@@ -795,7 +795,9 @@
         <div id="eveningAzkarList" style="display: flex; flex-direction: column; gap: 0.9375rem; padding-bottom: 1.875rem;"></div>
     </div>
 
-    <audio id="radioAudio" style="display:none;" preload="none"></audio>
+    <audio id="radioAudio" style="display:none;" preload="none">
+        <source src="https://archive.org/download/Mobasher-Ezaa/12-Yusuf-1-34-High-Quality.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="quranScreen" class="content-screen">
         <div class="quran-tabs">
@@ -1311,12 +1313,15 @@
             if (window.pauseTextAudio) window.pauseTextAudio();
             showTaPlayerOffline();
             if (window.updateTaPlayerBar) window.updateTaPlayerBar();
+            const seriesArea = document.getElementById('seriesEpisodesArea');
+            if (seriesArea && seriesArea.style.display !== 'none' && window.showSeriesOffline) window.showSeriesOffline();
         });
         window.addEventListener('online', () => {
             showConnectionBanner('تم استعادة الاتصال بالإنترنت', false);
             hidePlayerOffline();
             if (window.hideRadioOffline) window.hideRadioOffline();
             hideTaPlayerOffline();
+            if (window.hideSeriesOffline) window.hideSeriesOffline();
         });
 
         // اعتراض كل نداءات fetch (الحالية والمستقبلية) لإظهار رسالة موحّدة عند فشل الشبكة
@@ -2031,13 +2036,31 @@
         updateMiniPlayer();
     }
 
-    // رابط البث المباشر الفعلي لإذاعة القرآن الكريم من القاهرة
-    const radioLiveStreamUrl = "https://stream.radiojar.com/8s5u5tpdtwzuv";
+    // حلقات تلاوة مسجلة تتبدّل بينها الإذاعة تلقائيًا (بدل بث لايف واحد ثابت)
+    const radioEpisodes = [
+        "https://archive.org/download/Mobasher-Ezaa/12-Yusuf-1-34-High-Quality.mp3",
+        "https://archive.org/download/Mobasher-Ezaa/AbdelBaset-AlAnam-126-135.mp3",
+        "https://archive.org/download/Mobasher-Ezaa/Abdelbaset-ankaboot-54-69-end.mp3",
+        "https://archive.org/download/Mobasher-Ezaa/Hood-Keama-Abdelbaset.mp3",
+        "https://archive.org/download/Mobasher-Ezaa/%D8%A7%D9%84%D8%B9%D9%84%D9%82%20%D8%A7%D9%84%D9%89%20%D8%AE%D8%AA%D8%A7%D9%85%20%D8%A7%D9%84%D9%82%D8%B1%D8%A7%D9%86%20%D9%85%D8%B9%20%D8%A7%D9%84%D8%AF%D8%B9%D8%A7%D8%A1%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D8%A8%D8%A7%D8%B3%D8%B7_kena.mp3",
+        "https://archive.org/download/Mobasher-Ezaa/%D8%A7%D9%84%D9%81%D8%AA%D8%AD%20%D9%85%D9%86%2027%20%D8%A7%D9%84%D9%89%20%D8%A7%D9%84%D8%A7%D9%8A%D8%A9%2030%20%D8%A7%D9%84%D8%B0%D8%A7%D8%B1%D9%8A%D8%A7%D8%AA%20%D9%85%D8%AD%D9%85%D9%88%D8%AF%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%89.mp3",
+        "https://archive.org/download/Mobasher-Ezaa/%D9%85%D8%A7%20%D8%AA%D9%8A%D8%B3%D8%B1%20%D9%85%D9%86%20%D8%B3%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AD%D8%AF%D9%8A%D8%AF%20%D9%85%D8%AD%D9%85%D9%88%D8%AF%20%D8%B5%D8%AF%D9%8A%D9%82%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%89.mp3"
+    ];
+    let currentRadioEpisode = -1;
 
-    function loadRadioStream() {
+    // بيختار حلقة عشوائية غير الحلقة الحالية (عشان مايكررش نفس الكلام على طول)
+    function pickNextRadioEpisode() {
+        if (radioEpisodes.length <= 1) return 0;
+        let idx;
+        do { idx = Math.floor(Math.random() * radioEpisodes.length); } while (idx === currentRadioEpisode);
+        return idx;
+    }
+
+    function loadRadioEpisode(idx) {
         const audio = document.getElementById('radioAudio');
         if (!audio) return;
-        audio.src = radioLiveStreamUrl;
+        currentRadioEpisode = idx;
+        audio.src = radioEpisodes[idx];
         audio.load();
     }
 
@@ -2045,18 +2068,15 @@
         const audio = document.getElementById('radioAudio');
         if (!audio) return;
         if (!navigator.onLine) { showRadioOffline(); return; }
-        if (!audio.src) loadRadioStream();
+        // أول مرة (أو بعد إغلاق المشغّل) بيختار حلقة جديدة عشان يحس إنه بث متجدد
+        if (currentRadioEpisode === -1) loadRadioEpisode(pickNextRadioEpisode());
         audio.play().catch(() => {});
         updateRadioMiniPlayer();
     }
 
-    // لو البث اتقطع لأي سبب، يحاول يرجع يشتغل تاني تلقائيًا
+    // لما الحلقة الحالية تخلص، يبدأ يشغل حلقة تانية على طول عشان يفضل حاسس إنه بث مستمر
     document.getElementById('radioAudio').addEventListener('ended', () => {
-        loadRadioStream();
-        document.getElementById('radioAudio').play().catch(() => {});
-    });
-    document.getElementById('radioAudio').addEventListener('stalled', () => {
-        loadRadioStream();
+        loadRadioEpisode(pickNextRadioEpisode());
         document.getElementById('radioAudio').play().catch(() => {});
     });
 
@@ -2076,6 +2096,7 @@
         audio.pause();
         audio.removeAttribute('src');
         audio.load();
+        currentRadioEpisode = -1; // عشان لما يفتح تاني يختار حلقة جديدة
         radioStarted = false;
         hideRadioOffline();
         updateRadioMiniPlayer();
@@ -2738,6 +2759,30 @@
 
     let pendingSeriesVideoId = null;
 
+    // حالة عدم الاتصال بالإنترنت الخاصة بمشغل المسلسلات والأفلام الدينية (نفس فكرة showRadioOffline/hideRadioOffline بالظبط)
+    function showSeriesOffline(message) {
+        const msg = message || 'لا يوجد اتصال بالإنترنت';
+        const iframe = document.getElementById('seriesPlayerIframe');
+        const cover = document.getElementById('seriesPlayerCover');
+        const loading = document.getElementById('seriesPlayerLoading');
+        if (iframe) { iframe.onload = null; iframe.src = ''; }
+        if (cover) cover.classList.add('hidden');
+        if (loading) {
+            loading.innerHTML = `<i class="fas fa-wifi" style="color:#ff6b6b; font-size:1.5rem;"></i><span style="color:#ff6b6b;">${msg}</span>`;
+            loading.classList.add('show', 'offline');
+        }
+    }
+
+    function hideSeriesOffline() {
+        const loading = document.getElementById('seriesPlayerLoading');
+        if (loading && loading.classList.contains('offline')) {
+            loading.classList.remove('show', 'offline');
+            loading.innerHTML = '<div class="loading-spinner"></div><span>جاري تحميل الفيديو...</span>';
+        }
+    }
+    window.showSeriesOffline = showSeriesOffline;
+    window.hideSeriesOffline = hideSeriesOffline;
+
     // تصفير كامل لمشغل المسلسلات/الأفلام: بيوقف الفيديو ويرجع الحاوية لحالتها الأولى (من غير غلاف ولا سبينر تحميل)
     function resetSeriesPlayer() {
         const iframe = document.getElementById('seriesPlayerIframe');
@@ -2745,11 +2790,12 @@
         const loading = document.getElementById('seriesPlayerLoading');
         if (iframe) { iframe.onload = null; iframe.src = ''; }
         if (cover) cover.classList.add('hidden');
-        if (loading) loading.classList.remove('show');
+        if (loading) loading.classList.remove('show', 'offline');
         pendingSeriesVideoId = null;
     }
 
     function playSeriesEpisode(seriesId, epNum) {
+        if (!navigator.onLine) { showSeriesOffline(); return; }
         const series = seriesData[seriesId];
         const epData = series.episodes.find(e => e.ep === epNum);
         if (!epData || !epData.youtubeId) {
@@ -2763,7 +2809,7 @@
         const loading = document.getElementById('seriesPlayerLoading');
         const thumb = document.getElementById('seriesPlayerThumb');
         iframe.src = '';
-        loading.classList.remove('show');
+        loading.classList.remove('show', 'offline');
         pendingSeriesVideoId = epData.youtubeId;
         thumb.src = `https://i.ytimg.com/vi/${epData.youtubeId}/hqdefault.jpg`;
         cover.classList.remove('hidden');
@@ -2779,6 +2825,7 @@
 
     // بتشتغل لما المستخدم يضغط على زر التشغيل فوق الغلاف: هنا بس بيتحمّل الفيديو الفعلي
     function startSeriesPlayback() {
+        if (!navigator.onLine) { showSeriesOffline(); return; }
         if (!pendingSeriesVideoId) return;
         const iframe = document.getElementById('seriesPlayerIframe');
         const cover = document.getElementById('seriesPlayerCover');
