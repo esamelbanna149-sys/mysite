@@ -389,6 +389,11 @@
         .series-player-loading.show { display: flex; }
         .series-player-loading .loading-spinner { width: 1.75rem; height: 1.75rem; border-width: 3px; }
         .series-player-loading span { color: var(--gold); font-size: 0.8125rem; }
+
+        /* طبقة شفافة فوق المشغل بتمنع لمس اسم الفيديو/شعار يوتيوب اللي بيودّي المستخدم برّه التطبيق، من غير ما تأثر على أزرار التحكم الأساسية */
+        .series-player-brand-block { position: absolute; z-index: 1; pointer-events: auto; background: transparent; }
+        .series-player-brand-block.top-strip { top: 0; left: 0; right: 0; height: 2.75rem; }
+        .series-player-brand-block.logo-corner { bottom: 0; right: 0; width: 3.75rem; height: 1.75rem; }
     </style>
 </head>
 <body>
@@ -439,7 +444,7 @@
             <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن الكريم</span></div>
             <div class="menu-item" onclick="openTaTabSmart()"><i class="fas fa-closed-captioning"></i><span>القرآن بالنص والصوت</span></div>
             <div class="menu-item" onclick="openScreen('quranTextScreen')"><i class="fas fa-book-open-reader"></i><span>المصحف المكتوب والتفسير</span></div>
-            <div class="menu-item menu-item-locked"><i class="fas fa-film"></i><span>مسلسلات وأفلام دينية</span><span class="menu-locked-badge"><i class="fas fa-lock"></i> تحت التحديث</span></div>
+            <div class="menu-item" onclick="openScreen('seriesScreen')"><i class="fas fa-film"></i><span>مسلسلات وأفلام دينية</span></div>
             <div class="menu-item" onclick="openScreen('quizScreen')"><i class="fas fa-brain"></i><span>تحدي الأسئلة الدينية</span></div>
             <div class="menu-item" onclick="openHadithBook('bukhari')"><i class="fas fa-book"></i><span>صحيح البخاري</span></div>
             <div class="menu-item" onclick="openHadithBook('muslim')"><i class="fas fa-book"></i><span>صحيح مسلم</span></div>
@@ -700,6 +705,8 @@
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>
                         </iframe>
+                        <div class="series-player-brand-block top-strip" oncontextmenu="return false;"></div>
+                        <div class="series-player-brand-block logo-corner" oncontextmenu="return false;"></div>
                         <div id="seriesPlayerLoading" class="series-player-loading">
                             <div class="loading-spinner"></div>
                             <span>جاري تحميل الفيديو...</span>
@@ -2904,7 +2911,7 @@
         loading.classList.add('show');
 
         // بارامترات بتقلل أي عناصر واجهة خارجية (فيديوهات مقترحة، شعارات إضافية...) عشان يحس المستخدم إنه مشغل داخلي
-        const src = `https://www.youtube.com/embed/${pendingSeriesVideoId}?autoplay=1&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&fs=1&color=white`;
+        const src = `https://www.youtube-nocookie.com/embed/${pendingSeriesVideoId}?autoplay=1&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&fs=1&color=white&disablekb=1&cc_load_policy=0`;
         iframe.onload = () => { loading.classList.remove('show'); };
         iframe.src = src;
     }
