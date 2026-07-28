@@ -2737,8 +2737,6 @@
     }
 
     function backToSuraList() {
-        // Go back one history step instead of jumping straight to the index,
-        // so this button and the device back button stay perfectly in sync.
         if (historyDepth > 0) { history.back(); } else { _showSuraIndexUI(); }
     }
 
@@ -2834,6 +2832,18 @@
     }
 
     let pendingSeriesVideoId = null;
+    // تتبّع تقريبي لمكان الوقوف في الفيديو، عشان لو النت قطع نقدر نرجّع نفس المكان لما النت يرجع
+    let seriesElapsedSeconds = 0;
+    let seriesElapsedTimer = null;
+    let seriesWasPlayingBeforeOffline = false;
+
+    function startSeriesElapsedTimer() {
+        stopSeriesElapsedTimer();
+        seriesElapsedTimer = setInterval(() => { seriesElapsedSeconds += 1; }, 1000);
+    }
+    function stopSeriesElapsedTimer() {
+        if (seriesElapsedTimer) { clearInterval(seriesElapsedTimer); seriesElapsedTimer = null; }
+    }
 
     // حالة عدم الاتصال بالإنترنت الخاصة بمشغل المسلسلات والأفلام الدينية (نفس فكرة showRadioOffline/hideRadioOffline بالظبط)
     function showSeriesOffline(message) {
@@ -2841,6 +2851,9 @@
         const iframe = document.getElementById('seriesPlayerIframe');
         const cover = document.getElementById('seriesPlayerCover');
         const loading = document.getElementById('seriesPlayerLoading');
+        // لو كان فيه فيديو شغال فعليًا (مش مجرد الغلاف قبل الضغط على تشغيل)، سجّل ده عشان نرجّعه تلقائيًا بعدين
+        seriesWasPlayingBeforeOffline = !!(iframe && iframe.src);
+        stopSeriesElapsedTimer();
         if (iframe) { iframe.onload = null; iframe.src = ''; }
         if (cover) cover.classList.add('hidden');
         if (loading) {
@@ -2855,6 +2868,13 @@
             loading.classList.remove('show', 'offline');
             loading.innerHTML = '<div class="loading-spinner"></div><span>جاري تحميل الفيديو...</span>';
         }
+        // لو النت رجع والمستخدم كان لسه واقف في شاشة تشغيل الحلقة وكان الفيديو شغال قبل القطع، رجّعه تلقائيًا من نفس المكان تقريبًا
+        const episodesArea = document.getElementById('seriesEpisodesArea');
+        const isReadingVisible = episodesArea && episodesArea.style.display !== 'none';
+        if (seriesWasPlayingBeforeOffline && pendingSeriesVideoId && isReadingVisible) {
+            seriesWasPlayingBeforeOffline = false;
+            startSeriesPlayback();
+        }
     }
     window.showSeriesOffline = showSeriesOffline;
     window.hideSeriesOffline = hideSeriesOffline;
@@ -2864,10 +2884,18 @@
         const iframe = document.getElementById('seriesPlayerIframe');
         const cover = document.getElementById('seriesPlayerCover');
         const loading = document.getElementById('seriesPlayerLoading');
-        if (iframe) { iframe.onload = null; iframe.src = ''; }
         if (cover) cover.classList.add('hidden');
         if (loading) loading.classList.remove('show', 'offline');
         pendingSeriesVideoId = null;
+        stopSeriesElapsedTimer();
+        seriesElapsedSeconds = 0;
+        seriesWasPlayingBeforeOffline = false;
+        if (iframe) {
+            iframe.onload = null;
+            // بنفرّغ مصدر الفيديو (اللي بيفكك مشغل يوتيوب الداخلي وبياخد وقت على المعالج) بعد أول رسمة للشاشة الجديدة،
+            // مش في نفس لحظة الرجوع، عشان زر الرجوع يحس إنه فوري من غير أي تهنيج
+            requestAnimationFrame(() => { requestAnimationFrame(() => { iframe.src = ''; }); });
+        }
     }
 
     function playSeriesEpisode(seriesId, epNum) {
@@ -2887,6 +2915,9 @@
         iframe.src = '';
         loading.classList.remove('show', 'offline');
         pendingSeriesVideoId = epData.youtubeId;
+        stopSeriesElapsedTimer();
+        seriesElapsedSeconds = 0;
+        seriesWasPlayingBeforeOffline = false;
         thumb.src = `https://i.ytimg.com/vi/${epData.youtubeId}/hqdefault.jpg`;
         cover.classList.remove('hidden');
 
@@ -2911,8 +2942,10 @@
         loading.classList.add('show');
 
         // بارامترات بتقلل أي عناصر واجهة خارجية (فيديوهات مقترحة، شعارات إضافية...) عشان يحس المستخدم إنه مشغل داخلي
-        const src = `https://www.youtube-nocookie.com/embed/${pendingSeriesVideoId}?autoplay=1&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&fs=1&color=white&disablekb=1&cc_load_policy=0`;
-        iframe.onload = () => { loading.classList.remove('show'); };
+        // start بيرجّع الفيديو لنفس المكان التقريبي اللي كان واقف عنده لو رجّعنا التشغيل بعد قطع نت
+        const resumeAt = Math.max(0, Math.floor(seriesElapsedSeconds));
+        const src = `https://www.youtube-nocookie.com/embed/${pendingSeriesVideoId}?autoplay=1&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&fs=1&color=white&disablekb=1&cc_load_policy=0&start=${resumeAt}`;
+        iframe.onload = () => { loading.classList.remove('show'); startSeriesElapsedTimer(); };
         iframe.src = src;
     }
 
@@ -2941,7 +2974,6 @@
     }
 
     function backToSeriesIndex() {
-        // يرجع خطوة واحدة بس في الـ history، عشان زر الرجوع (سواء اللي في الشاشة أو زر الموبايل) يتصرف بنفس المنطق
         if (historyDepth > 0) { history.back(); } else { _showSeriesIndexUI(); }
     }
 
