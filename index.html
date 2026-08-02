@@ -76,8 +76,6 @@
         .menu-list { display: flex; flex-direction: column; gap: 0.625rem; padding: 0.625rem 0; }
         .menu-item { background: rgba(42, 95, 81, 0.4); padding: 1.125rem; border-radius: 1.25rem; display: flex; align-items: center; gap: 0.9375rem; cursor: pointer; border: 1px solid rgba(247, 200, 115, 0.1); color: inherit; }
         .menu-item i { font-size: 1.375rem; color: var(--gold); width: 1.875rem; text-align: center; }
-        .series-ep-item.active-ep { background: rgba(247,200,115,0.22); border-color: var(--gold); }
-        .series-ep-item.active-ep i { color: #fff3d6; }
 
 
         .about-dev-photo-wrap { display: flex; justify-content: center; margin: 0.625rem 0 1.25rem; }
@@ -377,21 +375,6 @@
         .player-loading { display: none; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.75rem; color: var(--gold); margin-top: 0.5rem; opacity: 0; transition: opacity 0.25s ease; }
         .player-loading.show { display: flex; opacity: 1; }
 
-        /* غلاف مشغل المسلسلات/الأفلام: يخفي واجهة يوتيوب قبل الضغط على تشغيل ويظهر بستايل التطبيق نفسه */
-        .series-player-cover { position: absolute; inset: 0; z-index: 3; background: #000; display: flex; align-items: center; justify-content: center; }
-        .series-player-cover.hidden { display: none; }
-        .series-player-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
-        .series-play-btn { position: relative; z-index: 2; width: 4.5rem; height: 4.5rem; border-radius: 50%; background: radial-gradient(circle, rgba(247,200,115,0.95), rgba(199,148,79,0.95)); border: 2px solid var(--gold); color: var(--dark); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 1.25rem rgba(247,200,115,0.55); }
-        .series-play-btn:active { transform: scale(0.94); }
-        .series-player-loading { position: absolute; inset: 0; z-index: 4; background: #000; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 0.625rem; }
-        .series-player-loading.show { display: flex; }
-        .series-player-loading .loading-spinner { width: 1.75rem; height: 1.75rem; border-width: 3px; }
-        .series-player-loading span { color: var(--gold); font-size: 0.8125rem; }
-
-        /* طبقة شفافة فوق المشغل بتمنع لمس اسم الفيديو/شعار يوتيوب اللي بيودّي المستخدم برّه التطبيق، من غير ما تأثر على أزرار التحكم الأساسية */
-        .series-player-brand-block { position: absolute; z-index: 1; pointer-events: auto; background: transparent; }
-        .series-player-brand-block.top-strip { top: 0; left: 0; right: 0; height: 2.75rem; }
-        .series-player-brand-block.logo-corner { bottom: 0; right: 0; width: 3.75rem; height: 1.75rem; }
     </style>
 </head>
 <body>
@@ -442,7 +425,6 @@
             <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن الكريم</span></div>
             <div class="menu-item" onclick="openTaTabSmart()"><i class="fas fa-closed-captioning"></i><span>القرآن بالنص والصوت</span></div>
             <div class="menu-item" onclick="openScreen('quranTextScreen')"><i class="fas fa-book-open-reader"></i><span>المصحف المكتوب والتفسير</span></div>
-            <div class="menu-item" onclick="openScreen('seriesScreen')"><i class="fas fa-film"></i><span>مسلسلات وأفلام دينية</span></div>
             <div class="menu-item" onclick="openScreen('quizScreen')"><i class="fas fa-brain"></i><span>تحدي الأسئلة الدينية</span></div>
             <div class="menu-item" onclick="openHadithBook('bukhari')"><i class="fas fa-book"></i><span>صحيح البخاري</span></div>
             <div class="menu-item" onclick="openHadithBook('muslim')"><i class="fas fa-book"></i><span>صحيح مسلم</span></div>
@@ -577,7 +559,6 @@
             <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🕋 مواقيت الصلاة واتجاه القبلة:</strong> بوصلة قبلة تفاعلية دقيقة ومواقيت صلاة محدّثة أينما كنت.</p>
             <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">📚 أحاديث وسير:</strong> مختارات من صحيح البخاري وصحيح مسلم والأربعين النووية، بالإضافة إلى قصص الأنبياء والصحابة الكاملة، ولمحات مختصرة عنهم، وخواطر الشيخ الشعراوي، مع إمكانية حفظ ما يعجبك في المفضلة.</p>
             <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">✨ أسماء الله الحسنى:</strong> تعرّف على أسماء الله الحسنى ومعانيها بتصميم جذاب.</p>
-            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🎬 محتوى مرئي:</strong> مسلسلات وأفلام دينية مختارة بعناية.</p>
             <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🧠 تحدي الأسئلة الدينية:</strong> اختبر معلوماتك الدينية عبر أسئلة تفاعلية مع تفسير للإجابات، وتابع سجل إجاباتك الصحيحة والخاطئة.</p>
             <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">⭐ مميزات إضافية:</strong> الوضع الليلي لراحة العين، حفظ المفضلة في كل الأقسام (أحاديث، قصص، لمحات، خواطر)، تأثيرات صوتية وتصميم عصري بخط "تجوّل" و"أميري"، وتاريخ هجري وميلادي يوميًا على الشاشة الرئيسية.</p>
             <p style="text-align:center; margin-top:1.25rem; font-weight:700; color:var(--gold);">تطبيق واحد يجمع لك القرآن والسنة والسيرة والعبادة في مكان واحد، بتجربة استخدام سلسة وهادئة تناسب جميع الأعمار.</p>
@@ -672,54 +653,6 @@
         </div>
         <div id="sharawiFavoritesContainer" class="menu-list"></div>
     </div>
-
-    <div id="seriesScreen" class="content-screen">
-        <h2 style="color:var(--gold); text-align: center; margin-bottom: 0.9375rem;"><i class="fas fa-film"></i> مسلسلات وأفلام دينية</h2>
-        <div id="seriesIndexArea">
-            <div class="glimpse-tabs">
-                <button type="button" class="glimpse-tab-btn active" data-tab="series" onclick="switchSeriesTab('series')"><i class="fas fa-clapperboard"></i> مسلسلات</button>
-                <button type="button" class="glimpse-tab-btn" data-tab="movies" onclick="switchSeriesTab('movies')"><i class="fas fa-video"></i> أفلام</button>
-            </div>
-            <div id="seriesTabSeries" class="glimpse-subpanel active">
-                <input type="text" id="seriesSearch" class="search-box" placeholder="ابحث عن مسلسل..." onkeyup="filterSeriesList('series')">
-                <div id="seriesSeriesList" class="menu-list"></div>
-            </div>
-            <div id="seriesTabMovies" class="glimpse-subpanel">
-                <input type="text" id="moviesSearch" class="search-box" placeholder="ابحث عن فيلم..." onkeyup="filterSeriesList('movies')">
-                <div id="seriesMoviesList" class="menu-list"></div>
-            </div>
-        </div>
-        <div id="seriesEpisodesArea" style="display:none;">
-            <button class="back-btn" style="background: rgba(0,0,0,0.3); border: 1px solid var(--gold); color: var(--gold); padding: 0.5rem 1.25rem; border-radius: 3.125rem; cursor: pointer; margin-bottom: 0.9375rem;" onclick="backToSeriesIndex()"><i class="fas fa-arrow-right"></i> العودة للفهرس</button>
-            <h2 id="seriesPlayerTitle" style="color:var(--gold); text-align: center; margin-bottom: 0.9375rem;"></h2>
-            <div style="position: sticky; top: 0; z-index: 5; background: var(--bg-gradient); padding-bottom: 0.75rem;">
-                <div class="daily-card" style="padding: 0.875rem; margin-bottom: 0;">
-                    <div style="position: relative; width: 100%; padding-top: 56.25%; border-radius: 1.125rem; overflow: hidden; background: #000;">
-                        <iframe
-                            id="seriesPlayerIframe"
-                            src=""
-                            title="مشغل الفيديو"
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-                        <div class="series-player-brand-block top-strip" oncontextmenu="return false;"></div>
-                        <div class="series-player-brand-block logo-corner" oncontextmenu="return false;"></div>
-                        <div id="seriesPlayerLoading" class="series-player-loading">
-                            <div class="loading-spinner"></div>
-                            <span>جاري تحميل الفيديو...</span>
-                        </div>
-                        <div id="seriesPlayerCover" class="series-player-cover hidden">
-                            <img id="seriesPlayerThumb" src="" alt="">
-                            <button type="button" class="series-play-btn" onclick="startSeriesPlayback()"><i class="fas fa-play"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="seriesEpisodesList" class="menu-list" style="margin-top: 0.75rem; padding-bottom: 1.25rem;"></div>
-        </div>
-    </div>
-
 
     <div id="quranTextScreen" class="content-screen">
         <div id="quranTextHeader">
@@ -1365,15 +1298,12 @@
             if (window.pauseTextAudio) window.pauseTextAudio();
             showTaPlayerOffline();
             if (window.updateTaPlayerBar) window.updateTaPlayerBar();
-            const seriesArea = document.getElementById('seriesEpisodesArea');
-            if (seriesArea && seriesArea.style.display !== 'none' && window.showSeriesOffline) window.showSeriesOffline();
         });
         window.addEventListener('online', () => {
             showConnectionBanner('تم استعادة الاتصال بالإنترنت', false);
             hidePlayerOffline();
             if (window.hideRadioOffline) window.hideRadioOffline();
             hideTaPlayerOffline();
-            if (window.hideSeriesOffline) window.hideSeriesOffline();
         });
 
         // اعتراض كل نداءات fetch (الحالية والمستقبلية) لإظهار رسالة موحّدة عند فشل الشبكة
@@ -1411,6 +1341,76 @@
         watchAudioNetworkErrors(document.getElementById('radioAudio'), 'إذاعة القرآن الكريم', () => { if (window.showRadioOffline) window.showRadioOffline(); });
         watchAudioNetworkErrors(document.getElementById('taAudio'), 'القرآن بالنص والصوت', () => showTaPlayerOffline());
         window.watchAudioNetworkErrors = watchAudioNetworkErrors;
+
+        // تذكر آخر مشغّل كان شغّال وقت انقطاع النت، عشان يكمّل تلقائيًا لما النت يرجع
+        // (ده اللي بيخلي التشغيل في الخلفية "يقاوم" انقطاع الشبكة المؤقت بدل ما يفضل واقف)
+        let __pendingResumeAudioId = null;
+        window.addEventListener('offline', () => {
+            const mA = document.getElementById('mainAudio');
+            const rA = document.getElementById('radioAudio');
+            const tA = document.getElementById('taAudio');
+            if (mA && !mA.paused) __pendingResumeAudioId = 'mainAudio';
+            else if (rA && !rA.paused) __pendingResumeAudioId = 'radioAudio';
+            else if (tA && !tA.paused) __pendingResumeAudioId = 'taAudio';
+        });
+        window.addEventListener('online', () => {
+            const id = __pendingResumeAudioId;
+            __pendingResumeAudioId = null;
+            if (!id) return;
+            setTimeout(() => {
+                const audio = document.getElementById(id);
+                if (audio && audio.currentSrc && audio.paused) {
+                    audio.play().catch(() => {});
+                }
+            }, 400);
+        });
+    })();
+
+    // ==========================================================
+    // التشغيل في الخلفية (Media Session API): تحكّم من شاشة القفل/الإشعارات
+    // في مشغّل القرآن الكريم، إذاعة القرآن، ومشغّل القرآن بالنص والصوت،
+    // مع استمرار الصوت في العمل لما التطبيق يبقى في الخلفية.
+    // ==========================================================
+    (function initBackgroundPlayback() {
+        if (!('mediaSession' in navigator)) return;
+
+        const artworkSvg = `<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512'>
+            <rect width='512' height='512' fill='%230a2621'/>
+            <circle cx='256' cy='256' r='210' fill='none' stroke='%23f7c873' stroke-width='10'/>
+            <text x='256' y='300' font-size='220' text-anchor='middle' fill='%23f7c873' font-family='sans-serif'>%E2%98%BE</text>
+        </svg>`;
+        const artworkUrl = 'data:image/svg+xml,' + encodeURIComponent(artworkSvg).replace(/'/g, '%27');
+        const mediaArtwork = [
+            { src: artworkUrl, sizes: '512x512', type: 'image/svg+xml' },
+            { src: artworkUrl, sizes: '192x192', type: 'image/svg+xml' }
+        ];
+
+        function setNowPlaying(title, artist) {
+            try {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: title || 'البنا الإسلامي',
+                    artist: artist || 'البنا الإسلامي',
+                    album: 'تطبيق البنا الإسلامي',
+                    artwork: mediaArtwork
+                });
+            } catch (e) { /* بعض المتصفحات القديمة مش داعمة MediaMetadata */ }
+        }
+
+        function setPlaybackState(state) {
+            try { navigator.mediaSession.playbackState = state; } catch (e) {}
+        }
+
+        function bindActions(handlers) {
+            const actions = ['play', 'pause', 'previoustrack', 'nexttrack', 'stop'];
+            actions.forEach((action) => {
+                try { navigator.mediaSession.setActionHandler(action, handlers[action] || null); }
+                catch (e) { /* أكشن مش مدعوم في المتصفح ده - نتجاهل بهدوء */ }
+            });
+        }
+
+        window.setNowPlayingMeta = setNowPlaying;
+        window.setMediaPlaybackState = setPlaybackState;
+        window.bindMediaSessionActions = bindActions;
     })();
 
     const RECITERS = {
@@ -1818,9 +1818,6 @@
         if (currentScreenId === 'prayerScreen' && screenId !== 'prayerScreen' && typeof disableLiveCompass === 'function') {
             disableLiveCompass();
         }
-        if (currentScreenId === 'seriesScreen' && screenId !== 'seriesScreen') {
-            resetSeriesPlayer();
-        }
         if (currentScreenId === 'settingsScreen' && screenId !== 'settingsScreen') {
             hideDevPanelMenuItem();
         }
@@ -1840,7 +1837,6 @@
         if (screenId === 'namesScreen') loadNames();
         if (screenId === 'sharawiScreen') loadSharawi();
         if (screenId === 'glimpseScreen') _showGlimpseIndexUI();
-        if (screenId === 'seriesScreen') _showSeriesIndexUI();
         if (screenId === 'fullStoriesScreen') _showFullStoriesIndexUI();
         if (screenId === 'quizScreen') initQuizScreen();
         if (screenId === 'quizAnsweredScreen') initQuizAnsweredScreen();
@@ -1987,14 +1983,11 @@
 
     function openScreen(screenId) {
         _showScreenUI(screenId);
-        pushNav({ screen: screenId, view: (screenId === 'quranTextScreen' || screenId === 'fullStoriesScreen' || screenId === 'glimpseScreen' || screenId === 'quranTextAudioScreen' || screenId === 'seriesScreen') ? 'index' : undefined });
+        pushNav({ screen: screenId, view: (screenId === 'quranTextScreen' || screenId === 'fullStoriesScreen' || screenId === 'glimpseScreen' || screenId === 'quranTextAudioScreen') ? 'index' : undefined });
     }
 
     function _showHomeUI() {
         clearScreenSearches(currentScreenId);
-        if (currentScreenId === 'seriesScreen') {
-            resetSeriesPlayer();
-        }
         if (currentScreenId === 'settingsScreen') {
             hideDevPanelMenuItem();
         }
@@ -2031,8 +2024,6 @@
             _showGlimpseReadingUI(state.index);
         } else if (state.screen === 'quranTextAudioScreen' && state.view === 'reading' && state.suraNum) {
             _showTextAudioReadingUI(state.suraNum, state.name);
-        } else if (state.screen === 'seriesScreen' && state.view === 'reading' && state.seriesId) {
-            _showSeriesReadingUI(state.seriesId, state.epNum);
         }
     }
 
@@ -2092,6 +2083,7 @@
         document.getElementById('mpTitle').innerText = "اختر سورة";
         document.getElementById('mpProgress').style.width = '0%';
         updateMiniPlayer();
+        if (window.setMediaPlaybackState) window.setMediaPlaybackState('none');
     }
 
     // حلقات تلاوة مسجلة تتبدّل بينها الإذاعة تلقائيًا (بدل بث لايف واحد ثابت)
@@ -2158,6 +2150,7 @@
         radioStarted = false;
         hideRadioOffline();
         updateRadioMiniPlayer();
+        if (window.setMediaPlaybackState) window.setMediaPlaybackState('none');
     }
 
     // حالة عدم الاتصال بالإنترنت الخاصة بشريط إذاعة القرآن الكريم المصغّر
@@ -2205,17 +2198,32 @@
             const mainAudioEl = document.getElementById('mainAudio');
             if (mainAudioEl && !mainAudioEl.paused) mainAudioEl.pause();
             if (window.pauseTextAudio) window.pauseTextAudio();
+            if (window.setNowPlayingMeta) window.setNowPlayingMeta('إذاعة القرآن الكريم', 'بث مستمر');
+            if (window.setMediaPlaybackState) window.setMediaPlaybackState('playing');
+            if (window.bindMediaSessionActions) {
+                window.bindMediaSessionActions({
+                    play: () => radioAudioEl.play(),
+                    pause: () => radioAudioEl.pause(),
+                    nexttrack: () => { loadRadioEpisode(pickNextRadioEpisode()); radioAudioEl.play().catch(() => {}); },
+                    stop: () => closeRadioMiniPlayer()
+                });
+            }
         });
         radioAudioEl.addEventListener('pause', () => {
             const icon = document.getElementById('radioMpIcon');
             if (icon && !icon.classList.contains('offline')) icon.innerHTML = '<i class="fas fa-play"></i>';
             updateRadioMiniPlayer();
+            if (window.setMediaPlaybackState) window.setMediaPlaybackState('paused');
         });
     }
 
     document.getElementById('mainAudio').addEventListener('play', () => {
         if (radioAudioEl && !radioAudioEl.paused) radioAudioEl.pause();
         if (window.pauseTextAudio) window.pauseTextAudio();
+        if (window.setMediaPlaybackState) window.setMediaPlaybackState('playing');
+    });
+    document.getElementById('mainAudio').addEventListener('pause', () => {
+        if (window.setMediaPlaybackState) window.setMediaPlaybackState('paused');
     });
 
     let hadithDisplayCount = 50;
@@ -2800,245 +2808,6 @@
     }
 
     /* ============================================================
-       مسلسلات وأفلام دينية
-       ============================================================ */
-    const seriesData = {
-        bukhariSeries: {
-            title: "مسلسل الإمام البخاري",
-            type: "series",
-            episodes: [
-                { ep: 1, youtubeId: "EFuMPCMKLRU" },
-                { ep: 2, youtubeId: "BOPyxqFFm4o" },
-                { ep: 3, youtubeId: "WgwRf74xTxQ" },
-                { ep: 4, youtubeId: "C-2m_s3veRI" },
-                { ep: 5, youtubeId: "sC4HS54BvIo" },
-                { ep: 6, youtubeId: "4PLfMsn8wJg" },
-                { ep: 7, youtubeId: "oOHvVAZxS2Q" },
-                { ep: 8, youtubeId: "97X9Mn_-R3Q" },
-                { ep: 9, youtubeId: "7pfwOW36XQ4" },
-                { ep: 10, youtubeId: "PXgAnqWP-FA" },
-                { ep: 11, youtubeId: "jzfbyKhQbBI" },
-                { ep: 12, youtubeId: "daPGuzavi8Q" },
-                { ep: 13, youtubeId: "88Dcb2eAqSQ" },
-                { ep: 14, youtubeId: "YsRayiKIb4U" },
-                { ep: 15, youtubeId: "tn-h4rHz8Ic" },
-                { ep: 16, youtubeId: "zDvA3frdMSU" },
-                { ep: 17, youtubeId: "UXV2fFW0K5w" },
-                { ep: 18, youtubeId: "dqrturDWLq8" },
-                { ep: 19, youtubeId: "hRjJ5ZdfTPc" },
-                { ep: 20, youtubeId: "9sHE9rXq26I" },
-                { ep: 21, youtubeId: "PTflFCEjK54" },
-                { ep: 22, youtubeId: "AqHzGNAD6Cg" },
-                { ep: 23, youtubeId: "LMeXmEe6SiQ" },
-                { ep: 24, youtubeId: "cKEigAfEtOU" },
-                { ep: 25, youtubeId: "0wOjIdxXbNg" },
-                { ep: 26, youtubeId: "k7JX3RhmZ_Y" },
-                { ep: 27, youtubeId: "Bb4-Ku9MEBI" },
-                { ep: 28, youtubeId: "iGyNf9i63LI" },
-                { ep: 29, youtubeId: "Oewg_PezPuA" },
-                { ep: 30, youtubeId: "eYBcipIWCkQ" }
-            ]
-        }
-        // الأفلام الدينية هتتضاف هنا بنفس الشكل مع type: "movie"
-    };
-    let currentSeriesId = null;
-
-    function switchSeriesTab(tab) {
-        document.querySelectorAll('#seriesIndexArea .glimpse-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
-        document.getElementById('seriesTabSeries').classList.toggle('active', tab === 'series');
-        document.getElementById('seriesTabMovies').classList.toggle('active', tab === 'movies');
-    }
-
-    function buildSeriesIndexLists() {
-        const icons = { series: 'fa-clapperboard', movie: 'fa-video' };
-        const seriesIds = Object.keys(seriesData).filter(id => seriesData[id].type === 'series');
-        const movieIds = Object.keys(seriesData).filter(id => seriesData[id].type === 'movie');
-
-        const seriesContainer = document.getElementById('seriesSeriesList');
-        seriesContainer.innerHTML = seriesIds.length
-            ? seriesIds.map(id => `<div class="menu-item series-index-item" data-name="${normalizeArabic(seriesData[id].title)}" onclick="openSeriesItem('${id}')"><i class="fas ${icons.series}"></i><span>${seriesData[id].title}</span></div>`).join('')
-            : '<p style="text-align:center; color:var(--gold);">لا توجد مسلسلات حاليًا</p>';
-
-        const moviesContainer = document.getElementById('seriesMoviesList');
-        moviesContainer.innerHTML = movieIds.length
-            ? movieIds.map(id => `<div class="menu-item series-index-item" data-name="${normalizeArabic(seriesData[id].title)}" onclick="openSeriesItem('${id}')"><i class="fas ${icons.movie}"></i><span>${seriesData[id].title}</span></div>`).join('')
-            : '<p style="text-align:center; color:var(--gold);">لا توجد أفلام حاليًا، هتُضاف قريبًا</p>';
-    }
-
-    // فلترة قائمة المسلسلات أو الأفلام حسب نص البحث (نفس فكرة filterGlimpseList بالظبط)
-    function filterSeriesList(which) {
-        const boxId = which === 'series' ? 'seriesSearch' : 'moviesSearch';
-        const listId = which === 'series' ? 'seriesSeriesList' : 'seriesMoviesList';
-        const box = document.getElementById(boxId);
-        if (!box) return;
-        const query = normalizeArabic(box.value.trim());
-        document.querySelectorAll(`#${listId} .series-index-item`).forEach(item => {
-            const matches = query === "" || (item.getAttribute('data-name') || '').includes(query);
-            item.style.display = matches ? 'flex' : 'none';
-        });
-    }
-
-    function buildSeriesEpisodesList(seriesId) {
-        const series = seriesData[seriesId];
-        const container = document.getElementById('seriesEpisodesList');
-        let html = '';
-        for (let i = 1; i <= 30; i++) {
-            const epData = series.episodes.find(e => e.ep === i);
-            const available = !!(epData && epData.youtubeId);
-            html += `<div class="menu-item series-ep-item" id="seriesEp-${i}" data-ep="${i}" style="${available ? '' : 'opacity:0.5;'}" onclick="playSeriesEpisode('${seriesId}', ${i})"><i class="fas fa-circle-play"></i><span>الحلقة ${toArabicDigits(i)}</span>${available ? '' : '<span style="margin-inline-start:auto; font-size:0.75rem;">قريبًا</span>'}</div>`;
-        }
-        container.innerHTML = html;
-    }
-
-    let pendingSeriesVideoId = null;
-    // تتبّع تقريبي لمكان الوقوف في الفيديو، عشان لو النت قطع نقدر نرجّع نفس المكان لما النت يرجع
-    let seriesElapsedSeconds = 0;
-    let seriesElapsedTimer = null;
-    let seriesWasPlayingBeforeOffline = false;
-
-    function startSeriesElapsedTimer() {
-        stopSeriesElapsedTimer();
-        seriesElapsedTimer = setInterval(() => { seriesElapsedSeconds += 1; }, 1000);
-    }
-    function stopSeriesElapsedTimer() {
-        if (seriesElapsedTimer) { clearInterval(seriesElapsedTimer); seriesElapsedTimer = null; }
-    }
-
-    // حالة عدم الاتصال بالإنترنت الخاصة بمشغل المسلسلات والأفلام الدينية (نفس فكرة showRadioOffline/hideRadioOffline بالظبط)
-    function showSeriesOffline(message) {
-        const msg = message || 'لا يوجد اتصال بالإنترنت';
-        const iframe = document.getElementById('seriesPlayerIframe');
-        const cover = document.getElementById('seriesPlayerCover');
-        const loading = document.getElementById('seriesPlayerLoading');
-        // لو كان فيه فيديو شغال فعليًا (مش مجرد الغلاف قبل الضغط على تشغيل)، سجّل ده عشان نرجّعه تلقائيًا بعدين
-        seriesWasPlayingBeforeOffline = !!(iframe && iframe.src);
-        stopSeriesElapsedTimer();
-        if (iframe) { iframe.onload = null; iframe.src = ''; }
-        if (cover) cover.classList.add('hidden');
-        if (loading) {
-            loading.innerHTML = `<i class="fas fa-wifi" style="color:#ff6b6b; font-size:1.5rem;"></i><span style="color:#ff6b6b;">${msg}</span>`;
-            loading.classList.add('show', 'offline');
-        }
-    }
-
-    function hideSeriesOffline() {
-        const loading = document.getElementById('seriesPlayerLoading');
-        if (loading && loading.classList.contains('offline')) {
-            loading.classList.remove('show', 'offline');
-            loading.innerHTML = '<div class="loading-spinner"></div><span>جاري تحميل الفيديو...</span>';
-        }
-        // لو النت رجع والمستخدم كان لسه واقف في شاشة تشغيل الحلقة وكان الفيديو شغال قبل القطع، رجّعه تلقائيًا من نفس المكان تقريبًا
-        const episodesArea = document.getElementById('seriesEpisodesArea');
-        const isReadingVisible = episodesArea && episodesArea.style.display !== 'none';
-        if (seriesWasPlayingBeforeOffline && pendingSeriesVideoId && isReadingVisible) {
-            seriesWasPlayingBeforeOffline = false;
-            startSeriesPlayback();
-        }
-    }
-    window.showSeriesOffline = showSeriesOffline;
-    window.hideSeriesOffline = hideSeriesOffline;
-
-    // تصفير كامل لمشغل المسلسلات/الأفلام: بيوقف الفيديو ويرجع الحاوية لحالتها الأولى (من غير غلاف ولا سبينر تحميل)
-    function resetSeriesPlayer() {
-        const iframe = document.getElementById('seriesPlayerIframe');
-        const cover = document.getElementById('seriesPlayerCover');
-        const loading = document.getElementById('seriesPlayerLoading');
-        if (cover) cover.classList.add('hidden');
-        if (loading) loading.classList.remove('show', 'offline');
-        pendingSeriesVideoId = null;
-        stopSeriesElapsedTimer();
-        seriesElapsedSeconds = 0;
-        seriesWasPlayingBeforeOffline = false;
-        if (iframe) {
-            iframe.onload = null;
-            // بنفرّغ مصدر الفيديو (اللي بيفكك مشغل يوتيوب الداخلي وبياخد وقت على المعالج) بعد أول رسمة للشاشة الجديدة،
-            // مش في نفس لحظة الرجوع، عشان زر الرجوع يحس إنه فوري من غير أي تهنيج
-            requestAnimationFrame(() => { requestAnimationFrame(() => { iframe.src = ''; }); });
-        }
-    }
-
-    function playSeriesEpisode(seriesId, epNum) {
-        if (!navigator.onLine) { showSeriesOffline(); return; }
-        const series = seriesData[seriesId];
-        const epData = series.episodes.find(e => e.ep === epNum);
-        if (!epData || !epData.youtubeId) {
-            if ('vibrate' in navigator) navigator.vibrate([40, 30, 40]);
-            return;
-        }
-
-        // بنوقف أي تشغيل حالي ونرجع نعرض الغلاف الخاص بالتطبيق بدل ما نحمّل مشغل يوتيوب على طول
-        const iframe = document.getElementById('seriesPlayerIframe');
-        const cover = document.getElementById('seriesPlayerCover');
-        const loading = document.getElementById('seriesPlayerLoading');
-        const thumb = document.getElementById('seriesPlayerThumb');
-        iframe.src = '';
-        loading.classList.remove('show', 'offline');
-        pendingSeriesVideoId = epData.youtubeId;
-        stopSeriesElapsedTimer();
-        seriesElapsedSeconds = 0;
-        seriesWasPlayingBeforeOffline = false;
-        thumb.src = `https://i.ytimg.com/vi/${epData.youtubeId}/hqdefault.jpg`;
-        cover.classList.remove('hidden');
-
-        document.querySelectorAll('.series-ep-item').forEach(el => el.classList.remove('active-ep'));
-        const activeEl = document.getElementById(`seriesEp-${epNum}`);
-        if (activeEl) activeEl.classList.add('active-ep');
-        document.getElementById('seriesEpisodesArea').scrollTop = 0;
-        if (history.state && history.state.screen === 'seriesScreen' && history.state.view === 'reading') {
-            history.replaceState({ screen: 'seriesScreen', view: 'reading', seriesId, epNum }, '', location.href);
-        }
-    }
-
-    // بتشتغل لما المستخدم يضغط على زر التشغيل فوق الغلاف: هنا بس بيتحمّل الفيديو الفعلي
-    function startSeriesPlayback() {
-        if (!navigator.onLine) { showSeriesOffline(); return; }
-        if (!pendingSeriesVideoId) return;
-        const iframe = document.getElementById('seriesPlayerIframe');
-        const cover = document.getElementById('seriesPlayerCover');
-        const loading = document.getElementById('seriesPlayerLoading');
-
-        cover.classList.add('hidden');
-        loading.classList.add('show');
-
-        // بارامترات بتقلل أي عناصر واجهة خارجية (فيديوهات مقترحة، شعارات إضافية...) عشان يحس المستخدم إنه مشغل داخلي
-        // start بيرجّع الفيديو لنفس المكان التقريبي اللي كان واقف عنده لو رجّعنا التشغيل بعد قطع نت
-        const resumeAt = Math.max(0, Math.floor(seriesElapsedSeconds));
-        const src = `https://www.youtube-nocookie.com/embed/${pendingSeriesVideoId}?autoplay=1&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&fs=1&color=white&disablekb=1&cc_load_policy=0&start=${resumeAt}`;
-        iframe.onload = () => { loading.classList.remove('show'); startSeriesElapsedTimer(); };
-        iframe.src = src;
-    }
-
-    // بترسم واجهة قائمة الحلقات فقط (من غير أي تعامل مع الـ history)، بيستخدمها كل من فتح المسلسل والرجوع بزر الرجوع
-    function _showSeriesReadingUI(seriesId, epNum) {
-        const series = seriesData[seriesId];
-        if (!series) return;
-        currentSeriesId = seriesId;
-        document.getElementById('seriesPlayerTitle').innerText = series.title;
-        buildSeriesEpisodesList(seriesId);
-        document.getElementById('seriesIndexArea').style.display = 'none';
-        document.getElementById('seriesEpisodesArea').style.display = 'block';
-        playSeriesEpisode(seriesId, epNum || 1);
-    }
-
-    function _showSeriesIndexUI() {
-        resetSeriesPlayer();
-        document.getElementById('seriesEpisodesArea').style.display = 'none';
-        document.getElementById('seriesIndexArea').style.display = 'block';
-        buildSeriesIndexLists();
-    }
-
-    function openSeriesItem(seriesId) {
-        _showSeriesReadingUI(seriesId, 1);
-        pushNav({ screen: 'seriesScreen', view: 'reading', seriesId, epNum: 1 });
-    }
-
-    function backToSeriesIndex() {
-        if (historyDepth > 0) { history.back(); } else { _showSeriesIndexUI(); }
-    }
-
-
-
-    /* ============================================================
        القرآن بالنص والصوت: قراءة الآيات مع الاستماع لها آية آية
        ============================================================ */
     const EVERYAYAH_RECITERS = {
@@ -3449,6 +3218,7 @@
         document.getElementById('taPlayerBar').style.display = 'none';
         document.getElementById('taMpProgress').style.width = '0%';
         updateTaMiniPlayer();
+        if (window.setMediaPlaybackState) window.setMediaPlaybackState('none');
     }
 
     function playAyahAudio(ayahIndex) {
@@ -3468,6 +3238,19 @@
         taIsPlaying = true;
         highlightTaAyah(ayahIndex);
         updateTaPlayerBar();
+        const ayah = currentTaAyahsData[ayahIndex];
+        const suraName = suras[currentTaSuraNumber - 1] || '';
+        const reciterName = (EVERYAYAH_RECITERS[selectedTextAudioReciter] || {}).name || '';
+        if (window.setNowPlayingMeta) window.setNowPlayingMeta("سورة " + suraName + (ayah ? " - آية " + ayah.numberInSurah : ''), reciterName);
+        if (window.bindMediaSessionActions) {
+            window.bindMediaSessionActions({
+                play: () => audio.play(),
+                pause: () => audio.pause(),
+                previoustrack: () => playPrevAyahAudio(),
+                nexttrack: () => playNextAyahAudio(),
+                stop: () => closeTaMiniPlayer()
+            });
+        }
     }
 
     function toggleTextAudioPlay() {
@@ -3540,10 +3323,12 @@
                 const mainAudioEl = document.getElementById('mainAudio');
                 if (mainAudioEl && !mainAudioEl.paused) mainAudioEl.pause();
                 updateTaPlayerBar();
+                if (window.setMediaPlaybackState) window.setMediaPlaybackState('playing');
             });
             taAudioEl.addEventListener('pause', () => {
                 taIsPlaying = false;
                 updateTaPlayerBar();
+                if (window.setMediaPlaybackState) window.setMediaPlaybackState('paused');
             });
             taAudioEl.addEventListener('timeupdate', () => {
                 const prog = document.getElementById('taMpProgress');
@@ -3846,9 +3631,20 @@
         if (window.setPlayerLoading) window.setPlayerLoading(true);
         audio.load(); audio.play();
         updateMiniPlayer();
+        if (window.setNowPlayingMeta) window.setNowPlayingMeta("سورة " + suras[index], reciter.name);
+        if (window.bindMediaSessionActions) {
+            window.bindMediaSessionActions({
+                play: () => audio.play(),
+                pause: () => audio.pause(),
+                previoustrack: () => playPrev(),
+                nexttrack: () => playNext(),
+                stop: () => closeMiniPlayer()
+            });
+        }
     }
 
     document.getElementById('mainAudio').onended = () => {
+        if (window.setMediaPlaybackState) window.setMediaPlaybackState('none');
         if (isRepeat) {
             playSura(currentSuraIndex);
         } else {
