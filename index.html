@@ -375,9 +375,265 @@
         .player-loading { display: none; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.75rem; color: var(--gold); margin-top: 0.5rem; opacity: 0; transition: opacity 0.25s ease; }
         .player-loading.show { display: flex; opacity: 1; }
 
+    
+        /* ==== شاشة حفظ القرآن بالتكرار ==== */
+        .hz-intro { text-align: center; font-size: 0.8125rem; line-height: 1.8; opacity: 0.8; margin-bottom: 0.875rem; }
+        .hz-setup { background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.3)); border: 1px solid rgba(247,200,115,0.3); border-radius: 1.375rem; padding: 1rem 1.125rem 1.125rem; margin-bottom: 0.9375rem; }
+        .hz-row { margin-bottom: 0.875rem; }
+        .hz-label { display: block; font-size: 0.75rem; color: var(--gold); font-weight: 700; margin-bottom: 0.375rem; }
+        .hz-range { display: flex; align-items: center; gap: 0.625rem; }
+        .hz-range span { font-size: 0.8125rem; opacity: 0.85; }
+        .hz-select { flex: 1; min-width: 0; width: 100%; background: rgba(0,0,0,0.35); border: 1px solid var(--gold); border-radius: 0.875rem; padding: 0.5rem 0.625rem; color: var(--gold); font-family: 'Tajawal', sans-serif; font-size: 0.875rem; outline: none; }
+        .hz-select option { background: #0a2621; color: #f7c873; }
+        .hz-chips { display: flex; flex-wrap: wrap; gap: 0.4375rem; }
+        .hz-chip { flex: 1; min-width: 3rem; text-align: center; background: rgba(0,0,0,0.3); border: 1px solid rgba(247,200,115,0.35); color: var(--text-color); border-radius: 0.875rem; padding: 0.4375rem 0.5rem; font-family: 'Tajawal', sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; }
+        .hz-chip.active { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+        .hz-check { display: flex; align-items: center; gap: 0.625rem; font-size: 0.8125rem; cursor: pointer; }
+        .hz-check input { width: 1.125rem; height: 1.125rem; accent-color: var(--gold); flex-shrink: 0; }
+        .hz-check small { display: block; opacity: 0.65; font-size: 0.6875rem; }
+        .hz-go { width: 100%; background: var(--gold); color: var(--dark); border: none; border-radius: 3.125rem; padding: 0.75rem; font-family: 'Tajawal', sans-serif; font-size: 1rem; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .hz-go.stop { background: rgba(0,0,0,0.35); color: var(--gold); border: 1px solid var(--gold); }
+        .hz-chip:focus-visible, .hz-go:focus-visible, .hz-select:focus-visible { outline: 0.125rem solid var(--gold); outline-offset: 0.125rem; }
+        .hz-dock { display: none; text-align: center; background: rgba(5,20,18,0.95); border: 1px solid var(--gold); border-radius: 1.25rem; padding: 0.75rem 0.875rem; font-size: 0.875rem; line-height: 1.7; }
+        body.night-mode .hz-dock { background: rgba(0,0,0,0.95); }
+        .hz-dock b { color: var(--gold); }
+        .hz-dock .hz-bar { height: 0.25rem; background: rgba(255,255,255,0.12); border-radius: 0.25rem; margin: 0.4375rem 0 0.625rem; overflow: hidden; }
+        .hz-dock .hz-bar i { display: block; height: 100%; width: 0; background: var(--gold); transition: width 0.3s ease; }
+        .hz-dock .hz-go { padding: 0.5rem; font-size: 0.875rem; }
+        .ayah-unit.hz-inrange .ayah-circle { background: rgba(247,200,115,0.2); }
+        .ayah-unit.hz-playing { background: rgba(247,200,115,0.16); border-radius: 0.75rem; }
+        #hzViewer.hz-hide .ayah-text { filter: blur(0.5rem); }
+        #hzViewer.hz-hide .ayah-unit.hz-revealed .ayah-text { filter: none; }
+        @media (prefers-reduced-motion: reduce) { .hz-dock .hz-bar i { transition: none; } }
+        .hz-sura-badge { text-align: center; color: var(--gold); font-weight: 700; font-size: 1.0625rem; margin-bottom: 0.875rem; }
+        .hz-go:disabled { opacity: 0.5; cursor: not-allowed; }
+        .hz-steppers { display: flex; gap: 0.625rem; }
+        .hz-stepper { flex: 1; min-width: 0; background: rgba(0,0,0,0.3); border: 1px solid rgba(247,200,115,0.3); border-radius: 1.125rem; padding: 0.5rem 0.5rem 0.625rem; text-align: center; }
+        .hz-st-label { display: block; font-size: 0.6875rem; opacity: 0.75; margin-bottom: 0.375rem; }
+        .hz-st-ctrl { display: flex; align-items: center; justify-content: space-between; gap: 0.25rem; direction: ltr; }
+        .hz-st-btn { width: 2.125rem; height: 2.125rem; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--gold); background: rgba(247,200,115,0.12); color: var(--gold); font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .hz-st-btn:active:not(:disabled) { transform: scale(0.92); }
+        .hz-st-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .hz-st-val { flex: 1; min-width: 0; background: transparent; border: none; border-bottom: 1px dashed rgba(247,200,115,0.5); color: var(--gold); font-family: 'Tajawal', sans-serif; font-size: 1.375rem; font-weight: 900; cursor: pointer; padding: 0.125rem 0; }
+        .hz-range-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.625rem; font-size: 0.8125rem; }
+        .hz-range-foot #hzRangeSummary { opacity: 0.85; }
+        .hz-link { font-family: 'Tajawal', sans-serif; font-size: 0.75rem; font-weight: 700; color: var(--gold); background: transparent; border: 1px solid rgba(247,200,115,0.4); border-radius: 3.125rem; padding: 0.25rem 0.875rem; cursor: pointer; }
+        .hz-link.active { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+        .hz-st-btn:focus-visible, .hz-st-val:focus-visible, .hz-link:focus-visible { outline: 0.125rem solid var(--gold); outline-offset: 0.125rem; }
+        /* النافذة السفلية لاختيار القارئ / الآية */
+        .hz-sheet-overlay { position: fixed; inset: 0; z-index: 5000; background: rgba(0,0,0,0.6); display: flex; align-items: flex-end; justify-content: center; }
+        .hz-sheet { width: 100%; max-width: 40rem; max-height: 78vh; display: flex; flex-direction: column; background: #0d2a24; color: var(--text-color); border: 1px solid rgba(247,200,115,0.35); border-bottom: none; border-radius: 1.75rem 1.75rem 0 0; box-shadow: 0 -0.5rem 2rem rgba(0,0,0,0.5); animation: hzSheetUp 0.25s ease; }
+        body.night-mode .hz-sheet { background: #0a0a0a; }
+        .hz-sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem 0.75rem; color: var(--gold); font-weight: 900; font-size: 1.0625rem; }
+        .hz-sheet-x { width: 2.125rem; height: 2.125rem; border-radius: 50%; border: 1px solid rgba(247,200,115,0.4); background: rgba(0,0,0,0.3); color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .hz-sheet-body { overflow-y: auto; padding: 0 1.25rem 1.5rem; }
+        .hz-sheet-x:focus-visible, .hz-ayah-cell:focus-visible { outline: 0.125rem solid var(--gold); outline-offset: 0.125rem; }
+        .hz-ayah-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr)); gap: 0.5rem; }
+        .hz-ayah-cell { aspect-ratio: 1; border-radius: 0.875rem; border: 1px solid rgba(247,200,115,0.3); background: rgba(0,0,0,0.3); color: var(--text-color); font-family: 'Tajawal', sans-serif; font-size: 0.9375rem; font-weight: 700; cursor: pointer; }
+        .hz-ayah-cell.selected { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+        .hz-ayah-cell:disabled { opacity: 0.25; cursor: not-allowed; }
+        @keyframes hzSheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @media (prefers-reduced-motion: reduce) { .hz-sheet { animation: none; } }
+        .hz-dock.show { display: block; }
+        .hz-actions { display: flex; gap: 0.5rem; }
+        .hz-actions .hz-go { flex: 1; }
+        .hz-actions .hz-go.secondary { background: rgba(0,0,0,0.35); color: var(--gold); border: 1px solid var(--gold); }
+        .hz-offline-note { display: none; background: rgba(255,107,107,0.12); border: 1px solid #ff6b6b; color: #ff9a9a; border-radius: 1rem; padding: 0.5rem 0.75rem; font-size: 0.8125rem; line-height: 1.6; text-align: center; margin-bottom: 0.75rem; }
+        #hzSessionView.hz-offline .hz-offline-note { display: block; }
+        #hzSessionView.hz-offline .hz-setup .hz-row, #hzSessionView.hz-offline .hz-actions, #hzSessionView.hz-offline #hzGoBtn, #hzSessionView.hz-offline #hzViewer { pointer-events: none; opacity: 0.5; }
+        #hzViewer.hz-hide .ayah-circle { cursor: pointer; box-shadow: 0 0 0 0.125rem rgba(247,200,115,0.55); min-width: 1.75rem; min-height: 1.75rem; }
+        #hzViewer.hz-hide .ayah-text { cursor: default; }
+
+        /* سهم الرجوع العلوي مخفي: الرجوع بزر الجهاز أو أزرار العودة داخل الشاشات */
+        .header-back-btn { display: none !important; }
+
+        /* ==== الوضع الرمضاني ==== */
+        .ramadan-greeting { display: none; align-items: center; justify-content: center; gap: 0.625rem; margin: 0 0 0.875rem; }
+        body.ramadan-mode .ramadan-greeting { display: flex; }
+        .ramadan-greeting .rg-line { flex: 1; max-width: 5rem; height: 0.0625rem; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .ramadan-greeting .rg-text { font-family: 'Amiri', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); text-shadow: 0 0 0.875rem rgba(255,215,122,0.55); white-space: nowrap; }
+        .ramadan-greeting .rg-text i { font-size: 0.875rem; vertical-align: middle; opacity: 0.9; }
+
+        body.ramadan-mode {
+            --gold: #ffd77a;
+            --dark: #140f33;
+            --glass: rgba(170,150,255,0.07);
+            --text-color: #f4f0ff;
+            --bg-gradient: radial-gradient(ellipse at 15% 0%, rgba(110,80,220,0.55) 0%, transparent 55%), radial-gradient(ellipse at 90% 100%, rgba(40,90,170,0.35) 0%, transparent 55%), linear-gradient(160deg, #1b1247 0%, #261a63 45%, #0a1237 100%);
+            background-attachment: fixed;
+        }
+        body.ramadan-mode.night-mode {
+            --text-color: var(--gold);
+            --glass: rgba(255,215,122,0.05);
+            --bg-gradient: radial-gradient(ellipse at 15% 0%, rgba(70,50,150,0.4) 0%, transparent 55%), linear-gradient(160deg, #07041a 0%, #0d0a2a 55%, #02030d 100%);
+        }
+        body.ramadan-mode .app-container { box-shadow: 0 0 2.5rem rgba(120,90,255,0.2), inset 0 0 0 1px rgba(255,215,122,0.08); border-color: rgba(255,215,122,0.28); }
+        body.ramadan-mode .menu-item { background: linear-gradient(135deg, rgba(120,95,215,0.34), rgba(22,14,66,0.5)); border-color: rgba(255,215,122,0.26); }
+        body.ramadan-mode .daily-card { background: linear-gradient(135deg, rgba(150,125,255,0.10), rgba(15,9,50,0.4)); }
+        body.ramadan-mode .date-box { background: linear-gradient(150deg, rgba(255,215,122,0.16), rgba(15,9,50,0.5)); }
+        body.ramadan-mode .app-header { border-bottom-color: rgba(255,215,122,0.22); }
+        body.ramadan-mode .mini-player, body.ramadan-mode .player-fixed, body.ramadan-mode .ta-player-fixed { background: #170f40; }
+        body.ramadan-mode .connection-banner { background: linear-gradient(135deg, rgba(34,22,90,0.98), rgba(12,8,40,0.98)); }
+        body.ramadan-mode .confirm-modal-box { background: linear-gradient(150deg, rgba(90,70,200,0.5), rgba(12,8,40,0.97)); }
+        body.ramadan-mode .ta-jump-btn { background: rgba(26,17,72,0.96); }
+        body.ramadan-mode .hz-dock { background: rgba(16,10,48,0.96); }
+        body.ramadan-mode .hz-sheet { background: #1a1248; }
+        body.ramadan-mode .hz-select option { background: #1a1248; }
+        body.ramadan-mode.night-mode .mini-player, body.ramadan-mode.night-mode .player-fixed, body.ramadan-mode.night-mode .ta-player-fixed, body.ramadan-mode.night-mode .ta-jump-btn, body.ramadan-mode.night-mode .hz-dock, body.ramadan-mode.night-mode .hz-sheet { background: #05031a; }
+        body.ramadan-mode.night-mode .menu-item { background: linear-gradient(135deg, rgba(60,45,130,0.3), rgba(5,3,22,0.7)); }
+
+        #ramadanDeco { pointer-events: none; }
+        #ramadanDeco .rd-back { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+        #ramadanDeco .rd-pattern { position: absolute; inset: 0; opacity: 0.07; background-size: 5rem 5rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffd77a' stroke-width='1.2'%3E%3Crect x='20' y='20' width='40' height='40'/%3E%3Crect x='20' y='20' width='40' height='40' transform='rotate(45 40 40)'/%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3C/g%3E%3C/svg%3E"); }
+        #ramadanDeco .rd-star { position: absolute; width: 0.1875rem; height: 0.1875rem; border-radius: 50%; background: #fff6d8; box-shadow: 0 0 0.375rem 0.0625rem rgba(255,230,160,0.8); animation: rdTwinkle 3s ease-in-out infinite; }
+        #ramadanDeco .rd-front { position: fixed; top: 0; left: 0; right: 0; height: 0; z-index: 3; }
+        #ramadanDeco .rd-moon { position: absolute; top: 0.625rem; left: 50%; width: 3.5rem; height: 3.5rem; transform: translateX(-50%); filter: drop-shadow(0 0 0.75rem rgba(255,215,122,0.65)); animation: rdGlow 4s ease-in-out infinite; }
+        #ramadanDeco .rd-lantern { position: absolute; top: -0.25rem; transform-origin: 50% 0; animation: rdSwing 5s ease-in-out infinite; filter: drop-shadow(0 0 0.625rem rgba(255,170,60,0.55)); }
+        #ramadanDeco .rd-lantern svg { display: block; width: 100%; height: auto; }
+        #ramadanDeco .rd-l1 { left: 22%; width: 2.5rem; margin-left: -1.25rem; animation-delay: -1s; }
+        #ramadanDeco .rd-l2 { left: 35%; width: 1.75rem; margin-left: -0.875rem; animation-delay: -2.5s; }
+        #ramadanDeco .rd-l3 { left: 65%; width: 1.75rem; margin-left: -0.875rem; animation-delay: -0.5s; }
+        #ramadanDeco .rd-l4 { left: 78%; width: 2.5rem; margin-left: -1.25rem; animation-delay: -3s; }
+        @keyframes rdSwing { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+        @keyframes rdTwinkle { 0%, 100% { opacity: 0.25; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.3); } }
+        @keyframes rdGlow { 0%, 100% { filter: drop-shadow(0 0 0.5rem rgba(255,215,122,0.45)); } 50% { filter: drop-shadow(0 0 1rem rgba(255,215,122,0.85)); } }
+        @media (prefers-reduced-motion: reduce) { #ramadanDeco .rd-lantern, #ramadanDeco .rd-star, #ramadanDeco .rd-moon { animation: none; } }
+        @media (min-width: 48rem) { #ramadanDeco .rd-moon { width: 4.5rem; height: 4.5rem; } #ramadanDeco .rd-l1 { left: 30%; } #ramadanDeco .rd-l2 { left: 40%; } #ramadanDeco .rd-l3 { left: 60%; } #ramadanDeco .rd-l4 { left: 70%; } }
+        @media (max-height: 30rem) and (orientation: landscape) { #ramadanDeco .rd-lantern { display: none; } }
+
+        /* ==== تحسين شكل شريط مشغل القرآن الصوتي ==== */
+        .player-fixed { border-radius: 1.75rem; padding: 1.125rem 1rem 1rem; box-shadow: 0 0.625rem 1.75rem rgba(0,0,0,0.5), 0 0 1.5rem rgba(247,200,115,0.14); overflow: hidden; }
+        .player-fixed::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 50% -20%, rgba(247,200,115,0.22) 0%, transparent 65%), linear-gradient(160deg, rgba(247,200,115,0.07), transparent 55%); }
+        .player-fixed::after { content: ""; position: absolute; top: 0; left: 15%; right: 15%; height: 0.125rem; z-index: 1; pointer-events: none; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .player-fixed > * { position: relative; z-index: 1; }
+        .player-fixed #nowPlaying { font-family: 'Amiri', serif; font-size: 1.1rem !important; font-weight: 700; margin-bottom: 0.625rem !important; line-height: 1.6; text-shadow: 0 0 0.75rem rgba(247,200,115,0.35); }
+        .player-fixed #nowPlaying::before { content: "\f001"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 0.8rem; margin-inline-end: 0.5rem; opacity: 0.85; }
+        .player-fixed #mainAudio { height: 2.75rem; border-radius: 2rem; filter: invert(1) sepia(1) saturate(2.4) hue-rotate(-12deg) brightness(1.05) !important; }
+        .player-fixed .player-controls { gap: 1.25rem; margin-top: 0.875rem; }
+        .player-fixed .player-controls .control-btn { width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1rem; background: rgba(247,200,115,0.1); border: 1px solid rgba(247,200,115,0.35); box-shadow: 0 0.25rem 0.625rem rgba(0,0,0,0.3); transition: transform 0.15s ease, background 0.2s ease; }
+        .player-fixed .player-controls .control-btn:nth-child(2) { width: 3.25rem; height: 3.25rem; font-size: 1.15rem; background: linear-gradient(145deg, rgba(247,200,115,0.28), rgba(247,200,115,0.08)); border-color: var(--gold); }
+        .player-fixed .player-controls .control-btn:active { transform: scale(0.9); background: rgba(247,200,115,0.3); }
+        .player-fixed .player-controls .control-btn.active { background: rgba(247,200,115,0.32); border-color: #fff; }
+        .player-fixed .player-loading { margin: 0 0 0.5rem; }
+
+        /* ==== شاشة البداية (Splash) — تتبع ألوان الوضع العادي والليلي والرمضاني تلقائيًا ==== */
+        #splash { position: fixed; inset: 0; z-index: 5000; background: var(--bg-gradient); background-attachment: fixed; color: var(--text-color); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; text-align: center; overflow: hidden; transition: opacity 0.6s ease, visibility 0.6s ease; }
+        #splash.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        #splash::before { content: ""; position: absolute; width: 90vmin; height: 90vmin; border-radius: 50%; background: radial-gradient(circle, rgba(247,200,115,0.16) 0%, transparent 65%); top: 50%; left: 50%; transform: translate(-50%, -58%); pointer-events: none; }
+        #splash .sp-inner { position: relative; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 26rem; }
+        #splash .sp-logo { width: 11rem; height: 11rem; border-radius: 2.5rem; object-fit: cover; border: 0.125rem solid var(--gold); box-shadow: 0 0 2.5rem rgba(247,200,115,0.3), 0 0.75rem 2rem rgba(0,0,0,0.4); animation: spPop 0.9s cubic-bezier(.2,.9,.3,1.2) both, spGlow 3.5s ease-in-out 0.9s infinite; pointer-events: none; -webkit-user-drag: none; }
+        #splash .sp-logo-fallback { display: none; font-size: 6rem; color: var(--gold); filter: drop-shadow(0 0 1rem rgba(247,200,115,0.5)); }
+        #splash .sp-tagline { margin-top: 1.75rem; font-family: 'Amiri', serif; font-size: 1.3rem; font-weight: 700; line-height: 1.9; color: var(--text-color); animation: spFade 0.9s ease 0.35s both; }
+        #splash .sp-dev { margin-top: 2.75rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; animation: spFade 0.9s ease 0.6s both; }
+        #splash .sp-dev-label { display: flex; align-items: center; gap: 0.625rem; color: var(--gold); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2rem; text-transform: uppercase; opacity: 0.9; direction: ltr; }
+        #splash .sp-dev-label::before, #splash .sp-dev-label::after { content: ""; width: 2.25rem; height: 0.0625rem; background: linear-gradient(90deg, transparent, var(--gold)); }
+        #splash .sp-dev-label::after { transform: scaleX(-1); }
+        #splash .sp-dev-name { direction: ltr; font-size: 1.35rem; font-weight: 900; letter-spacing: 0.06rem; background: linear-gradient(135deg, #fff3d6, var(--gold) 55%, #c9974f); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0.125rem 0.625rem rgba(247,200,115,0.2); }
+        #splash .sp-status { margin-top: 2.5rem; min-height: 6.5rem; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 0.875rem; }
+        #splash .sp-loader { display: flex; gap: 0.5rem; }
+        #splash .sp-loader span { width: 0.625rem; height: 0.625rem; border-radius: 50%; background: var(--gold); animation: spDot 1.1s ease-in-out infinite; }
+        #splash .sp-loader span:nth-child(2) { animation-delay: 0.18s; }
+        #splash .sp-loader span:nth-child(3) { animation-delay: 0.36s; }
+        #splash .sp-load-text { font-size: 0.8125rem; opacity: 0.8; }
+        #splash .sp-offline { display: none; flex-direction: column; align-items: center; gap: 0.75rem; }
+        #splash .sp-offline i { color: #ff6b6b; font-size: 1.5rem; }
+        #splash .sp-offline p { font-size: 0.875rem; line-height: 1.8; color: var(--text-color); }
+        #splash .sp-retry { background: rgba(247,200,115,0.12); border: 1px solid var(--gold); color: var(--gold); font-size: 0.875rem; font-weight: 700; padding: 0.5rem 1.5rem; border-radius: 0.875rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
+        #splash .sp-retry:active { transform: scale(0.96); }
+        #splash[data-state="offline"] .sp-loader, #splash[data-state="offline"] .sp-load-text { display: none; }
+        #splash[data-state="offline"] .sp-offline { display: flex; }
+        @keyframes spPop { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+        @keyframes spFade { from { opacity: 0; transform: translateY(0.75rem); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spGlow { 0%,100% { box-shadow: 0 0 2rem rgba(247,200,115,0.25), 0 0.75rem 2rem rgba(0,0,0,0.4); } 50% { box-shadow: 0 0 3.25rem rgba(247,200,115,0.5), 0 0.75rem 2rem rgba(0,0,0,0.4); } }
+        @keyframes spDot { 0%,80%,100% { opacity: 0.25; transform: scale(0.7); } 40% { opacity: 1; transform: scale(1.15); } }
     </style>
 </head>
 <body>
+
+<script>
+/* تطبيق الوضع الليلي/الرمضاني فورًا لمنع وميض الألوان قبل تحميل باقي التطبيق */
+try {
+    if (localStorage.getItem('nightModeEnabled') === 'true') document.body.classList.add('night-mode');
+    if (localStorage.getItem('ramadanModeEnabled') === 'true') document.body.classList.add('ramadan-mode');
+} catch (e) {}
+</script>
+
+<div id="splash" data-state="loading">
+    <div class="sp-inner">
+        <img id="splashLogo" class="sp-logo" draggable="false" alt="البنا الإسلامي">
+        <i id="splashLogoFallback" class="fas fa-mosque sp-logo-fallback"></i>
+        <p class="sp-tagline">القرآن والسنة والسيرة والعبادة في تطبيق واحد، بتجربة سلسة تناسب جميع الأعمار.</p>
+        <div class="sp-dev">
+            <div class="sp-dev-label">programmer</div>
+            <div class="sp-dev-name">Ahmed Esam Elbanna</div>
+        </div>
+        <div class="sp-status">
+            <div class="sp-loader"><span></span><span></span><span></span></div>
+            <div class="sp-load-text">جاري التحميل...</div>
+            <div class="sp-offline">
+                <i class="fas fa-wifi"></i>
+                <p>لا يوجد اتصال بالإنترنت.<br>تأكد من الشبكة ثم حاول مرة أخرى.</p>
+                <button type="button" class="sp-retry" id="splashRetry"><i class="fas fa-rotate-right" style="font-size:0.8rem;color:inherit"></i> إعادة المحاولة</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+(function () {
+    var splash = document.getElementById('splash');
+    var rawFetch = window.fetch ? window.fetch.bind(window) : null; /* نسخة أصلية قبل ما التطبيق يعمل override */
+    var MIN_MS = 5000, PROBE_MS = 8000, runId = 0, done = false;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        /* نفس صورة التطبيق الموجودة في "لمحة عن التطبيق" (بدون تكرار الملف) */
+        var logo = document.getElementById('splashLogo');
+        var src = document.querySelector('#aboutAppScreen .about-dev-photo-wrap img');
+        if (src && src.src) logo.src = src.src;
+        else { logo.style.display = 'none'; document.getElementById('splashLogoFallback').style.display = 'block'; }
+        run();
+    });
+
+    function setState(s) { splash.setAttribute('data-state', s); }
+
+    function probe() {
+        return new Promise(function (resolve) {
+            if (!navigator.onLine || !rawFetch) return resolve(!!navigator.onLine);
+            var ctrl = window.AbortController ? new AbortController() : null;
+            var t = setTimeout(function () { if (ctrl) ctrl.abort(); resolve(false); }, PROBE_MS);
+            rawFetch('https://api.aladhan.com/v1/gToH?_=' + Date.now(), { mode: 'no-cors', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+                .then(function () { clearTimeout(t); resolve(true); })
+                .catch(function () { clearTimeout(t); resolve(false); });
+        });
+    }
+
+    function enter() {
+        if (done) return;
+        done = true;
+        splash.classList.add('hide');
+        setTimeout(function () { splash.remove(); }, 700);
+    }
+
+    function run() {
+        if (done) return;
+        var id = ++runId, start = Date.now();
+        setState('loading');
+        probe().then(function (ok) {
+            if (done || id !== runId) return;
+            if (!ok || !navigator.onLine) { setState('offline'); return; }
+            var wait = Math.max(0, MIN_MS - (Date.now() - start));
+            setTimeout(function () {
+                if (done || id !== runId) return;
+                if (navigator.onLine) enter(); else setState('offline');
+            }, wait);
+        });
+    }
+
+    document.getElementById('splashRetry').addEventListener('click', run);
+    window.addEventListener('offline', function () { if (!done) { runId++; setState('offline'); } });
+    window.addEventListener('online', function () { if (!done) run(); });
+})();
+</script>
+
 
 <div class="app-container">
     <div class="top-nav">
@@ -394,6 +650,7 @@
     <div id="homeScreen" class="content-screen active">
         <div class="app-header">
             <div class="logo-area"><i class="fas fa-mosque"></i><h1 class="logo-title">البنا الإسلامي</h1></div>
+            <div class="ramadan-greeting" aria-hidden="true"><span class="rg-line"></span><span class="rg-text"><i class="fas fa-star-and-crescent"></i> رمضان كريم <i class="fas fa-star-and-crescent"></i></span><span class="rg-line"></span></div>
             <div class="date-container">
                 <div class="date-box">
                     <i class="fas fa-moon"></i>
@@ -422,8 +679,9 @@
         <div class="menu-list">
             <div class="menu-item" onclick="playRadioDirect()"><i class="fas fa-broadcast-tower"></i><span>إذاعة القرآن الكريم</span></div>
             <!-- الزرار بيشغل مشغّل الصوت الداخلي، وده بيختار تلقائيًا حلقة تلاوة مسجلة من مجموعة حلقات ويبدّل بينها -->
-            <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن الكريم</span></div>
+            <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن بالصوت</span></div>
             <div class="menu-item" onclick="openTaTabSmart()"><i class="fas fa-closed-captioning"></i><span>القرآن بالنص والصوت</span></div>
+            <div class="menu-item" onclick="openScreen('hifzScreen')"><i class="fas fa-repeat"></i><span>وضع حفظ القرآن</span></div>
             <div class="menu-item" onclick="openScreen('quranTextScreen')"><i class="fas fa-book-open-reader"></i><span>المصحف المكتوب والتفسير</span></div>
             <div class="menu-item" onclick="openScreen('quizScreen')"><i class="fas fa-brain"></i><span>تحدي الأسئلة الدينية</span></div>
             <div class="menu-item" onclick="openHadithBook('bukhari')"><i class="fas fa-book"></i><span>صحيح البخاري</span></div>
@@ -509,6 +767,14 @@
                     <span class="sound-switch-track"></span>
                 </label>
             </div>
+            <div class="menu-item sound-toggle-item">
+                <i class="fas fa-star-and-crescent"></i>
+                <span class="sound-toggle-label">الوضع الرمضاني</span>
+                <label class="sound-switch">
+                    <input type="checkbox" id="ramadanModeToggle" onchange="toggleRamadanModeSetting(this.checked)">
+                    <span class="sound-switch-track"></span>
+                </label>
+            </div>
             <div class="menu-item" onclick="openFavorites()"><i class="fas fa-book"></i><span>الأحاديث المفضلة</span></div>
             <div class="menu-item" onclick="openStoryFavorites()"><i class="fas fa-scroll"></i><span>القصص المفضلة</span></div>
             <div class="menu-item" onclick="openGlimpseFavorites()"><i class="fas fa-users"></i><span>اللمحات المفضلة</span></div>
@@ -553,15 +819,16 @@
         </div>
         <div class="about-dev-card">
             <p style="text-align:center; font-family:'Amiri', serif; font-size:1.375rem; font-weight:700; color:var(--gold); margin-bottom:1rem;">البنا الإسلامي</p>
-            <p>تطبيق إسلامي شامل يجمع لك كل ما تحتاجه في حياتك الدينية اليومية بتصميم أنيق وسهل الاستخدام.</p>
-            <p style="margin-top:1rem;"><strong style="color:var(--gold);">📖 القرآن الكريم:</strong> استمع للقرآن الكريم بصوت نخبة من القراء، أو تابع النص مع الصوت آية بآية، أو اقرأ المصحف المكتوب مع تفسير السعدي، واستمتع أيضًا بإذاعة القرآن الكريم المباشرة.</p>
-            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">📿 أذكار وعبادات:</strong> أذكار الصباح والمساء، أذكار ما بعد الصلاة، الرقية الشرعية، والسبحة الإلكترونية لمساعدتك على المداومة على الذكر في كل وقت.</p>
-            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🕋 مواقيت الصلاة واتجاه القبلة:</strong> بوصلة قبلة تفاعلية دقيقة ومواقيت صلاة محدّثة أينما كنت.</p>
-            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">📚 أحاديث وسير:</strong> مختارات من صحيح البخاري وصحيح مسلم والأربعين النووية، بالإضافة إلى قصص الأنبياء والصحابة الكاملة، ولمحات مختصرة عنهم، وخواطر الشيخ الشعراوي، مع إمكانية حفظ ما يعجبك في المفضلة.</p>
+            <p>البنا الإسلامي رفيقك اليومي في طاعة الله؛ تطبيق متكامل يجمع القرآن الكريم والسنة والسيرة والأذكار ومواقيت الصلاة في مكان واحد، بتصميم أنيق وهادئ وسهل الاستخدام على الهاتف والتابلت.</p>
+            <p style="margin-top:1rem;"><strong style="color:var(--gold);">📖 القرآن الكريم:</strong> استمع للمصحف كاملًا بأصوات نخبة من القراء في «القرآن بالصوت»، أو تابع النص مع التلاوة آية بآية في «القرآن بالنص والصوت»، أو اقرأ «المصحف المكتوب» مع تفسير السعدي لكل آية ونسخها بضغطة واحدة، مع إذاعة القرآن الكريم المباشرة وعلامة تحفظ لك موضع قراءتك.</p>
+            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🧠 وضع حفظ القرآن:</strong> اختر السورة وحدّد المقطع الذي تريده من أي آية إلى أي آية، واضبط عدد مرات تكرار كل آية وإعادة المقطع (1 - 3 - 5 - 7 - 9) مع اختيار القارئ المفضل لديك. يمكنك تفعيل مهلة للترديد وراء الشيخ، أو إخفاء الآيات واختبار حفظك بالضغط على رقم الآية لإظهارها. أوقف الحفظ مؤقتًا وأكمل من حيث توقفت في أي وقت، أو ابدأ من جديد، وعند انقطاع الإنترنت يتوقف الحفظ تلقائيًا ويستأنف عند عودته.</p>
+            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">📿 أذكار وعبادات:</strong> أذكار الصباح والمساء، وأذكار ما بعد الصلاة، والرقية الشرعية، والسبحة الإلكترونية لتداوم على الذكر في كل وقت.</p>
+            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🕋 مواقيت الصلاة واتجاه القبلة:</strong> مواقيت صلاة محدّثة، وبوصلة قبلة تفاعلية دقيقة أينما كنت.</p>
+            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">📚 أحاديث وسير:</strong> مختارات من صحيح البخاري وصحيح مسلم والأربعين النووية، وقصص الأنبياء والصحابة كاملة، ولمحات مختصرة عنهم، وخواطر الشيخ الشعراوي، مع إمكانية حفظ ما يعجبك في المفضلة.</p>
             <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">✨ أسماء الله الحسنى:</strong> تعرّف على أسماء الله الحسنى ومعانيها بتصميم جذاب.</p>
-            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🧠 تحدي الأسئلة الدينية:</strong> اختبر معلوماتك الدينية عبر أسئلة تفاعلية مع تفسير للإجابات، وتابع سجل إجاباتك الصحيحة والخاطئة.</p>
-            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">⭐ مميزات إضافية:</strong> الوضع الليلي لراحة العين، حفظ المفضلة في كل الأقسام (أحاديث، قصص، لمحات، خواطر)، تأثيرات صوتية وتصميم عصري بخط "تجوّل" و"أميري"، وتاريخ هجري وميلادي يوميًا على الشاشة الرئيسية.</p>
-            <p style="text-align:center; margin-top:1.25rem; font-weight:700; color:var(--gold);">تطبيق واحد يجمع لك القرآن والسنة والسيرة والعبادة في مكان واحد، بتجربة استخدام سلسة وهادئة تناسب جميع الأعمار.</p>
+            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🎯 تحدي الأسئلة الدينية:</strong> اختبر معلوماتك عبر أسئلة تفاعلية مع شرح للإجابات، وتابع سجل إجاباتك الصحيحة والخاطئة.</p>
+            <p style="margin-top:0.75rem;"><strong style="color:var(--gold);">🌙 الأوضاع والمظهر:</strong> الوضع الليلي لراحة العين، والوضع الرمضاني بطابعه المميز من هلال وفوانيس ونجوم متلألئة، وكلاهما يعمل على مختلف الأجهزة وأحجام الشاشات ويمكن الجمع بينهما، إضافة إلى التأثيرات الصوتية والتاريخ الهجري والميلادي يوميًا على الشاشة الرئيسية.</p>
+            <p style="text-align:center; margin-top:1.25rem; font-weight:700; color:var(--gold);">القرآن والسنة والسيرة والعبادة في تطبيق واحد، بتجربة سلسة تناسب جميع الأعمار. نسأل الله أن يتقبّل منك ويجعله في ميزان حسناتك.</p>
             <div style="text-align:center; margin-top:0.75rem;">
                 <a href="https://www.appcreator24.com/app4127925-ioksch" target="_blank" style="display:inline-flex; align-items:center; gap:0.6rem; background:linear-gradient(135deg, var(--gold), #c9974f); color:var(--dark); text-decoration:none; font-weight:900; font-size:1rem; padding:0.85rem 1.8rem; border-radius:50px; box-shadow:0 4px 15px rgba(0,0,0,0.35); transition:transform 0.2s;" onmousedown="this.style.transform='scale(0.96)'" onmouseup="this.style.transform='scale(1)'">
                     <i class="fas fa-share-nodes" style="font-size:1.25rem;"></i>
@@ -667,6 +934,89 @@
             <input type="number" id="ayahSearchBox" class="search-box" placeholder="ادخل رقم الآية للبحث..." onkeyup="filterAyahs()">
             <div id="quranTextViewer" class="quran-text-view daily-card" style="border:none; background: rgba(0,0,0,0.2);"></div>
         </div>
+    </div>
+
+    <div id="hifzScreen" class="content-screen">
+        <div id="hzIndexView">
+            <h2 style="color:var(--gold); text-align: center; margin-bottom: 0.625rem;">وضع حفظ القرآن</h2>
+            <p class="hz-intro">اختر السورة التي تريد حفظها، ثم اضبط إعدادات الحفظ وابدأ.</p>
+            <input type="text" id="hzSuraSearch" class="search-box" placeholder="ابحث عن سورة للحفظ..." onkeyup="hifzFilterSuras()">
+            <div id="hzSuraIndex"></div>
+        </div>
+
+        <div id="hzSessionView" style="display:none;">
+            <button class="back-btn" style="background: rgba(0,0,0,0.3); border: 1px solid var(--gold); color: var(--gold); padding: 0.5rem 1.25rem; border-radius: 3.125rem; cursor: pointer; margin-bottom: 0.9375rem;" onclick="hifzBackToIndex()"><i class="fas fa-arrow-right"></i> العودة للفهرس</button>
+            <h2 id="hzSuraTitle" style="color:var(--gold); text-align: center; margin-bottom: 0.875rem;"></h2>
+            <div id="hzOfflineNote" class="hz-offline-note"><i class="fas fa-wifi"></i> لا يوجد اتصال بالإنترنت. تم إيقاف الحفظ مؤقتًا وتعطيل التعديل، وسيستمر الشيخ تلقائيًا عند عودة الاتصال.</div>
+            <div class="hz-setup">
+                <div class="hz-row">
+                    <button type="button" class="reciter-current-mini" style="margin-bottom:0;" onclick="hifzPickReciter()">
+                        <span class="rc-icon"><i class="fas fa-user-tie"></i></span>
+                        <span class="rc-text"><span class="rc-label">القارئ</span><span class="rc-name" id="hzReciterName">—</span></span>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+                <div class="hz-row">
+                    <span class="hz-label">المقطع المراد حفظه</span>
+                    <div class="hz-steppers">
+                        <div class="hz-stepper">
+                            <span class="hz-st-label">من آية</span>
+                            <div class="hz-st-ctrl">
+                                <button type="button" id="hzFromDec" class="hz-st-btn" aria-label="الآية السابقة" onclick="hifzStep('from',-1)"><i class="fas fa-minus"></i></button>
+                                <button type="button" id="hzFromVal" class="hz-st-val" aria-label="اختيار آية البداية" onclick="hifzPickAyah('from')">1</button>
+                                <button type="button" id="hzFromInc" class="hz-st-btn" aria-label="الآية التالية" onclick="hifzStep('from',1)"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="hz-stepper">
+                            <span class="hz-st-label">إلى آية</span>
+                            <div class="hz-st-ctrl">
+                                <button type="button" id="hzToDec" class="hz-st-btn" aria-label="الآية السابقة" onclick="hifzStep('to',-1)"><i class="fas fa-minus"></i></button>
+                                <button type="button" id="hzToVal" class="hz-st-val" aria-label="اختيار آية النهاية" onclick="hifzPickAyah('to')">1</button>
+                                <button type="button" id="hzToInc" class="hz-st-btn" aria-label="الآية التالية" onclick="hifzStep('to',1)"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hz-range-foot">
+                        <span id="hzRangeSummary"></span>
+                        <button type="button" id="hzWholeBtn" class="hz-link" onclick="hifzWhole()">السورة كاملة</button>
+                    </div>
+                </div>
+                <div class="hz-row">
+                    <span class="hz-label">تكرار كل آية</span>
+                    <div class="hz-chips" data-hz-group="per">
+                        <button type="button" class="hz-chip" data-v="1">1</button>
+                        <button type="button" class="hz-chip" data-v="3">3</button>
+                        <button type="button" class="hz-chip" data-v="5">5</button>
+                        <button type="button" class="hz-chip" data-v="7">7</button>
+                        <button type="button" class="hz-chip" data-v="9">9</button>
+                    </div>
+                </div>
+                <div class="hz-row">
+                    <span class="hz-label">إعادة المقطع كاملًا بعد الانتهاء</span>
+                    <div class="hz-chips" data-hz-group="rounds">
+                        <button type="button" class="hz-chip" data-v="1">مرة</button>
+                        <button type="button" class="hz-chip" data-v="3">3 مرات</button>
+                        <button type="button" class="hz-chip" data-v="5">5 مرات</button>
+                        <button type="button" class="hz-chip" data-v="7">7 مرات</button>
+                        <button type="button" class="hz-chip" data-v="9">9 مرات</button>
+                    </div>
+                </div>
+                <div class="hz-row">
+                    <label class="hz-check"><input type="checkbox" id="hzPause" onchange="hifzSettingChanged()"><span>مهلة للترديد بعد كل مرة<small>يتوقف الصوت بمقدار طول الآية لتردد وراء القارئ</small></span></label>
+                </div>
+                <div class="hz-row">
+                    <label class="hz-check"><input type="checkbox" id="hzHide" onchange="hifzSettingChanged()"><span>إخفاء نص الآيات للاختبار<small>اضغط على رقم الآية لإظهارها أو إخفائها بعد أن تحاول تسميعها</small></span></label>
+                </div>
+                <button type="button" id="hzGoBtn" class="hz-go" onclick="hifzStartStop()" disabled><i class="fas fa-play"></i> ابدأ الحفظ</button>
+                <div id="hzTopBar" class="hz-dock" aria-live="polite">
+                    <div id="hzTopText"></div>
+                    <div class="hz-bar"><i id="hzTopFill"></i></div>
+                    <div id="hzTopActions"></div>
+                </div>
+            </div>
+            <div id="hzViewer" class="quran-text-view daily-card" style="border:none; background: rgba(0,0,0,0.2);"></div>
+        </div>
+        <audio id="hzAudio" preload="none"></audio>
     </div>
 
     <div id="quranTextAudioScreen" class="content-screen">
@@ -930,6 +1280,7 @@
 </div>
 
 <button type="button" id="taJumpToCurrentBtn" class="ta-jump-btn" onclick="scrollToCurrentTaAyah()"><i class="fas fa-location-arrow"></i> اذهب إلى الآية الحالية</button>
+<button type="button" id="hzJumpBtn" class="ta-jump-btn" onclick="hifzJumpToCurrent()"><i class="fas fa-location-arrow"></i> اذهب إلى الآية الحالية</button>
 
 <div id="devPassOverlay" class="confirm-modal-overlay" onclick="if(event.target===this) closeDevPanelPrompt()">
     <div class="confirm-modal-box">
@@ -1000,6 +1351,78 @@
         applyNightMode(nightModeEnabled);
     }
     document.addEventListener('DOMContentLoaded', initNightModeUI);
+
+    /* ==== الوضع الرمضاني: ثيم رمضاني (فوانيس وهلال ونجوم) متجاوب مع كل الأجهزة، ومحفوظ في المتصفح ==== */
+    let ramadanModeEnabled = localStorage.getItem('ramadanModeEnabled') === 'true';
+
+    function lanternSvg(uid, tall) {
+        const h = tall ? 150 : 110;
+        const bodyTop = tall ? 48 : 36;
+        return `<svg viewBox="0 0 60 ${h}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="rdLg${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2b8"/><stop offset="0.55" stop-color="#ffb340"/><stop offset="1" stop-color="#d9731a"/></linearGradient>
+                <linearGradient id="rdMg${uid}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b8862e"/><stop offset="0.5" stop-color="#ffe08a"/><stop offset="1" stop-color="#b8862e"/></linearGradient>
+            </defs>
+            <line x1="30" y1="0" x2="30" y2="${bodyTop - 14}" stroke="#ffd77a" stroke-width="1.6"/>
+            <circle cx="30" cy="${bodyTop - 14}" r="3" fill="none" stroke="#ffd77a" stroke-width="1.6"/>
+            <path d="M22 ${bodyTop} L30 ${bodyTop - 12} L38 ${bodyTop} Z" fill="url(#rdMg${uid})"/>
+            <rect x="19" y="${bodyTop}" width="22" height="4" rx="1.5" fill="url(#rdMg${uid})"/>
+            <path d="M21 ${bodyTop + 4} Q10 ${bodyTop + 24} 21 ${bodyTop + 46} L39 ${bodyTop + 46} Q50 ${bodyTop + 24} 39 ${bodyTop + 4} Z" fill="url(#rdLg${uid})" stroke="#ffe08a" stroke-width="1.2"/>
+            <path d="M30 ${bodyTop + 4} L30 ${bodyTop + 46} M24 ${bodyTop + 5} Q17 ${bodyTop + 25} 24 ${bodyTop + 46} M36 ${bodyTop + 5} Q43 ${bodyTop + 25} 36 ${bodyTop + 46}" stroke="#8a5a12" stroke-width="1" fill="none" opacity="0.7"/>
+            <rect x="19" y="${bodyTop + 46}" width="22" height="4" rx="1.5" fill="url(#rdMg${uid})"/>
+            <path d="M23 ${bodyTop + 50} L30 ${bodyTop + 62} L37 ${bodyTop + 50} Z" fill="url(#rdMg${uid})"/>
+            <circle cx="30" cy="${bodyTop + 64}" r="2.2" fill="#ffd77a"/>
+        </svg>`;
+    }
+
+    function buildRamadanDeco() {
+        if (document.getElementById('ramadanDeco')) return;
+        const d = document.createElement('div');
+        d.id = 'ramadanDeco';
+        d.setAttribute('aria-hidden', 'true');
+        let stars = '';
+        for (let i = 0; i < 22; i++) {
+            const x = (Math.random() * 100).toFixed(1), y = (Math.random() * 100).toFixed(1);
+            const delay = (Math.random() * 3).toFixed(2), dur = (2.5 + Math.random() * 3).toFixed(2);
+            stars += `<i class="rd-star" style="left:${x}%;top:${y}%;animation-delay:-${delay}s;animation-duration:${dur}s"></i>`;
+        }
+        d.innerHTML = `
+            <div class="rd-back"><div class="rd-pattern"></div>${stars}</div>
+            <div class="rd-front">
+                <svg class="rd-moon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="rdMoonG" cx="35%" cy="35%" r="80%"><stop offset="0" stop-color="#fff7d6"/><stop offset="1" stop-color="#f0b84a"/></radialGradient>
+                        <mask id="rdMoonM"><rect width="100" height="100" fill="#fff"/><circle cx="64" cy="40" r="34" fill="#000"/></mask>
+                    </defs>
+                    <circle cx="48" cy="52" r="38" fill="url(#rdMoonG)" mask="url(#rdMoonM)"/>
+                    <path d="M76 22 L78.4 28.6 L85.4 28.9 L79.9 33.2 L81.8 40 L76 36.1 L70.2 40 L72.1 33.2 L66.6 28.9 L73.6 28.6 Z" fill="#fff2b8"/>
+                </svg>
+                <div class="rd-lantern rd-l1">${lanternSvg('a', true)}</div>
+                <div class="rd-lantern rd-l2">${lanternSvg('b', false)}</div>
+                <div class="rd-lantern rd-l3">${lanternSvg('c', false)}</div>
+                <div class="rd-lantern rd-l4">${lanternSvg('d', true)}</div>
+            </div>`;
+        document.body.insertBefore(d, document.body.firstChild);
+    }
+
+    function applyRamadanMode(enabled) {
+        ramadanModeEnabled = !!enabled;
+        document.body.classList.toggle('ramadan-mode', ramadanModeEnabled);
+        if (ramadanModeEnabled) buildRamadanDeco();
+        else { const d = document.getElementById('ramadanDeco'); if (d) d.remove(); }
+        const toggle = document.getElementById('ramadanModeToggle');
+        if (toggle) toggle.checked = ramadanModeEnabled;
+        // لون شريط المتصفح على الموبايل
+        let meta = document.querySelector('meta[name="theme-color"]');
+        if (ramadanModeEnabled) {
+            if (!meta) { meta = document.createElement('meta'); meta.name = 'theme-color'; meta.dataset.rd = '1'; document.head.appendChild(meta); }
+            meta.content = '#1b1247';
+        } else if (meta && meta.dataset.rd) { meta.remove(); }
+        try { localStorage.setItem('ramadanModeEnabled', ramadanModeEnabled ? 'true' : 'false'); } catch (e) {}
+    }
+
+    function toggleRamadanModeSetting(enabled) { applyRamadanMode(enabled); }
+    document.addEventListener('DOMContentLoaded', () => applyRamadanMode(ramadanModeEnabled));
 
     /* إظهار خيار "لوحة المطور" داخل الإعدادات بشكل مخفي على مرحلتين، من غير أي عداد ظاهر على الشاشة:
        1) تضغط على ترس الإعدادات 5 مرات ورا بعض.
@@ -1294,7 +1717,9 @@
             showPlayerOffline();
             const radioAudioEl = document.getElementById('radioAudio');
             if (radioAudioEl && !radioAudioEl.paused) radioAudioEl.pause();
-            if (window.showRadioOffline) window.showRadioOffline();
+            // نظهر حالة الأوفلاين على شريط الإذاعة فقط لو كان ظاهر أصلًا (الإذاعة اتشغّلت قبل كده)
+            const radioMp = document.getElementById('radioMiniPlayer');
+            if (window.showRadioOffline && radioMp && radioMp.classList.contains('show')) window.showRadioOffline();
             if (window.pauseTextAudio) window.pauseTextAudio();
             showTaPlayerOffline();
             if (window.updateTaPlayerBar) window.updateTaPlayerBar();
@@ -1357,7 +1782,19 @@
     let selectedReciter = localStorage.getItem('quranReciter') || 'minsh';
     if (!RECITERS[selectedReciter]) selectedReciter = 'minsh';
 
+    // بيرجّع الشاشة الحالية لأولها (بيتنادى عند تغيير أي تبويب)
+    function scrollActiveScreenToTop() {
+        const go = () => {
+            const scr = document.querySelector('.content-screen.active');
+            if (scr) { scr.scrollTop = 0; try { scr.scrollTo({ top: 0, behavior: 'auto' }); } catch (e) {} }
+            window.scrollTo(0, 0);
+        };
+        go();
+        requestAnimationFrame(go);
+    }
+
     function switchQuranTab(tab) {
+        scrollActiveScreenToTop();
         document.querySelectorAll('.quran-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
         document.getElementById('quranTabReciters').classList.toggle('active', tab === 'reciters');
         document.getElementById('quranTabSuras').classList.toggle('active', tab === 'suras');
@@ -1741,6 +2178,7 @@
     armHomeGuard();
 
     function _showScreenUI(screenId) {
+        if (currentScreenId === 'hifzScreen' && screenId !== 'hifzScreen' && window.hifzStop) window.hifzStop();
         clearScreenSearches(currentScreenId);
         if (currentScreenId === 'prayerScreen' && screenId !== 'prayerScreen' && typeof activeCountdowns !== 'undefined') {
             Object.keys(activeCountdowns).forEach(stopCountdown);
@@ -1763,6 +2201,7 @@
         currentScreenId = screenId;
         if (screenId === 'quranTextScreen') _showSuraIndexUI();
         if (screenId === 'quranTextAudioScreen') _showTextAudioIndexUI();
+        if (screenId === 'hifzScreen') window.hifzShowIndex();
         if (screenId === 'prayerScreen') initPrayerScreen();
         if (screenId === 'namesScreen') loadNames();
         if (screenId === 'sharawiScreen') loadSharawi();
@@ -1913,10 +2352,12 @@
 
     function openScreen(screenId) {
         _showScreenUI(screenId);
-        pushNav({ screen: screenId, view: (screenId === 'quranTextScreen' || screenId === 'fullStoriesScreen' || screenId === 'glimpseScreen' || screenId === 'quranTextAudioScreen') ? 'index' : undefined });
+        scrollActiveScreenToTop(); // أي تبويب رئيسي يتفتح من أوله
+        pushNav({ screen: screenId, view: (screenId === 'quranTextScreen' || screenId === 'fullStoriesScreen' || screenId === 'glimpseScreen' || screenId === 'quranTextAudioScreen' || screenId === 'hifzScreen') ? 'index' : undefined });
     }
 
     function _showHomeUI() {
+        if (window.hifzStop) window.hifzStop();
         clearScreenSearches(currentScreenId);
         if (currentScreenId === 'settingsScreen') {
             hideDevPanelMenuItem();
@@ -1954,6 +2395,8 @@
             _showGlimpseReadingUI(state.index);
         } else if (state.screen === 'quranTextAudioScreen' && state.view === 'reading' && state.suraNum) {
             _showTextAudioReadingUI(state.suraNum, state.name);
+        } else if (state.screen === 'hifzScreen' && state.suraNum && (state.view === 'settings' || state.view === 'reading')) {
+            window.hifzShowView('session', state.suraNum, state.name);
         }
     }
 
@@ -2836,6 +3279,7 @@
     }
 
     function switchTaTab(tab) {
+        scrollActiveScreenToTop();
         document.querySelectorAll('#taReadingArea .quran-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.taTab === tab));
         document.getElementById('taTabReciters').classList.toggle('active', tab === 'reciters');
         document.getElementById('taTabReading').classList.toggle('active', tab === 'reading');
@@ -3243,6 +3687,602 @@
         }
     });
 
+
+
+    // ==== شاشة حفظ القرآن بالتكرار: بتكرر كل آية في مقطع محدد عدد مرات، وبعدها بتعيد المقطع كله ====
+    (function () {
+        const SAVE_KEY = 'hifzSettings';
+        const PROG_KEY = 'hifzProgress';
+        const hz = { active: false, sura: 0, ayahs: [], from: 0, to: 0, idx: 0, rep: 0, round: 0, timer: null,
+                     per: 5, rounds: 1, pause: true, hide: false, reciter: null, token: 0, view: 'index', name: '', lastMsg: '', selFrom: 0, selTo: 0,
+                     resume: null, phase: 'restart', waitInfo: null, autoResume: false, offline: false, leaving: false };
+
+        try {
+            const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+            if ([1,3,5,7,9].includes(saved.per)) hz.per = saved.per;
+            if ([1,3,5,7,9].includes(saved.rounds)) hz.rounds = saved.rounds;
+            if (typeof saved.pause === 'boolean') hz.pause = saved.pause;
+            if (typeof saved.hide === 'boolean') hz.hide = saved.hide;
+            if (typeof saved.reciter === 'string' && EVERYAYAH_RECITERS[saved.reciter]) hz.reciter = saved.reciter;
+        } catch (e) {}
+        if (!hz.reciter) hz.reciter = EVERYAYAH_RECITERS[selectedTextAudioReciter] ? selectedTextAudioReciter : Object.keys(EVERYAYAH_RECITERS)[0];
+
+        const $ = id => document.getElementById(id);
+        const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify({ per: hz.per, rounds: hz.rounds, pause: hz.pause, hide: hz.hide, reciter: hz.reciter })); } catch (e) {} };
+        const toast = m => { if (typeof showQuickToast === 'function') showQuickToast(m, 3000); };
+        const reduceMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isOffline = () => !navigator.onLine;
+
+        // ---------- حفظ مكان التوقف (لكل سورة) عشان نكمّل منه بدل ما نبدأ من الأول ----------
+        function readProgressMap() { try { return JSON.parse(localStorage.getItem(PROG_KEY) || '{}') || {}; } catch (e) { return {}; } }
+        function persistProgress() {
+            if (!hz.sura) return;
+            const map = readProgressMap();
+            if (hz.resume) map[hz.sura] = hz.resume; else delete map[hz.sura];
+            try { localStorage.setItem(PROG_KEY, JSON.stringify(map)); } catch (e) {}
+        }
+        function snapshot() {
+            return { from: hz.from, to: hz.to, idx: hz.idx, rep: hz.rep, round: hz.round, per: hz.per, rounds: hz.rounds, reciter: hz.reciter };
+        }
+        function loadProgress(num) {
+            const r = readProgressMap()[num];
+            const n = hz.ayahs.length;
+            if (r && Number.isInteger(r.from) && Number.isInteger(r.to) && Number.isInteger(r.idx) &&
+                r.from >= 0 && r.to < n && r.from <= r.to && r.idx >= r.from && r.idx <= r.to) {
+                hz.resume = r;
+                hz.phase = 'restart'; hz.waitInfo = null;
+                hz.selFrom = r.from; hz.selTo = r.to;
+            } else {
+                hz.resume = null;
+            }
+        }
+        // هل نقطة التوقف لسه مناسبة للإعدادات الحالية؟ (لو غيّر المقطع/التكرار/القارئ نبدأ من جديد)
+        function canResume() {
+            const r = hz.resume;
+            return !!r && r.from === hz.selFrom && r.to === hz.selTo && r.per === hz.per && r.rounds === hz.rounds && r.reciter === hz.reciter;
+        }
+
+        // ---------- الفهرس ----------
+        function buildIndex() {
+            const box = $('hzSuraIndex');
+            box.innerHTML = '';
+            suras.forEach((name, i) => {
+                const card = document.createElement('div');
+                card.className = 'sura-card';
+                card.setAttribute('data-name', name);
+                card.innerHTML = `<span>${i + 1}. ${name}</span> <i class="fas fa-repeat" style="font-size:0.75rem; color:var(--gold)"></i>`;
+                card.onclick = () => openSura(i + 1, name);
+                box.appendChild(card);
+            });
+        }
+
+        window.hifzFilterSuras = function () {
+            const q = normalizeArabic($('hzSuraSearch').value.trim());
+            document.querySelectorAll('#hzSuraIndex .sura-card').forEach(c => {
+                c.style.display = normalizeArabic(c.getAttribute('data-name')).includes(q) ? 'flex' : 'none';
+            });
+        };
+
+        function showIndex() {
+            hz.leaving = false;
+            pauseSession(); closeSheet();
+            hz.token++;
+            const sb = $('hzSuraSearch');
+            if (sb && sb.value) { sb.value = ''; window.hifzFilterSuras(); }
+            setView('index');
+            if (!$('hzSuraIndex').children.length) buildIndex();
+            updateJump();
+        }
+
+        function setView(v) {
+            $('hzIndexView').style.display = v === 'index' ? 'block' : 'none';
+            $('hzSessionView').style.display = v === 'session' ? 'block' : 'none';
+            hz.view = v;
+        }
+
+        function openSura(num, name) {
+            showView('session', num, name);
+            pushNav({ screen: 'hifzScreen', view: 'reading', suraNum: num, name });
+        }
+
+        window.hifzBackToIndex = function () {
+            if (historyDepth > 0) { history.back(); } else { showIndex(); }
+        };
+
+        // بيعرض شاشة الإعدادات أو شاشة الحفظ لسورة معيّنة، وبيحمّل نص السورة لو لسه مش محمّل
+        async function showView(view, num, name) {
+            hz.leaving = false;
+            pauseSession();
+            const same = hz.sura === num && hz.ayahs.length > 0;
+            hz.sura = num; hz.name = name;
+            $('hzSuraTitle').innerText = 'سورة ' + name;
+            closeSheet(); fillReciters(); syncControls();
+            setView('session');
+            applyOfflineLock();
+            if (same) {
+                if (!hz.resume) loadProgress(num);
+                render(); updateRange();
+                $('hzGoBtn').disabled = false;
+                updateUI();
+                return;
+            }
+            hz.resume = null; hz.lastMsg = ''; hz.waitInfo = null;
+            renderTopBar();
+            const my = ++hz.token;
+            hz.ayahs = [];
+            $('hzGoBtn').disabled = true;
+            hz.selFrom = 0; hz.selTo = 0; updateRange();
+            $('hzViewer').innerHTML = 'جاري التحميل...';
+            try {
+                const key = `cache_sura_${num}`;
+                let ayahs = null;
+                try { const c = localStorage.getItem(key); if (c) ayahs = JSON.parse(c); } catch (e) { ayahs = null; }
+                if (!ayahs) {
+                    const res = await fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`);
+                    const data = await res.json();
+                    ayahs = data.data.ayahs;
+                    try { localStorage.setItem(key, JSON.stringify(ayahs)); } catch (e) {}
+                }
+                if (my !== hz.token) return;
+                hz.ayahs = ayahs;
+                fillRange();
+                loadProgress(num);
+                $('hzGoBtn').disabled = false;
+                render(); updateRange();
+                updateUI();
+            } catch (e) {
+                if (my !== hz.token) return;
+                hz.sura = 0;
+                toast('تعذّر تحميل السورة، تأكد من الاتصال بالإنترنت');
+                $('hzViewer').innerHTML = 'تعذّر تحميل السورة، تأكد من الاتصال بالإنترنت.';
+            }
+        }
+
+        function render() {
+            const showBasmala = hz.sura != 1 && hz.sura != 9;
+            let html = showBasmala ? '<span class="basmala">بِسْمِ ٱللَّهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ</span>' : '';
+            hz.ayahs.forEach((a, i) => {
+                let t = (showBasmala && a.numberInSurah === 1) ? stripLeadingBasmala(a.text) : a.text;
+                if (a.numberInSurah === 1) t = t.replace(/^[\s\-–—_ـ«»"'ۧ]+/, '');
+                html += `<div class="ayah-unit" id="hz-ayah-${i}" data-i="${i}"><span class="ayah-text">${t}</span><span class="ayah-circle" role="button" tabindex="0" aria-label="إظهار أو إخفاء الآية ${a.numberInSurah}">${a.numberInSurah}</span><span class="tafsir-btn" onclick="toggleTafsir(this, ${hz.sura}, ${a.numberInSurah})"><i class="fas fa-book-open"></i> تفسير</span><span class="ayah-copy-btn" onclick="copyAyahText(this)"><i class="fas fa-copy"></i> نسخ</span><div class="tafsir-box"><span class="tafsir-label">تفسير السعدي</span><span class="tafsir-text"></span></div></div>`;
+            });
+            $('hzViewer').innerHTML = html;
+            applyHide();
+            markRange();
+        }
+
+        function fillReciters() {
+            const el = $('hzReciterName');
+            if (el) el.innerText = EVERYAYAH_RECITERS[hz.reciter].name;
+        }
+
+        function fillRange() {
+            hz.selFrom = 0;
+            hz.selTo = Math.max(hz.ayahs.length - 1, 0);
+            updateRange();
+        }
+
+        function countWord(n) {
+            if (n === 1) return 'آية واحدة';
+            if (n === 2) return 'آيتان';
+            if (n >= 3 && n <= 10) return n + ' آيات';
+            return n + ' آية';
+        }
+
+        // التعديل ممنوع لو الحفظ شغّال أو مفيش نت
+        const rangeLocked = () => hz.active || hz.offline;
+
+        function updateRange() {
+            const n = hz.ayahs.length;
+            const f = hz.ayahs[hz.selFrom], t = hz.ayahs[hz.selTo];
+            $('hzFromVal').innerText = f ? f.numberInSurah : '—';
+            $('hzToVal').innerText = t ? t.numberInSurah : '—';
+            const count = n ? hz.selTo - hz.selFrom + 1 : 0;
+            const whole = n > 0 && count === n;
+            $('hzRangeSummary').innerText = n ? (whole ? `السورة كاملة (${countWord(n)})` : countWord(count)) : '';
+            $('hzWholeBtn').classList.toggle('active', whole);
+            // الاختيار حر: أي آية من 1 لآخر السورة، ولو تعارض الطرفين بيتحرك الطرف التاني معاه
+            const lock = rangeLocked();
+            $('hzFromDec').disabled = lock || !n || hz.selFrom <= 0;
+            $('hzFromInc').disabled = lock || !n || hz.selFrom >= n - 1;
+            $('hzToDec').disabled = lock || !n || hz.selTo <= 0;
+            $('hzToInc').disabled = lock || !n || hz.selTo >= n - 1;
+            $('hzFromVal').disabled = lock || !n;
+            $('hzToVal').disabled = lock || !n;
+            $('hzWholeBtn').disabled = lock || !n;
+            markRange();
+        }
+
+        function setSel(which, i) {
+            const n = hz.ayahs.length;
+            i = Math.min(Math.max(i, 0), n - 1);
+            if (which === 'from') { hz.selFrom = i; if (hz.selTo < i) hz.selTo = i; }
+            else { hz.selTo = i; if (hz.selFrom > i) hz.selFrom = i; }
+        }
+
+        window.hifzStep = function (which, d) {
+            if (rangeLocked() || !hz.ayahs.length) return;
+            setSel(which, (which === 'from' ? hz.selFrom : hz.selTo) + d);
+            updateRange(); updateUI();
+        };
+
+        window.hifzWhole = function () {
+            if (rangeLocked() || !hz.ayahs.length) return;
+            hz.selFrom = 0; hz.selTo = hz.ayahs.length - 1;
+            updateRange(); updateUI();
+        };
+
+        // ---------- النافذة السفلية ----------
+        let sheetEl = null;
+        function closeSheet() {
+            if (sheetEl) { sheetEl.remove(); sheetEl = null; }
+        }
+        function openSheet(title) {
+            closeSheet();
+            sheetEl = document.createElement('div');
+            sheetEl.className = 'hz-sheet-overlay';
+            sheetEl.innerHTML = `<div class="hz-sheet" role="dialog" aria-modal="true" aria-label="${title}"><div class="hz-sheet-head"><span>${title}</span><button type="button" class="hz-sheet-x" aria-label="إغلاق"><i class="fas fa-times"></i></button></div><div class="hz-sheet-body"></div></div>`;
+            sheetEl.addEventListener('click', e => { if (e.target === sheetEl) closeSheet(); });
+            sheetEl.querySelector('.hz-sheet-x').addEventListener('click', closeSheet);
+            document.body.appendChild(sheetEl);
+            return sheetEl.querySelector('.hz-sheet-body');
+        }
+
+        window.hifzPickReciter = function () {
+            if (rangeLocked()) return;
+            const body = openSheet('اختيار القارئ');
+            const list = document.createElement('div');
+            list.className = 'reciter-full-list';
+            list.innerHTML = Object.keys(EVERYAYAH_RECITERS).map(k => `
+                <div class="reciter-full-card${k === hz.reciter ? ' selected' : ''}" data-key="${k}" role="button" tabindex="0">
+                    <span class="rfc-avatar"><i class="fas fa-microphone-alt"></i></span>
+                    <span class="rfc-name">${EVERYAYAH_RECITERS[k].name}</span>
+                    <i class="fas fa-check-circle rfc-check"></i>
+                </div>`).join('');
+            list.addEventListener('click', e => {
+                const card = e.target.closest('.reciter-full-card');
+                if (!card || rangeLocked()) return;
+                hz.reciter = card.dataset.key;
+                save(); fillReciters(); closeSheet(); updateUI();
+            });
+            body.appendChild(list);
+        };
+
+        window.hifzPickAyah = function (which) {
+            const n = hz.ayahs.length;
+            if (!n || rangeLocked()) return;
+            const body = openSheet(which === 'from' ? 'اختيار آية البداية' : 'اختيار آية النهاية');
+            const grid = document.createElement('div');
+            grid.className = 'hz-ayah-grid';
+            const cur = which === 'from' ? hz.selFrom : hz.selTo;
+            // كل الآيات متاحة من آية 1 لآخر آية (مفيش آيات معطّلة)
+            grid.innerHTML = hz.ayahs.map((a, i) =>
+                `<button type="button" class="hz-ayah-cell${i === cur ? ' selected' : ''}" data-i="${i}">${a.numberInSurah}</button>`
+            ).join('');
+            grid.addEventListener('click', e => {
+                const cell = e.target.closest('.hz-ayah-cell');
+                if (!cell || rangeLocked()) return;
+                setSel(which, Number(cell.dataset.i));
+                updateRange(); closeSheet(); updateUI();
+            });
+            body.appendChild(grid);
+            const sel = grid.querySelector('.selected');
+            if (sel) sel.scrollIntoView({ block: 'center' });
+        };
+
+        function syncControls() {
+            document.querySelectorAll('#hzSessionView .hz-chips').forEach(g => {
+                const cur = g.dataset.hzGroup === 'per' ? hz.per : hz.rounds;
+                g.querySelectorAll('.hz-chip').forEach(b => { b.classList.toggle('active', Number(b.dataset.v) === cur); b.disabled = rangeLocked(); });
+            });
+            $('hzPause').checked = hz.pause;
+            $('hzHide').checked = hz.hide;
+            $('hzPause').disabled = hz.offline;
+            $('hzHide').disabled = hz.offline;
+            const rb = document.querySelector('#hzSessionView .reciter-current-mini');
+            if (rb) rb.disabled = rangeLocked();
+        }
+
+        function applyHide() {
+            const v = $('hzViewer');
+            v.classList.toggle('hz-hide', hz.hide);
+            if (!hz.hide) v.querySelectorAll('.hz-revealed').forEach(el => el.classList.remove('hz-revealed'));
+        }
+
+        function markRange() {
+            document.querySelectorAll('#hzViewer .ayah-unit').forEach((u, i) => u.classList.toggle('hz-inrange', i >= hz.selFrom && i <= hz.selTo));
+        }
+
+        window.hifzSettingChanged = function () {
+            if (hz.offline) { syncControls(); return; }
+            hz.pause = $('hzPause').checked;
+            hz.hide = $('hzHide').checked;
+            save(); applyHide();
+            // لو قفلت مهلة الترديد وإحنا في وسط المهلة: نلغيها فورًا وننتقل للتكرار التالي
+            if (!hz.pause && hz.waitInfo) {
+                if (hz.active) {
+                    const go = hz.waitInfo.proceed;
+                    clearTimeout(hz.timer); hz.timer = null;
+                    go();
+                } else {
+                    hz.waitInfo.remaining = 0; // لو الحفظ موقوف مؤقتًا، الاستئناف هيكمّل على طول
+                }
+            }
+        };
+
+        // ---------- قفل التعديل عند انقطاع النت ----------
+        function applyOfflineLock() {
+            hz.offline = isOffline();
+            const view = $('hzSessionView');
+            if (view) view.classList.toggle('hz-offline', hz.offline);
+            if (hz.offline) closeSheet();
+            syncControls();
+            updateRange();
+            updateUI();
+        }
+
+        function onWentOffline() {
+            const wasActive = hz.active;
+            if (wasActive) { hz.autoResume = true; pauseSession(); }
+            // لو الإنترنت فصل أثناء الحفظ، نبدأ الآية الحالية من أولها عند الرجوع
+            if (wasActive) { hz.phase = hz.waitInfo ? 'wait' : 'restart'; }
+            applyOfflineLock();
+            if (wasActive && currentScreenId === 'hifzScreen') toast('انقطع الإنترنت، تم إيقاف الحفظ مؤقتًا');
+        }
+
+        function onBackOnline() {
+            applyOfflineLock();
+            if (hz.autoResume && hz.view === 'session' && currentScreenId === 'hifzScreen' && canResume()) {
+                hz.autoResume = false;
+                setTimeout(() => { if (!isOffline() && !hz.active && canResume()) { toast('عاد الإنترنت، تم استئناف الحفظ'); resumeSession(); } }, 800);
+            } else {
+                hz.autoResume = false;
+            }
+        }
+
+        // ---------- التشغيل ----------
+        function ayahUrl(i) {
+            const a = hz.ayahs[i];
+            const r = EVERYAYAH_RECITERS[hz.reciter];
+            return `https://everyayah.com/data/${r.folder}/${String(hz.sura).padStart(3, '0')}${String(a.numberInSurah).padStart(3, '0')}.mp3`;
+        }
+
+        function renderTopBar() {
+            const bar = $('hzTopActions');
+            if (!bar) return;
+            const restart = '<button type="button" class="hz-go secondary" onclick="hifzRestart()"><i class="fas fa-rotate-left"></i> من الأول</button>';
+            if (hz.active) {
+                bar.innerHTML = '<div class="hz-actions"><button type="button" class="hz-go stop" onclick="hifzPause()"><i class="fas fa-pause"></i> إيقاف مؤقت</button>' + restart + '</div>';
+            } else if (canResume()) {
+                bar.innerHTML = '<div class="hz-actions"><button type="button" class="hz-go" onclick="hifzResume()"><i class="fas fa-play"></i> استئناف</button>' + restart + '</div>';
+            } else {
+                bar.innerHTML = '<div class="hz-actions"><button type="button" class="hz-go" onclick="hifzRestart()"><i class="fas fa-play"></i> ابدأ من جديد</button></div>';
+            }
+        }
+
+        function progressHtml(st, waiting) {
+            const a = hz.ayahs[st.idx];
+            if (!a) return '';
+            return `آية <b>${a.numberInSurah}</b> &middot; التكرار <b>${st.rep + 1}</b> من ${st.per}` + (st.rounds > 1 ? ` &middot; الدورة <b>${st.round + 1}</b> من ${st.rounds}` : '') + (waiting ? '<br><b>رددها الآن...</b>' : '');
+        }
+        function progressPct(st, waiting) {
+            const span = st.to - st.from + 1;
+            const total = span * st.per * st.rounds;
+            const done = ((st.round * span) + (st.idx - st.from)) * st.per + st.rep + (waiting ? 1 : 0);
+            return Math.min(100, Math.round(done / total * 100));
+        }
+
+        // زر "اذهب إلى الآية الحالية": يظهر وإحنا في شاشة الحفظ والحفظ شغّال أو متوقف مؤقتًا
+        function currentIdx() {
+            if (hz.active) return hz.idx;
+            if (canResume()) return hz.resume.idx;
+            return hz.selFrom;
+        }
+        function updateJump() {
+            const b = $('hzJumpBtn');
+            if (!b) return;
+            const show = hz.view === 'session' && currentScreenId === 'hifzScreen' && !hz.leaving && hz.ayahs.length > 0 && (hz.active || canResume());
+            b.classList.toggle('show', show);
+        }
+        window.hifzJumpToCurrent = function () {
+            const unit = $('hz-ayah-' + currentIdx());
+            if (unit) unit.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
+        };
+
+        function updateUI(waiting) {
+            updateJump();
+            renderTopBar();
+            const go = $('hzGoBtn');
+            const resumable = !hz.active && canResume();
+            const showBar = hz.active || resumable || !!hz.lastMsg;
+            $('hzTopBar').classList.toggle('show', showBar);
+            if (go) {
+                go.innerHTML = '<i class="fas fa-play"></i> ابدأ الحفظ';
+                go.style.display = showBar ? 'none' : 'flex';
+            }
+            document.querySelectorAll('#hzViewer .hz-playing').forEach(el => el.classList.remove('hz-playing'));
+            if (hz.active) {
+                const st = { idx: hz.idx, rep: hz.rep, round: hz.round, from: hz.from, to: hz.to, per: hz.per, rounds: hz.rounds };
+                $('hzTopText').innerHTML = progressHtml(st, waiting);
+                $('hzTopFill').style.width = progressPct(st, waiting) + '%';
+                const unit = $('hz-ayah-' + hz.idx);
+                if (unit) {
+                    unit.classList.add('hz-playing');
+                    unit.scrollIntoView({ block: 'nearest', behavior: reduceMotion() ? 'auto' : 'smooth' });
+                }
+                return;
+            }
+            if (resumable) {
+                const r = hz.resume;
+                $('hzTopText').innerHTML = (hz.offline ? 'الحفظ متوقف حتى يعود الإنترنت<br>' : 'متوقف مؤقتًا<br>') + progressHtml(r, false);
+                $('hzTopFill').style.width = progressPct(r, false) + '%';
+                const unit = $('hz-ayah-' + r.idx);
+                if (unit) unit.classList.add('hz-playing');
+                return;
+            }
+            $('hzTopText').innerHTML = hz.lastMsg ? hz.lastMsg : 'الحفظ متوقف';
+            $('hzTopFill').style.width = '0%';
+        }
+
+        // إيقاف نهائي (بينهي الجلسة ويمسح نقطة الاستئناف): بنستخدمه عند الانتهاء أو الخطأ
+        function endSession(message, clearProgress) {
+            clearTimeout(hz.timer); hz.timer = null; hz.waitInfo = null;
+            const was = hz.active;
+            hz.active = false;
+            hz.lastMsg = message || '';
+            const audio = $('hzAudio');
+            if (was && audio) audio.pause();
+            if (clearProgress) { hz.resume = null; persistProgress(); }
+            syncControls(); updateRange(); updateUI();
+            if (message) toast(message);
+        }
+
+        // إيقاف مؤقت: بيحافظ على مكان التوقف عشان نقدر نكمّل منه
+        function pauseSession(message) {
+            if (!hz.active) return;
+            const audio = $('hzAudio');
+            if (hz.waitInfo) {
+                hz.waitInfo.remaining = Math.max(hz.waitInfo.end - Date.now(), 0);
+                hz.phase = 'wait';
+            } else {
+                hz.phase = (audio && audio.getAttribute('src') && !audio.ended && !audio.error) ? 'audio' : 'restart';
+            }
+            clearTimeout(hz.timer); hz.timer = null;
+            hz.active = false;
+            hz.lastMsg = '';
+            if (audio) audio.pause();
+            hz.resume = snapshot();
+            persistProgress();
+            syncControls(); updateRange(); updateUI();
+            if (message) toast(message);
+        }
+
+        function pauseOtherAudio() {
+            try { const t = $('taAudio'); if (t && !t.paused) t.pause(); } catch (e) {}
+            try { const m = $('mainAudio'); if (m && !m.paused) m.pause(); } catch (e) {}
+            try { if (typeof radioAudioEl !== 'undefined' && radioAudioEl && !radioAudioEl.paused) radioAudioEl.pause(); } catch (e) {}
+        }
+
+        function play() {
+            if (isOffline()) { hz.autoResume = true; hz.phase = 'restart'; pauseSession(); applyOfflineLock(); return; }
+            const audio = $('hzAudio');
+            pauseOtherAudio();
+            audio.src = ayahUrl(hz.idx);
+            audio.play().catch(() => {});
+            hz.resume = snapshot(); persistProgress();
+            updateUI();
+        }
+
+        function onEnded() {
+            if (!hz.active) return;
+            const audio = $('hzAudio');
+            const waitMs = hz.pause && isFinite(audio.duration) ? Math.min(Math.max(audio.duration * 1000, 1500), 30000) : 0;
+            let nextRep = hz.rep + 1, nextIdx = hz.idx, nextRound = hz.round;
+            if (nextRep >= hz.per) {
+                nextRep = 0; nextIdx = hz.idx + 1;
+                if (nextIdx > hz.to) { nextIdx = hz.from; nextRound = hz.round + 1; }
+            }
+            const finished = nextRound >= hz.rounds;
+            const proceed = () => {
+                hz.timer = null; hz.waitInfo = null;
+                if (!hz.active) return;
+                if (finished) { endSession('ما شاء الله، أتممت المقطع. تقبّل الله منك', true); hz.lastMsg = 'تم إتمام المقطع، تقبّل الله منك'; updateUI(); return; }
+                hz.rep = nextRep; hz.idx = nextIdx; hz.round = nextRound;
+                play();
+            };
+            if (waitMs && !finished) {
+                hz.waitInfo = { proceed, end: Date.now() + waitMs, remaining: waitMs };
+                updateUI(true);
+                hz.timer = setTimeout(proceed, waitMs);
+            } else proceed();
+        }
+
+        function begin() {
+            if (!hz.ayahs.length) return false;
+            if (isOffline()) { toast('لا يوجد اتصال بالإنترنت حاليًا'); return false; }
+            clearTimeout(hz.timer); hz.timer = null; hz.waitInfo = null;
+            hz.from = hz.selFrom;
+            hz.to = Math.max(hz.selTo, hz.selFrom);
+            hz.idx = hz.from; hz.rep = 0; hz.round = 0; hz.lastMsg = '';
+            hz.active = true;
+            syncControls(); updateRange();
+            markRange();
+            play();
+            return true;
+        }
+
+        function resumeSession() {
+            if (hz.active) return;
+            if (isOffline()) { toast('لا يوجد اتصال بالإنترنت حاليًا'); return; }
+            if (!canResume()) { begin(); return; }
+            const r = hz.resume;
+            hz.from = r.from; hz.to = r.to; hz.idx = r.idx; hz.rep = r.rep; hz.round = r.round; hz.lastMsg = '';
+            hz.active = true;
+            syncControls(); updateRange();
+            const audio = $('hzAudio');
+            if (hz.phase === 'wait' && hz.waitInfo) {
+                pauseOtherAudio();
+                const info = hz.waitInfo;
+                info.end = Date.now() + info.remaining;
+                hz.timer = setTimeout(info.proceed, info.remaining);
+                updateUI(true);
+            } else if (hz.phase === 'audio' && audio.getAttribute('src') && audio.src === ayahUrl(hz.idx)) {
+                pauseOtherAudio();
+                audio.play().catch(() => { if (hz.active) play(); });
+                updateUI();
+            } else {
+                play();
+            }
+        }
+
+        window.hifzStartStop = function () { if (!hz.active) begin(); };
+        window.hifzPause = function () { if (hz.active) pauseSession('تم الإيقاف مؤقتًا، يمكنك الاستئناف'); };
+        window.hifzResume = resumeSession;
+        window.hifzRestart = function () {
+            if (isOffline()) { toast('لا يوجد اتصال بالإنترنت حاليًا'); return; }
+            const audio = $('hzAudio');
+            if (hz.active) { clearTimeout(hz.timer); hz.timer = null; hz.waitInfo = null; hz.active = false; if (audio) audio.pause(); }
+            hz.resume = null; persistProgress();
+            begin();
+        };
+        // بيستدعيه باقي التطبيق عند الخروج من الشاشة: بيوقف مؤقتًا ويحتفظ بالمكان
+        window.hifzStop = function (userAction) { pauseSession(userAction ? 'تم إيقاف وضع الحفظ' : undefined); hz.leaving = true; updateJump(); };
+        window.hifzShowIndex = showIndex;
+        window.hifzShowView = showView;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const audio = $('hzAudio');
+            audio.addEventListener('ended', onEnded);
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+            audio.addEventListener('error', () => {
+                if (!hz.active || !audio.getAttribute('src')) return;
+                if (isOffline()) { onWentOffline(); return; }
+                hz.phase = 'restart';
+                pauseSession('تعذّر تحميل الصوت، تم إيقاف وضع الحفظ');
+            });
+            // لو أي صوت تاني اشتغل (إذاعة/مشغّل القرآن)، نوقف وضع الحفظ مؤقتًا بدل ما يتداخلوا
+            document.addEventListener('play', e => { if (hz.active && e.target !== audio) pauseSession(); }, true);
+            window.addEventListener('offline', onWentOffline);
+            window.addEventListener('online', onBackOnline);
+            document.querySelectorAll('#hzSessionView .hz-chip').forEach(b => b.addEventListener('click', () => {
+                if (rangeLocked()) return;
+                if (b.parentElement.dataset.hzGroup === 'per') hz.per = Number(b.dataset.v); else hz.rounds = Number(b.dataset.v);
+                save(); syncControls(); updateUI();
+            }));
+            // الضغط على رقم الآية بيظهر/بيخفي الآية (في وضع الإخفاء)
+            const toggleAyah = e => {
+                if (!hz.hide || hz.offline) return;
+                const c = e.target.closest('.ayah-circle');
+                if (!c) return;
+                e.preventDefault();
+                const unit = c.closest('.ayah-unit');
+                if (unit) unit.classList.toggle('hz-revealed');
+            };
+            $('hzViewer').addEventListener('click', toggleAyah);
+            $('hzViewer').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') toggleAyah(e); });
+            applyOfflineLock();
+        });
+    })();
 
     // ==== خلفية متحركة: جسيمات ذهبية عائمة خفيفة خلف التطبيق ====
     function initStarfield() {
@@ -3897,6 +4937,7 @@
     }
 
     function switchPrayerTab(tab) {
+        scrollActiveScreenToTop();
         document.querySelectorAll('#prayerScreen .glimpse-tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
         document.getElementById('prayerTabTimes').classList.toggle('active', tab === 'times');
         document.getElementById('prayerTabQibla').classList.toggle('active', tab === 'qibla');
@@ -4437,6 +5478,7 @@
     ];
 
     function switchGlimpseTab(tab) {
+        scrollActiveScreenToTop();
         document.querySelectorAll('.glimpse-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
         document.getElementById('glimpseTabProphets').classList.toggle('active', tab === 'prophets');
         document.getElementById('glimpseTabCompanions').classList.toggle('active', tab === 'companions');
@@ -4888,6 +5930,7 @@
     ];
 
     function switchFullStoriesTab(tab) {
+        scrollActiveScreenToTop();
         document.querySelectorAll('#fullStoriesScreen .glimpse-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
         document.getElementById('fullStoriesTabProphets').classList.toggle('active', tab === 'prophets');
         document.getElementById('fullStoriesTabCompanions').classList.toggle('active', tab === 'companions');
@@ -5511,6 +6554,7 @@
     }
 
     function switchQuizAnsweredTab(tab) {
+        scrollActiveScreenToTop();
         document.querySelectorAll('#quizAnsweredScreen .glimpse-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
         document.getElementById('quizAnsweredTabCorrect').classList.toggle('active', tab === 'correct');
         document.getElementById('quizAnsweredTabWrong').classList.toggle('active', tab === 'wrong');
