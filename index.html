@@ -546,6 +546,109 @@
         @keyframes spFade { from { opacity: 0; transform: translateY(0.75rem); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spGlow { 0%,100% { box-shadow: 0 0 2rem rgba(247,200,115,0.25), 0 0.75rem 2rem rgba(0,0,0,0.4); } 50% { box-shadow: 0 0 3.25rem rgba(247,200,115,0.5), 0 0.75rem 2rem rgba(0,0,0,0.4); } }
         @keyframes spDot { 0%,80%,100% { opacity: 0.25; transform: scale(0.7); } 40% { opacity: 1; transform: scale(1.15); } }
+
+        /* ================= المساعد الديني: تصميم جديد ================= */
+        :root { --ai-surface: oklch(0.24 0.04 165); --ai-border: oklch(0.78 0.07 85 / 26%); --ai-muted: oklch(0.80 0.03 160); --ai-danger: oklch(0.76 0.14 25); --ai-gold-grad: linear-gradient(135deg, #ffe9b3 0%, #f7c873 48%, #d6a04c 100%); }
+        body.night-mode { --ai-surface: oklch(0.16 0.008 165); --ai-muted: oklch(0.78 0.03 85); }
+
+        @keyframes aiIn { from { opacity: 0; transform: translateY(0.5rem); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes aiPulse { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
+        @keyframes aiShine { 0% { transform: translateX(120%); } 55%,100% { transform: translateX(-120%); } }
+        @keyframes aiHalo { 0%,100% { box-shadow: 0 0 0 0 rgba(247,200,115,0.35), 0 0 1.4rem rgba(247,200,115,0.3); } 50% { box-shadow: 0 0 0 0.6rem rgba(247,200,115,0), 0 0 2rem rgba(247,200,115,0.5); } }
+
+        /* --- الكارت المميز في أول القائمة الرئيسية --- */
+        html body .menu-list .menu-item.ai-hero { position: relative; overflow: hidden; gap: 0.9rem; padding: 1.1rem; margin-bottom: 0.4rem; border: 1px solid var(--gold); background: linear-gradient(135deg, rgba(247,200,115,0.26), rgba(247,200,115,0.07) 55%, rgba(0,0,0,0.3)); box-shadow: 0 0.5rem 1.4rem rgba(0,0,0,0.3), 0 0 1.4rem rgba(247,200,115,0.16); }
+        html body .menu-list .menu-item.ai-hero:active { transform: scale(0.985); }
+        .ai-hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, rgba(255,240,200,0.16) 50%, transparent 65%); transform: translateX(120%); pointer-events: none; }
+        @media (prefers-reduced-motion: no-preference) {
+            .ai-hero::before { animation: aiShine 6s ease-in-out infinite; }
+            .ai-hero-icon { animation: aiHalo 3.2s ease-in-out infinite; }
+        }
+        .ai-hero-icon { width: 3.5rem; height: 3.5rem; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: var(--ai-gold-grad); }
+        html body .menu-item.ai-hero .ai-hero-icon i { color: var(--dark); width: auto; font-size: 1.5rem; }
+        .ai-hero-text { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; flex: 1; position: relative; }
+        .ai-hero-tag { align-self: flex-start; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.03rem; color: var(--dark); background: var(--ai-gold-grad); padding: 0.1rem 0.5rem; border-radius: 999px; }
+        .ai-hero-text strong { font-family: 'Amiri', serif; font-size: 1.4rem; line-height: 1.25; font-weight: 700; color: var(--gold); }
+        .ai-hero-text small { font-size: 0.78rem; line-height: 1.55; opacity: 0.88; color: var(--text-color); }
+        html body .menu-item.ai-hero .ai-hero-arrow { font-size: 1rem; width: auto; opacity: 0.85; position: relative; }
+
+        /* --- شاشة المساعد --- */
+        #aiScreen { letter-spacing: 0; }
+        #aiScreen button { cursor: pointer; font-size: 0.875rem; }
+        #aiScreen button:focus-visible, #aiInput:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+        #aiScreen #aiInput:focus-visible { outline: none; }
+
+        .ai-header { display: flex; align-items: center; gap: 0.85rem; padding: 0.35rem 0 1rem; border-bottom: 1px solid var(--ai-border); }
+        .ai-emblem { width: 3.2rem; height: 3.2rem; display: grid; place-items: center; flex-shrink: 0; border-radius: 50%; color: var(--dark); background: var(--ai-gold-grad); font-size: 1.35rem; box-shadow: 0 0 1.2rem rgba(247,200,115,0.35); }
+        .ai-header h2 { font-family: 'Amiri', serif; font-size: 1.65rem; line-height: 1.2; color: var(--gold); }
+        .ai-header p { color: var(--ai-muted); font-size: 0.8rem; margin-top: 0.15rem; }
+        .ai-new { margin-inline-start: auto; display: flex; align-items: center; gap: 0.5rem; background: var(--ai-gold-grad); color: var(--dark); border: 0; border-radius: 999px; padding: 0.7rem 1.1rem; font-weight: 700; flex-shrink: 0; box-shadow: 0 0.25rem 0.8rem rgba(0,0,0,0.25); }
+        .ai-new:active { transform: scale(0.95); }
+
+        .ai-layout { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 1rem; padding-top: 1rem; flex: 1; min-height: 0; }
+        .ai-sidebar { align-self: start; padding: 0.9rem 0.7rem; background: var(--glass); border: 1px solid var(--ai-border); border-radius: 1.25rem; }
+        .ai-sidebar h3 { display: flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; color: var(--gold); margin: 0 0.3rem 0.75rem; }
+        #aiChatList { display: flex; flex-direction: column; gap: 0.4rem; max-height: 24rem; overflow: auto; }
+        .ai-chat-row { display: flex; align-items: center; gap: 0.15rem; border: 1px solid transparent; border-radius: 0.95rem; }
+        .ai-chat-row:hover { background: rgba(255,255,255,0.04); }
+        .ai-chat-row.active { background: rgba(247,200,115,0.12); border-color: var(--ai-border); box-shadow: inset -0.2rem 0 0 var(--gold); }
+        .ai-chat-open { flex: 1; min-width: 0; text-align: right; background: none; border: 0; color: var(--text-color); padding: 0.7rem 0.75rem; }
+        .ai-chat-open span { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 0.85rem; }
+        .ai-chat-open small { display: block; color: var(--ai-muted); font-size: 0.68rem; margin-top: 0.25rem; }
+        .ai-icon-btn { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; flex-shrink: 0; border: 0; border-radius: 50%; background: none; color: var(--ai-muted); }
+        .ai-icon-btn:hover { color: var(--ai-danger); background: var(--glass); }
+
+        .ai-main { min-width: 0; display: flex; flex-direction: column; padding: 1rem 1rem 0.6rem; background: var(--glass); border: 1px solid var(--ai-border); border-radius: 1.6rem; }
+        #aiMessages { display: flex; flex-direction: column; gap: 1.1rem; min-height: 18rem; max-height: max(18rem, calc(100vh - 26rem)); overflow-y: auto; padding: 0.25rem 0.15rem 1rem; flex: 1; }
+        @supports (height: 1dvh) { #aiMessages { max-height: max(18rem, calc(100dvh - 26rem)); } }
+        .ai-message { max-width: 90%; align-self: flex-start; animation: aiIn 0.3s ease both; }
+        .ai-message-user { align-self: flex-end; }
+        .ai-message-label { font-size: 0.72rem; color: var(--ai-muted); margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem; }
+        .ai-message-label i { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; font-size: 0.65rem; color: var(--dark); background: var(--ai-gold-grad); }
+        .ai-message-user .ai-message-label { flex-direction: row-reverse; }
+        .ai-message-user .ai-message-label i { background: rgba(247,200,115,0.2); color: var(--gold); border: 1px solid var(--ai-border); }
+        .ai-message-text { padding: 0.9rem 1.1rem; border: 1px solid var(--ai-border); border-radius: 0.35rem 1.3rem 1.3rem 1.3rem; background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(0,0,0,0.16)); color: var(--text-color); font-size: 0.95rem; white-space: pre-wrap; line-height: 2; overflow-wrap: anywhere; user-select: text; -webkit-user-select: text; box-shadow: 0 0.25rem 0.8rem rgba(0,0,0,0.15); }
+        .ai-message-user .ai-message-text { background: var(--ai-gold-grad); color: var(--dark); border-color: transparent; border-radius: 1.3rem 0.35rem 1.3rem 1.3rem; font-weight: 500; line-height: 1.8; }
+        .ai-message-text.ai-thinking { color: var(--ai-muted); animation: aiPulse 1.3s ease-in-out infinite; }
+
+        .ai-empty { margin: auto; text-align: center; padding: 1.2rem 0.4rem; width: 100%; max-width: 36rem; }
+        .ai-empty-badge { width: 4.6rem; height: 4.6rem; margin: 0 auto 1.1rem; display: grid; place-items: center; border-radius: 50%; color: var(--gold); font-size: 1.9rem; background: radial-gradient(circle, rgba(247,200,115,0.22), rgba(247,200,115,0.04) 70%); border: 1px solid var(--ai-border); box-shadow: 0 0 2rem rgba(247,200,115,0.2); }
+        .ai-empty h3 { font-family: 'Amiri', serif; font-size: 1.7rem; font-weight: 700; color: var(--gold); }
+        .ai-empty p { color: var(--ai-muted); font-size: 0.85rem; margin-top: 0.4rem; line-height: 1.7; }
+        .ai-suggestions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin-top: 1.4rem; }
+        .ai-suggestions button { display: flex; align-items: center; gap: 0.65rem; text-align: right; padding: 0.8rem 0.9rem; background: var(--glass); border: 1px solid var(--ai-border); color: var(--text-color); border-radius: 1rem; line-height: 1.5; }
+        .ai-suggestions button i { color: var(--gold); font-size: 1rem; width: 1.3rem; text-align: center; flex-shrink: 0; }
+        .ai-suggestions button:hover { border-color: var(--gold); background: rgba(247,200,115,0.1); }
+        .ai-suggestions button:active { transform: scale(0.97); }
+
+        #aiForm { display: flex; align-items: flex-end; gap: 0.5rem; padding: 0.45rem; background: var(--ai-surface); border: 1px solid var(--ai-border); border-radius: 1.7rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        #aiForm:focus-within { border-color: var(--gold); box-shadow: 0 0 0 0.18rem rgba(247,200,115,0.18); }
+        #aiInput { flex: 1; min-width: 0; border: 0; background: none; color: var(--text-color); resize: none; padding: 0.55rem 0.8rem; font-size: 1rem; line-height: 1.6; }
+        #aiInput::placeholder { color: var(--ai-muted); }
+        #aiSendBtn { width: 2.9rem; height: 2.9rem; flex-shrink: 0; border: 0; border-radius: 50%; background: var(--ai-gold-grad); color: var(--dark); font-size: 1rem; box-shadow: 0 0.2rem 0.6rem rgba(0,0,0,0.3); }
+        #aiSendBtn:active { transform: scale(0.92); }
+        #aiSendBtn:disabled { opacity: 0.5; cursor: wait; }
+        .ai-note { display: flex; align-items: center; justify-content: center; gap: 0.4rem; text-align: center; color: var(--ai-muted); font-size: 0.72rem; padding: 0.7rem 0 0.2rem; line-height: 1.6; }
+        #aiSaveStatus { color: var(--ai-danger); font-size: 0.8rem; text-align: center; }
+        #aiSaveStatus:empty { display: none; }
+
+        @media (max-width: 700px) {
+            .ai-header { gap: 0.7rem; }
+            .ai-header h2 { font-size: 1.45rem; }
+            .ai-new { padding: 0; width: 2.9rem; height: 2.9rem; justify-content: center; }
+            .ai-new span { display: none; }
+            .ai-layout { grid-template-columns: minmax(0, 1fr); gap: 0.8rem; min-height: 0; }
+            .ai-sidebar { padding: 0; background: none; border: 0; }
+            .ai-sidebar h3 { display: none; }
+            #aiChatList { flex-direction: row; max-height: none; overflow-x: auto; overflow-y: hidden; padding-bottom: 0.25rem; }
+            .ai-chat-row { flex: 0 0 11.5rem; background: var(--glass); border-color: var(--ai-border); }
+            .ai-main { padding: 0.8rem 0.7rem 0.5rem; border-radius: 1.4rem; }
+            #aiMessages { min-height: 16rem; max-height: max(16rem, calc(100vh - 25rem)); }
+            @supports (height: 1dvh) { #aiMessages { max-height: max(16rem, calc(100dvh - 25rem)); } }
+            .ai-message { max-width: 95%; }
+            .ai-empty h3 { font-size: 1.45rem; }
+            .ai-suggestions { grid-template-columns: minmax(0, 1fr); }
+        }
     </style>
 </head>
 <body>
@@ -677,6 +780,15 @@ try {
         </div>
 
         <div class="menu-list">
+            <div class="menu-item ai-hero" onclick="openScreen('aiScreen')">
+                <span class="ai-hero-icon"><i class="fas fa-robot"></i></span>
+                <span class="ai-hero-text">
+                    <span class="ai-hero-tag">ذكاء اصطناعي</span>
+                    <strong>المساعد الديني</strong>
+                    <small>اسأل أي سؤال في أمور دينك واحصل على إجابة فورية</small>
+                </span>
+                <i class="fas fa-chevron-left ai-hero-arrow"></i>
+            </div>
             <div class="menu-item" onclick="playRadioDirect()"><i class="fas fa-broadcast-tower"></i><span>إذاعة القرآن الكريم</span></div>
             <!-- الزرار بيشغل مشغّل الصوت الداخلي، وده بيختار تلقائيًا حلقة تلاوة مسجلة من مجموعة حلقات ويبدّل بينها -->
             <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن بالصوت</span></div>
@@ -1127,6 +1239,26 @@ try {
             <button class="reset-all-btn" onclick="resetAllCountersInScreen('afterPrayerList')">تصفير الكل</button>
         </div>
         <div id="afterPrayerList" style="display: flex; flex-direction: column; gap: 0.9375rem; padding-bottom: 1.875rem;"></div>
+    </div>
+
+    <div id="aiScreen" class="content-screen">
+        <div class="ai-header">
+            <div class="ai-emblem"><i class="fas fa-robot" aria-hidden="true"></i></div>
+            <div><h2>المساعد الديني</h2><p>البنا الإسلامي</p></div>
+            <button type="button" class="ai-new" onclick="aiNewChat()" title="محادثة جديدة" aria-label="محادثة جديدة"><i class="fas fa-plus" aria-hidden="true"></i><span>محادثة جديدة</span></button>
+        </div>
+        <div class="ai-layout">
+            <aside class="ai-sidebar"><h3><i class="fas fa-clock-rotate-left" aria-hidden="true"></i> المحادثات</h3><div id="aiChatList"></div></aside>
+            <div class="ai-main">
+                <div id="aiMessages" role="log" aria-label="رسائل المحادثة" aria-live="polite"></div>
+                <form id="aiForm" onsubmit="aiSend(event)">
+                    <textarea id="aiInput" rows="2" aria-label="سؤالك" placeholder="اكتب سؤالك الديني..." onkeydown="if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();aiSend(event);}"></textarea>
+                    <button id="aiSendBtn" type="submit" title="إرسال السؤال" aria-label="إرسال السؤال"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
+                </form>
+                <p id="aiSaveStatus" role="status"></p>
+                <p class="ai-note"><i class="fas fa-circle-info" aria-hidden="true"></i> للفتاوى الشخصية الدقيقة، ارجع لدار الإفتاء أو عالم موثوق.</p>
+            </div>
+        </div>
     </div>
 
     <div id="tasbihScreen" class="content-screen">
@@ -6820,5 +6952,92 @@ try {
     window.onload = initApp;
 </script>
 
+<script>
+    const AI_ENDPOINT = (location.hostname.endsWith('lovable.app') || location.hostname==='localhost' ? '' : 'https://file-opinion-exchange.lovable.app') + '/api/public/ask';
+    const AI_STORAGE_KEY = 'elbanna.religious.chats.v1';
+    let aiChats=[], aiActiveId=null, aiBusy=false, aiCtrl=null;
+    function aiCurrent(){ return aiChats.find(c=>c.id===aiActiveId); }
+    function aiSave(){
+        try { localStorage.setItem(AI_STORAGE_KEY,JSON.stringify({chats:aiChats,activeId:aiActiveId})); document.getElementById('aiSaveStatus').textContent=''; }
+        catch { document.getElementById('aiSaveStatus').textContent='تعذّر حفظ المحادثات على الجهاز. تأكد من وجود مساحة كافية والسماح بالتخزين.'; }
+    }
+    function aiRestore(){
+        try {
+            const data=JSON.parse(localStorage.getItem(AI_STORAGE_KEY)||'null');
+            if(data && Array.isArray(data.chats)) aiChats=data.chats.filter(c=>c && typeof c.id==='string' && typeof c.title==='string' && Array.isArray(c.messages)).map(c=>({...c,messages:c.messages.filter(m=>m && ['user','assistant'].includes(m.role) && typeof m.content==='string')}));
+            aiActiveId=aiChats.some(c=>c.id===data?.activeId)?data.activeId:aiChats[0]?.id||null;
+        } catch { aiChats=[]; aiActiveId=null; }
+        aiRender();
+    }
+    function aiRenderList(){
+        const list=document.getElementById('aiChatList'); list.replaceChildren();
+        if(!aiChats.length){const p=document.createElement('p');p.className='ai-note';p.textContent='لا توجد محادثات بعد';list.appendChild(p);return;}
+        aiChats.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).forEach(chat=>{
+            const row=document.createElement('div');row.className='ai-chat-row'+(chat.id===aiActiveId?' active':'');
+            const open=document.createElement('button');open.type='button';open.className='ai-chat-open';open.onclick=()=>aiOpenChat(chat.id);open.setAttribute('aria-pressed',String(chat.id===aiActiveId));
+            const title=document.createElement('span');title.textContent=chat.title;open.appendChild(title);
+            const date=document.createElement('small');date.textContent=new Date(chat.updatedAt||Date.now()).toLocaleDateString('ar-EG',{day:'numeric',month:'short'});open.appendChild(date);
+            const del=document.createElement('button');del.type='button';del.className='ai-icon-btn';del.title='مسح المحادثة';del.setAttribute('aria-label','مسح المحادثة: '+chat.title);del.innerHTML='<i class="fas fa-trash-can" aria-hidden="true"></i>';del.onclick=()=>aiDeleteChat(chat.id);
+            row.append(open,del);list.appendChild(row);
+        });
+    }
+    function aiBubble(role,text){
+        const row=document.createElement('div');row.className='ai-message'+(role==='user'?' ai-message-user':'');
+        const label=document.createElement('div');label.className='ai-message-label';const ic=document.createElement('i');ic.className='fas '+(role==='user'?'fa-user':'fa-robot');ic.setAttribute('aria-hidden','true');label.append(ic,document.createTextNode(role==='user'?'أنت':'المساعد الديني'));
+        const body=document.createElement('div');body.className='ai-message-text';body.textContent=text;row.append(label,body);document.getElementById('aiMessages').appendChild(row);aiScroll();return body;
+    }
+    function aiScroll(){const box=document.getElementById('aiMessages');box.scrollTop=box.scrollHeight;}
+    function aiRender(){
+        aiRenderList();const box=document.getElementById('aiMessages');box.replaceChildren();const chat=aiCurrent();
+        if(chat?.messages.length)chat.messages.forEach(m=>aiBubble(m.role,m.content));
+        else {
+            const empty=document.createElement('div');empty.className='ai-empty';empty.innerHTML='<div class="ai-empty-badge"><i class="fas fa-book-open" aria-hidden="true"></i></div><h3>بماذا تحب أن تسأل اليوم؟</h3><p>اكتب سؤالك أو اختر واحدًا من الاقتراحات</p><div class="ai-suggestions"></div>';
+            [['fa-sun','ما فضل أذكار الصباح؟'],['fa-person-praying','كيف أصلي صلاة الوتر؟'],['fa-kaaba','ما أركان الإسلام؟'],['fa-hand-holding-heart','ما شروط قبول التوبة؟']].forEach(([ico,q])=>{const btn=document.createElement('button');btn.type='button';const bi=document.createElement('i');bi.className='fas '+ico;bi.setAttribute('aria-hidden','true');btn.append(bi,document.createTextNode(q));btn.onclick=()=>{document.getElementById('aiInput').value=q;document.getElementById('aiInput').focus();};empty.querySelector('.ai-suggestions').appendChild(btn);});box.appendChild(empty);
+        }
+    }
+    function aiStop(){if(aiCtrl)aiCtrl.abort();aiCtrl=null;aiBusy=false;document.getElementById('aiSendBtn').disabled=false;aiSave();}
+    function aiNewChat(){
+        aiStop();const empty=aiChats.find(c=>!c.messages.length);
+        if(empty)aiActiveId=empty.id;
+        else {const chat={id:crypto.randomUUID(),title:'محادثة جديدة',messages:[],updatedAt:Date.now()};aiChats.unshift(chat);aiActiveId=chat.id;}
+        aiSave();aiRender();document.getElementById('aiInput').value='';document.getElementById('aiInput').focus();
+    }
+    function aiOpenChat(id){aiStop();aiActiveId=id;aiSave();aiRender();document.getElementById('aiInput').value='';}
+    function aiDeleteChat(id){
+        const chat=aiChats.find(c=>c.id===id);if(!chat)return;
+        const overlay=document.getElementById('confirmModalOverlay');
+        const t=chat.title.length>40?chat.title.slice(0,40)+'…':chat.title;
+        document.getElementById('confirmModalTitle').innerText='مسح المحادثة';
+        document.getElementById('confirmModalText').innerText='هل تريد مسح محادثة «'+t+'» نهائيًا؟ لا يمكن التراجع عن هذا الإجراء.';
+        document.getElementById('confirmModalDeleteBtn').onclick=function(){
+            if(id===aiActiveId)aiStop();aiChats=aiChats.filter(c=>c.id!==id);
+            if(id===aiActiveId)aiActiveId=aiChats[0]?.id||null;
+            aiSave();aiRender();closeConfirmModal();
+            if('vibrate' in navigator)navigator.vibrate([50,30,50]);
+        };
+        overlay.classList.add('active');
+        if('vibrate' in navigator)navigator.vibrate(30);
+    }
+    async function aiSend(e){
+        if(e)e.preventDefault();if(aiBusy)return;
+        const inp=document.getElementById('aiInput');const q=inp.value.trim();if(!q)return;
+        if(!aiCurrent())aiNewChat();const chat=aiCurrent();if(!chat)return;
+        inp.value='';aiBusy=true;document.getElementById('aiSendBtn').disabled=true;
+        if(!chat.messages.length){chat.title=q.slice(0,70);document.getElementById('aiMessages').replaceChildren();}
+        chat.messages.push({role:'user',content:q});chat.updatedAt=Date.now();aiSave();aiRenderList();aiBubble('user',q);
+        const b=aiBubble('assistant','جاري التفكير…');b.classList.add('ai-thinking');const ctrl=new AbortController();aiCtrl=ctrl;let answer=null;
+        try {
+            const r=await fetch(AI_ENDPOINT,{signal:ctrl.signal,method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chat.messages})});
+            if(!r.ok){let m='حصل خطأ، حاول مرة أخرى لاحقًا.';if(r.status===429)m='ضغط كبير على الخدمة، استنى شوية وجرب تاني.';if(r.status===402)m='رصيد الذكاء الاصطناعي خلص.';try{const j=await r.json();if(j.error)m=j.error;}catch{}throw new Error(m);}
+            if(!r.body)throw new Error('لم يصل رد، حاول مرة أخرى.');
+            const rd=r.body.getReader();const dec=new TextDecoder();
+            while(true){const {done,value}=await rd.read();if(ctrl.signal.aborted)return;if(done)break;const chunk=dec.decode(value,{stream:true});if(!chunk)continue;b.classList.remove('ai-thinking');if(!answer){answer={role:'assistant',content:''};chat.messages.push(answer);}answer.content+=chunk;b.textContent=answer.content;aiSave();aiScroll();}
+            if(answer){answer.content+=dec.decode();b.textContent=answer.content;aiSave();}
+            else throw new Error('لم يصل رد، حاول مرة أخرى.');
+        } catch(err){b.classList.remove('ai-thinking');if(ctrl.signal.aborted)return;b.textContent=err.message||'تعذر الاتصال، تأكد من الإنترنت.';}
+        finally {if(aiCtrl===ctrl){aiCtrl=null;aiBusy=false;document.getElementById('aiSendBtn').disabled=false;aiSave();aiRenderList();}}
+    }
+    aiRestore();
+</script>
 </body>
 </html>
