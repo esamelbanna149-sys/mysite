@@ -22,8 +22,7 @@
         }
 
         html {
-            /* حجم الجذر يتمدد تلقائيًا مع اتساع الشاشة، وكل المقاسات في التطبيق مبنية عليه بوحدة rem
-               فتكبر وتصغر كل الأزرار والنصوص والأيقونات مع بعض بدل ما تفضل مساحة فاضية. مدعومة في كل المتصفحات الحديثة. */
+            
             font-size: clamp(15px, 1.05vw + 10.5px, 26px);
         }
 
@@ -41,7 +40,6 @@
         
         .header-back-btn { display: none; color: var(--gold); cursor: pointer; font-size: 1rem; background: rgba(0,0,0,0.2); width: 2.1875rem; height: 2.1875rem; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(247, 200, 115, 0.1); }
 
-        
         .app-header { padding: 0 1.25rem 1.25rem 1.25rem; text-align: center; border-bottom: 0.0625rem solid rgba(247, 200, 115, 0.1); position: relative; }
         .date-container { display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 1rem; }
         .date-box { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; flex: 1; max-width: 11.25rem; background: linear-gradient(150deg, rgba(247,200,115,0.16), rgba(0,0,0,0.35)); padding: 0.875rem 1rem; border-radius: 1.375rem; border: 1px solid var(--gold); color: var(--gold); box-shadow: 0 0.375rem 0.9375rem rgba(0,0,0,0.28); }
@@ -77,7 +75,6 @@
         .menu-item { background: rgba(42, 95, 81, 0.4); padding: 1.125rem; border-radius: 1.25rem; display: flex; align-items: center; gap: 0.9375rem; cursor: pointer; border: 1px solid rgba(247, 200, 115, 0.1); color: inherit; }
         .menu-item i { font-size: 1.375rem; color: var(--gold); width: 1.875rem; text-align: center; }
 
-
         .about-dev-photo-wrap { display: flex; justify-content: center; margin: 0.625rem 0 1.25rem; }
         .about-dev-photo-wrap img { width: 13rem; height: 13rem; object-fit: cover; border-radius: 1.5rem; border: 0.125rem solid var(--gold); box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.35); pointer-events: none; -webkit-user-drag: none; -webkit-touch-callout: none; user-select: none; }
         .about-dev-card { background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25)); padding: 1.375rem; border-radius: 1.625rem; border-right: 0.3125rem solid var(--gold); box-shadow: 0 0.4375rem 1.125rem rgba(0,0,0,0.25); }
@@ -101,7 +98,6 @@
         .quiz-explain strong { color: #7fd88a; display:block; margin-bottom:0.3rem; }
         .quiz-option:active { transform: scale(0.98); }
 
-        /* الخلفية المتحركة: جسيمات ذهبية عائمة خلف التطبيق */
         .stars-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
         .star-particle { position: absolute; bottom: -1rem; background: var(--gold); border-radius: 50%; opacity: 0; animation: starFloat linear infinite; box-shadow: 0 0 0.375rem 0.0625rem rgba(247,200,115,0.6); }
         @keyframes starFloat {
@@ -111,7 +107,6 @@
             100% { opacity: 0; transform: translateY(-110vh) translateX(var(--drift, 0px)); }
         }
 
-        /* قصاصات الاحتفال عند إتمام الأهداف */
         .confetti-layer { position: fixed; inset: 0; pointer-events: none; z-index: 4000; overflow: hidden; }
         .confetti-piece { position: absolute; top: -0.625rem; width: 0.5rem; height: 0.75rem; opacity: 0.9; border-radius: 0.125rem; animation: confettiFall var(--fall-duration, 1.4s) ease-in forwards; }
         @keyframes confettiFall {
@@ -119,7 +114,6 @@
             100% { transform: translateY(105vh) translateX(var(--x-drift, 0px)) rotate(540deg); opacity: 0; }
         }
 
-        /* تبويبات فرعية داخل شاشة القرآن الكريم: اختيار القراء / فهرس السور */
         .quran-tabs { display: flex; gap: 0.5rem; margin-bottom: 0.9375rem; background: rgba(0,0,0,0.25); border: 1px solid rgba(247,200,115,0.25); border-radius: 3.125rem; padding: 0.25rem; }
         .quran-tab-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4375rem; background: transparent; border: none; color: var(--text-color); opacity: 0.75; font-family: 'Tajawal', sans-serif; font-size: 0.8125rem; font-weight: 700; padding: 0.625rem 0.5rem; border-radius: 3.125rem; cursor: pointer; }
         .quran-tab-btn.active { background: var(--gold); color: var(--dark); opacity: 1; }
@@ -179,7 +173,7 @@
         .reciter-full-list.offline-locked { opacity: 0.45; pointer-events: none; }
         .reciter-full-list.reciter-locked-diff-sura { opacity: 0.45; }
         .player-fixed { position: sticky; top: 0; background: #071d1a; padding: 0.9375rem; border-radius: 1.25rem; border: 1px solid var(--gold); z-index: 100; margin-bottom: 0.9375rem; }
-        /* إخفاء زرار الصوت (الفوليوم) وقائمة الثلاث نقاط من مشغل الصوت الرئيسي بتاع القرآن الكريم */
+        
         #mainAudio::-webkit-media-controls-mute-button,
         #mainAudio::-webkit-media-controls-volume-slider,
         #mainAudio::-webkit-media-controls-volume-control-container,
@@ -197,7 +191,6 @@
         
         .ruqya-text { line-height: 1.8; font-size: 1rem; margin-bottom: 0.9375rem; text-align: justify; }
 
-        /* شريط تنبيه حالة الاتصال بالإنترنت - يظهر في كل تبويبات التطبيق */
         .connection-banner {
             position: fixed; top: 0; left: 50%; transform: translateX(-50%) translateY(-130%);
             z-index: 9999; width: fit-content; max-width: calc(100% - 8.5rem);
@@ -309,7 +302,6 @@
         @keyframes ayahPulse { 0% { background: rgba(247,200,115,0.4); } 100% { background: transparent; } }
         .ayah-unit.ayah-highlight { animation: ayahPulse 2s ease; border-radius: 0.75rem; }
 
-        /* القرآن بالنص والصوت */
         .ayah-play-btn { font-family: 'Tajawal', sans-serif; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.6875rem; font-weight: 700; color: var(--dark); background: var(--gold); padding: 0.1875rem 0.625rem; border-radius: 3.125rem; margin: 0 0.4375rem 0.625rem 0.4375rem; cursor: pointer; vertical-align: middle; opacity: 0.9; user-select: none; }
         .ayah-play-btn:active { opacity: 1; transform: scale(0.97); }
         .ayah-play-btn.active { background: #fff; color: var(--dark); }
@@ -342,7 +334,6 @@
         .exit-toast { position: fixed; left: 50%; bottom: 1.875rem; transform: translateX(-50%) translateY(0.9375rem); background: rgba(0,0,0,0.85); color: var(--gold); border: 1px solid var(--gold); padding: 0.625rem 1.25rem; border-radius: 3.125rem; font-size: 0.8125rem; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; white-space: nowrap; }
         .exit-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        /* Mini Player */
         .mini-player {
             display: none; flex-shrink: 0;
             margin: 0 0.9375rem 0.9375rem 0.9375rem;
@@ -364,27 +355,20 @@
         .mp-repeat-btn { position: relative; display: inline-flex; color: var(--gold); font-size: 1rem; cursor: pointer; }
         .mp-repeat-btn.active { color: #ffffff; text-shadow: 0 0 10px var(--gold); }
         .mp-repeat-btn.active.repeat-ayah { color: #7fd8ff; text-shadow: 0 0 10px #7fd8ff; }
-        /* حالة عدم الاتصال بالإنترنت داخل الشريط المصغر (إذاعة القرآن) */
+        
         .mini-player.offline { border-color: #ff6b6b; }
         .mp-icon.offline { background: #ff6b6b; color: #fff; }
         .mp-sub.offline-text { color: #ff6b6b; opacity: 1; }
 
-        /* Loading indicator */
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-spinner { width: 1rem; height: 1rem; border: 2px solid rgba(247, 200, 115, 0.25); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; flex-shrink: 0; }
         .player-loading { display: none; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.75rem; color: var(--gold); margin-top: 0.5rem; opacity: 0; transition: opacity 0.25s ease; }
         .player-loading.show { display: flex; opacity: 1; }
 
-    
-        /* ==== شاشة حفظ القرآن بالتكرار ==== */
         .hz-intro { text-align: center; font-size: 0.8125rem; line-height: 1.8; opacity: 0.8; margin-bottom: 0.875rem; }
         .hz-setup { background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.3)); border: 1px solid rgba(247,200,115,0.3); border-radius: 1.375rem; padding: 1rem 1.125rem 1.125rem; margin-bottom: 0.9375rem; }
         .hz-row { margin-bottom: 0.875rem; }
         .hz-label { display: block; font-size: 0.75rem; color: var(--gold); font-weight: 700; margin-bottom: 0.375rem; }
-        .hz-range { display: flex; align-items: center; gap: 0.625rem; }
-        .hz-range span { font-size: 0.8125rem; opacity: 0.85; }
-        .hz-select { flex: 1; min-width: 0; width: 100%; background: rgba(0,0,0,0.35); border: 1px solid var(--gold); border-radius: 0.875rem; padding: 0.5rem 0.625rem; color: var(--gold); font-family: 'Tajawal', sans-serif; font-size: 0.875rem; outline: none; }
-        .hz-select option { background: #0a2621; color: #f7c873; }
         .hz-chips { display: flex; flex-wrap: wrap; gap: 0.4375rem; }
         .hz-chip { flex: 1; min-width: 3rem; text-align: center; background: rgba(0,0,0,0.3); border: 1px solid rgba(247,200,115,0.35); color: var(--text-color); border-radius: 0.875rem; padding: 0.4375rem 0.5rem; font-family: 'Tajawal', sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; }
         .hz-chip.active { background: var(--gold); color: var(--dark); border-color: var(--gold); }
@@ -393,7 +377,7 @@
         .hz-check small { display: block; opacity: 0.65; font-size: 0.6875rem; }
         .hz-go { width: 100%; background: var(--gold); color: var(--dark); border: none; border-radius: 3.125rem; padding: 0.75rem; font-family: 'Tajawal', sans-serif; font-size: 1rem; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
         .hz-go.stop { background: rgba(0,0,0,0.35); color: var(--gold); border: 1px solid var(--gold); }
-        .hz-chip:focus-visible, .hz-go:focus-visible, .hz-select:focus-visible { outline: 0.125rem solid var(--gold); outline-offset: 0.125rem; }
+        .hz-chip:focus-visible, .hz-go:focus-visible { outline: 0.125rem solid var(--gold); outline-offset: 0.125rem; }
         .hz-dock { display: none; text-align: center; background: rgba(5,20,18,0.95); border: 1px solid var(--gold); border-radius: 1.25rem; padding: 0.75rem 0.875rem; font-size: 0.875rem; line-height: 1.7; }
         body.night-mode .hz-dock { background: rgba(0,0,0,0.95); }
         .hz-dock b { color: var(--gold); }
@@ -405,7 +389,6 @@
         #hzViewer.hz-hide .ayah-text { filter: blur(0.5rem); }
         #hzViewer.hz-hide .ayah-unit.hz-revealed .ayah-text { filter: none; }
         @media (prefers-reduced-motion: reduce) { .hz-dock .hz-bar i { transition: none; } }
-        .hz-sura-badge { text-align: center; color: var(--gold); font-weight: 700; font-size: 1.0625rem; margin-bottom: 0.875rem; }
         .hz-go:disabled { opacity: 0.5; cursor: not-allowed; }
         .hz-steppers { display: flex; gap: 0.625rem; }
         .hz-stepper { flex: 1; min-width: 0; background: rgba(0,0,0,0.3); border: 1px solid rgba(247,200,115,0.3); border-radius: 1.125rem; padding: 0.5rem 0.5rem 0.625rem; text-align: center; }
@@ -420,7 +403,7 @@
         .hz-link { font-family: 'Tajawal', sans-serif; font-size: 0.75rem; font-weight: 700; color: var(--gold); background: transparent; border: 1px solid rgba(247,200,115,0.4); border-radius: 3.125rem; padding: 0.25rem 0.875rem; cursor: pointer; }
         .hz-link.active { background: var(--gold); color: var(--dark); border-color: var(--gold); }
         .hz-st-btn:focus-visible, .hz-st-val:focus-visible, .hz-link:focus-visible { outline: 0.125rem solid var(--gold); outline-offset: 0.125rem; }
-        /* النافذة السفلية لاختيار القارئ / الآية */
+        
         .hz-sheet-overlay { position: fixed; inset: 0; z-index: 5000; background: rgba(0,0,0,0.6); display: flex; align-items: flex-end; justify-content: center; }
         .hz-sheet { width: 100%; max-width: 40rem; max-height: 78vh; display: flex; flex-direction: column; background: #0d2a24; color: var(--text-color); border: 1px solid rgba(247,200,115,0.35); border-bottom: none; border-radius: 1.75rem 1.75rem 0 0; box-shadow: 0 -0.5rem 2rem rgba(0,0,0,0.5); animation: hzSheetUp 0.25s ease; }
         body.night-mode .hz-sheet { background: #0a0a0a; }
@@ -444,10 +427,8 @@
         #hzViewer.hz-hide .ayah-circle { cursor: pointer; box-shadow: 0 0 0 0.125rem rgba(247,200,115,0.55); min-width: 1.75rem; min-height: 1.75rem; }
         #hzViewer.hz-hide .ayah-text { cursor: default; }
 
-        /* سهم الرجوع العلوي مخفي: الرجوع بزر الجهاز أو أزرار العودة داخل الشاشات */
         .header-back-btn { display: none !important; }
 
-        /* ==== الوضع الرمضاني ==== */
         .ramadan-greeting { display: none; align-items: center; justify-content: center; gap: 0.625rem; margin: 0 0 0.875rem; }
         body.ramadan-mode .ramadan-greeting { display: flex; }
         .ramadan-greeting .rg-line { flex: 1; max-width: 5rem; height: 0.0625rem; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
@@ -468,7 +449,6 @@
             --bg-gradient: radial-gradient(ellipse at 15% 0%, rgba(70,50,150,0.4) 0%, transparent 55%), linear-gradient(160deg, #07041a 0%, #0d0a2a 55%, #02030d 100%);
         }
         body.ramadan-mode .app-container { box-shadow: 0 0 2.5rem rgba(120,90,255,0.2), inset 0 0 0 1px rgba(255,215,122,0.08); border-color: rgba(255,215,122,0.28); }
-        body.ramadan-mode .menu-item { background: linear-gradient(135deg, rgba(120,95,215,0.34), rgba(22,14,66,0.5)); border-color: rgba(255,215,122,0.26); }
         body.ramadan-mode .daily-card { background: linear-gradient(135deg, rgba(150,125,255,0.10), rgba(15,9,50,0.4)); }
         body.ramadan-mode .date-box { background: linear-gradient(150deg, rgba(255,215,122,0.16), rgba(15,9,50,0.5)); }
         body.ramadan-mode .app-header { border-bottom-color: rgba(255,215,122,0.22); }
@@ -478,9 +458,7 @@
         body.ramadan-mode .ta-jump-btn { background: rgba(26,17,72,0.96); }
         body.ramadan-mode .hz-dock { background: rgba(16,10,48,0.96); }
         body.ramadan-mode .hz-sheet { background: #1a1248; }
-        body.ramadan-mode .hz-select option { background: #1a1248; }
         body.ramadan-mode.night-mode .mini-player, body.ramadan-mode.night-mode .player-fixed, body.ramadan-mode.night-mode .ta-player-fixed, body.ramadan-mode.night-mode .ta-jump-btn, body.ramadan-mode.night-mode .hz-dock, body.ramadan-mode.night-mode .hz-sheet { background: #05031a; }
-        body.ramadan-mode.night-mode .menu-item { background: linear-gradient(135deg, rgba(60,45,130,0.3), rgba(5,3,22,0.7)); }
 
         #ramadanDeco { pointer-events: none; }
         #ramadanDeco .rd-back { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
@@ -501,7 +479,6 @@
         @media (min-width: 48rem) { #ramadanDeco .rd-moon { width: 4.5rem; height: 4.5rem; } #ramadanDeco .rd-l1 { left: 30%; } #ramadanDeco .rd-l2 { left: 40%; } #ramadanDeco .rd-l3 { left: 60%; } #ramadanDeco .rd-l4 { left: 70%; } }
         @media (max-height: 30rem) and (orientation: landscape) { #ramadanDeco .rd-lantern { display: none; } }
 
-        /* ==== تحسين شكل شريط مشغل القرآن الصوتي ==== */
         .player-fixed { border-radius: 1.75rem; padding: 1.125rem 1rem 1rem; box-shadow: 0 0.625rem 1.75rem rgba(0,0,0,0.5), 0 0 1.5rem rgba(247,200,115,0.14); overflow: hidden; }
         .player-fixed::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 50% -20%, rgba(247,200,115,0.22) 0%, transparent 65%), linear-gradient(160deg, rgba(247,200,115,0.07), transparent 55%); }
         .player-fixed::after { content: ""; position: absolute; top: 0; left: 15%; right: 15%; height: 0.125rem; z-index: 1; pointer-events: none; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
@@ -516,7 +493,6 @@
         .player-fixed .player-controls .control-btn.active { background: rgba(247,200,115,0.32); border-color: #fff; }
         .player-fixed .player-loading { margin: 0 0 0.5rem; }
 
-        /* ==== شاشة البداية (Splash) — تتبع ألوان الوضع العادي والليلي والرمضاني تلقائيًا ==== */
         #splash { position: fixed; inset: 0; z-index: 5000; background: var(--bg-gradient); background-attachment: fixed; color: var(--text-color); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; text-align: center; overflow: hidden; transition: opacity 0.6s ease, visibility 0.6s ease; }
         #splash.hide { opacity: 0; visibility: hidden; pointer-events: none; }
         #splash::before { content: ""; position: absolute; width: 90vmin; height: 90vmin; border-radius: 50%; background: radial-gradient(circle, rgba(247,200,115,0.16) 0%, transparent 65%); top: 50%; left: 50%; transform: translate(-50%, -58%); pointer-events: none; }
@@ -547,114 +523,16 @@
         @keyframes spGlow { 0%,100% { box-shadow: 0 0 2rem rgba(247,200,115,0.25), 0 0.75rem 2rem rgba(0,0,0,0.4); } 50% { box-shadow: 0 0 3.25rem rgba(247,200,115,0.5), 0 0.75rem 2rem rgba(0,0,0,0.4); } }
         @keyframes spDot { 0%,80%,100% { opacity: 0.25; transform: scale(0.7); } 40% { opacity: 1; transform: scale(1.15); } }
 
-        /* ================= المساعد الديني: تصميم جديد ================= */
-        :root { --ai-surface: oklch(0.24 0.04 165); --ai-border: oklch(0.78 0.07 85 / 26%); --ai-muted: oklch(0.80 0.03 160); --ai-danger: oklch(0.76 0.14 25); --ai-gold-grad: linear-gradient(135deg, #ffe9b3 0%, #f7c873 48%, #d6a04c 100%); }
-        body.night-mode { --ai-surface: oklch(0.16 0.008 165); --ai-muted: oklch(0.78 0.03 85); }
-
-        @keyframes aiIn { from { opacity: 0; transform: translateY(0.5rem); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes aiPulse { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
-        @keyframes aiShine { 0% { transform: translateX(120%); } 55%,100% { transform: translateX(-120%); } }
-        @keyframes aiHalo { 0%,100% { box-shadow: 0 0 0 0 rgba(247,200,115,0.35), 0 0 1.4rem rgba(247,200,115,0.3); } 50% { box-shadow: 0 0 0 0.6rem rgba(247,200,115,0), 0 0 2rem rgba(247,200,115,0.5); } }
-
-        /* --- الكارت المميز في أول القائمة الرئيسية --- */
-        html body .menu-list .menu-item.ai-hero { position: relative; overflow: hidden; gap: 0.9rem; padding: 1.1rem; margin-bottom: 0.4rem; border: 1px solid var(--gold); background: linear-gradient(135deg, rgba(247,200,115,0.26), rgba(247,200,115,0.07) 55%, rgba(0,0,0,0.3)); box-shadow: 0 0.5rem 1.4rem rgba(0,0,0,0.3), 0 0 1.4rem rgba(247,200,115,0.16); }
-        html body .menu-list .menu-item.ai-hero:active { transform: scale(0.985); }
-        .ai-hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, rgba(255,240,200,0.16) 50%, transparent 65%); transform: translateX(120%); pointer-events: none; }
-        @media (prefers-reduced-motion: no-preference) {
-            .ai-hero::before { animation: aiShine 6s ease-in-out infinite; }
-            .ai-hero-icon { animation: aiHalo 3.2s ease-in-out infinite; }
-        }
-        .ai-hero-icon { width: 3.5rem; height: 3.5rem; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: var(--ai-gold-grad); }
-        html body .menu-item.ai-hero .ai-hero-icon i { color: var(--dark); width: auto; font-size: 1.5rem; }
-        .ai-hero-text { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; flex: 1; position: relative; }
-        .ai-hero-tag { align-self: flex-start; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.03rem; color: var(--dark); background: var(--ai-gold-grad); padding: 0.1rem 0.5rem; border-radius: 999px; }
-        .ai-hero-text strong { font-family: 'Amiri', serif; font-size: 1.4rem; line-height: 1.25; font-weight: 700; color: var(--gold); }
-        .ai-hero-text small { font-size: 0.78rem; line-height: 1.55; opacity: 0.88; color: var(--text-color); }
-        html body .menu-item.ai-hero .ai-hero-arrow { font-size: 1rem; width: auto; opacity: 0.85; position: relative; }
-
-        /* --- شاشة المساعد --- */
-        #aiScreen { letter-spacing: 0; }
-        #aiScreen button { cursor: pointer; font-size: 0.875rem; }
-        #aiScreen button:focus-visible, #aiInput:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-        #aiScreen #aiInput:focus-visible { outline: none; }
-
-        .ai-header { display: flex; align-items: center; gap: 0.85rem; padding: 0.35rem 0 1rem; border-bottom: 1px solid var(--ai-border); }
-        .ai-emblem { width: 3.2rem; height: 3.2rem; display: grid; place-items: center; flex-shrink: 0; border-radius: 50%; color: var(--dark); background: var(--ai-gold-grad); font-size: 1.35rem; box-shadow: 0 0 1.2rem rgba(247,200,115,0.35); }
-        .ai-header h2 { font-family: 'Amiri', serif; font-size: 1.65rem; line-height: 1.2; color: var(--gold); }
-        .ai-header p { color: var(--ai-muted); font-size: 0.8rem; margin-top: 0.15rem; }
-        .ai-new { margin-inline-start: auto; display: flex; align-items: center; gap: 0.5rem; background: var(--ai-gold-grad); color: var(--dark); border: 0; border-radius: 999px; padding: 0.7rem 1.1rem; font-weight: 700; flex-shrink: 0; box-shadow: 0 0.25rem 0.8rem rgba(0,0,0,0.25); }
-        .ai-new:active { transform: scale(0.95); }
-
-        .ai-layout { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 1rem; padding-top: 1rem; flex: 1; min-height: 0; }
-        .ai-sidebar { align-self: start; padding: 0.9rem 0.7rem; background: var(--glass); border: 1px solid var(--ai-border); border-radius: 1.25rem; }
-        .ai-sidebar h3 { display: flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; color: var(--gold); margin: 0 0.3rem 0.75rem; }
-        #aiChatList { display: flex; flex-direction: column; gap: 0.4rem; max-height: 24rem; overflow: auto; }
-        .ai-chat-row { display: flex; align-items: center; gap: 0.15rem; border: 1px solid transparent; border-radius: 0.95rem; }
-        .ai-chat-row:hover { background: rgba(255,255,255,0.04); }
-        .ai-chat-row.active { background: rgba(247,200,115,0.12); border-color: var(--ai-border); box-shadow: inset -0.2rem 0 0 var(--gold); }
-        .ai-chat-open { flex: 1; min-width: 0; text-align: right; background: none; border: 0; color: var(--text-color); padding: 0.7rem 0.75rem; }
-        .ai-chat-open span { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 0.85rem; }
-        .ai-chat-open small { display: block; color: var(--ai-muted); font-size: 0.68rem; margin-top: 0.25rem; }
-        .ai-icon-btn { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; flex-shrink: 0; border: 0; border-radius: 50%; background: none; color: var(--ai-muted); }
-        .ai-icon-btn:hover { color: var(--ai-danger); background: var(--glass); }
-
-        .ai-main { min-width: 0; display: flex; flex-direction: column; padding: 1rem 1rem 0.6rem; background: var(--glass); border: 1px solid var(--ai-border); border-radius: 1.6rem; }
-        #aiMessages { display: flex; flex-direction: column; gap: 1.1rem; min-height: 18rem; max-height: max(18rem, calc(100vh - 26rem)); overflow-y: auto; padding: 0.25rem 0.15rem 1rem; flex: 1; }
-        @supports (height: 1dvh) { #aiMessages { max-height: max(18rem, calc(100dvh - 26rem)); } }
-        .ai-message { max-width: 90%; align-self: flex-start; animation: aiIn 0.3s ease both; }
-        .ai-message-user { align-self: flex-end; }
-        .ai-message-label { font-size: 0.72rem; color: var(--ai-muted); margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem; }
-        .ai-message-label i { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; font-size: 0.65rem; color: var(--dark); background: var(--ai-gold-grad); }
-        .ai-message-user .ai-message-label { flex-direction: row-reverse; }
-        .ai-message-user .ai-message-label i { background: rgba(247,200,115,0.2); color: var(--gold); border: 1px solid var(--ai-border); }
-        .ai-message-text { padding: 0.9rem 1.1rem; border: 1px solid var(--ai-border); border-radius: 0.35rem 1.3rem 1.3rem 1.3rem; background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(0,0,0,0.16)); color: var(--text-color); font-size: 0.95rem; white-space: pre-wrap; line-height: 2; overflow-wrap: anywhere; user-select: text; -webkit-user-select: text; box-shadow: 0 0.25rem 0.8rem rgba(0,0,0,0.15); }
-        .ai-message-user .ai-message-text { background: var(--ai-gold-grad); color: var(--dark); border-color: transparent; border-radius: 1.3rem 0.35rem 1.3rem 1.3rem; font-weight: 500; line-height: 1.8; }
-        .ai-message-text.ai-thinking { color: var(--ai-muted); animation: aiPulse 1.3s ease-in-out infinite; }
-
-        .ai-empty { margin: auto; text-align: center; padding: 1.2rem 0.4rem; width: 100%; max-width: 36rem; }
-        .ai-empty-badge { width: 4.6rem; height: 4.6rem; margin: 0 auto 1.1rem; display: grid; place-items: center; border-radius: 50%; color: var(--gold); font-size: 1.9rem; background: radial-gradient(circle, rgba(247,200,115,0.22), rgba(247,200,115,0.04) 70%); border: 1px solid var(--ai-border); box-shadow: 0 0 2rem rgba(247,200,115,0.2); }
-        .ai-empty h3 { font-family: 'Amiri', serif; font-size: 1.7rem; font-weight: 700; color: var(--gold); }
-        .ai-empty p { color: var(--ai-muted); font-size: 0.85rem; margin-top: 0.4rem; line-height: 1.7; }
-        .ai-suggestions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin-top: 1.4rem; }
-        .ai-suggestions button { display: flex; align-items: center; gap: 0.65rem; text-align: right; padding: 0.8rem 0.9rem; background: var(--glass); border: 1px solid var(--ai-border); color: var(--text-color); border-radius: 1rem; line-height: 1.5; }
-        .ai-suggestions button i { color: var(--gold); font-size: 1rem; width: 1.3rem; text-align: center; flex-shrink: 0; }
-        .ai-suggestions button:hover { border-color: var(--gold); background: rgba(247,200,115,0.1); }
-        .ai-suggestions button:active { transform: scale(0.97); }
-
-        #aiForm { display: flex; align-items: flex-end; gap: 0.5rem; padding: 0.45rem; background: var(--ai-surface); border: 1px solid var(--ai-border); border-radius: 1.7rem; transition: border-color 0.2s, box-shadow 0.2s; }
-        #aiForm:focus-within { border-color: var(--gold); box-shadow: 0 0 0 0.18rem rgba(247,200,115,0.18); }
-        #aiInput { flex: 1; min-width: 0; border: 0; background: none; color: var(--text-color); resize: none; padding: 0.55rem 0.8rem; font-size: 1rem; line-height: 1.6; }
-        #aiInput::placeholder { color: var(--ai-muted); }
-        #aiSendBtn { width: 2.9rem; height: 2.9rem; flex-shrink: 0; border: 0; border-radius: 50%; background: var(--ai-gold-grad); color: var(--dark); font-size: 1rem; box-shadow: 0 0.2rem 0.6rem rgba(0,0,0,0.3); }
-        #aiSendBtn:active { transform: scale(0.92); }
-        #aiSendBtn:disabled { opacity: 0.5; cursor: wait; }
-        .ai-note { display: flex; align-items: center; justify-content: center; gap: 0.4rem; text-align: center; color: var(--ai-muted); font-size: 0.72rem; padding: 0.7rem 0 0.2rem; line-height: 1.6; }
-        #aiSaveStatus { color: var(--ai-danger); font-size: 0.8rem; text-align: center; }
-        #aiSaveStatus:empty { display: none; }
-
-        @media (max-width: 700px) {
-            .ai-header { gap: 0.7rem; }
-            .ai-header h2 { font-size: 1.45rem; }
-            .ai-new { padding: 0; width: 2.9rem; height: 2.9rem; justify-content: center; }
-            .ai-new span { display: none; }
-            .ai-layout { grid-template-columns: minmax(0, 1fr); gap: 0.8rem; min-height: 0; }
-            .ai-sidebar { padding: 0; background: none; border: 0; }
-            .ai-sidebar h3 { display: none; }
-            #aiChatList { flex-direction: row; max-height: none; overflow-x: auto; overflow-y: hidden; padding-bottom: 0.25rem; }
-            .ai-chat-row { flex: 0 0 11.5rem; background: var(--glass); border-color: var(--ai-border); }
-            .ai-main { padding: 0.8rem 0.7rem 0.5rem; border-radius: 1.4rem; }
-            #aiMessages { min-height: 16rem; max-height: max(16rem, calc(100vh - 25rem)); }
-            @supports (height: 1dvh) { #aiMessages { max-height: max(16rem, calc(100dvh - 25rem)); } }
-            .ai-message { max-width: 95%; }
-            .ai-empty h3 { font-size: 1.45rem; }
-            .ai-suggestions { grid-template-columns: minmax(0, 1fr); }
-        }
+        html body .menu-list .menu-item { position: relative; overflow: hidden; gap: 0.9rem; padding: 0.9rem 1.1rem; border: 1px solid rgba(247,200,115,0.4); background: linear-gradient(135deg, rgba(247,200,115,0.16), rgba(247,200,115,0.04) 55%, rgba(0,0,0,0.28)); box-shadow: 0 0.4rem 1.1rem rgba(0,0,0,0.26), 0 0 1rem rgba(247,200,115,0.09); transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+        html body .menu-list .menu-item:active { transform: scale(0.985); border-color: var(--gold); }
+        html body .menu-list .menu-item > i:first-child { width: 3rem; height: 3rem; flex-shrink: 0; display: grid; place-items: center; border-radius: 50%; font-size: 1.3rem; color: var(--dark); background: linear-gradient(135deg, #ffe9b3 0%, #f7c873 48%, #d6a04c 100%); box-shadow: 0 0 0.9rem rgba(247,200,115,0.28); }
+        html body .menu-list .menu-item > span { flex: 1; min-width: 0; font-weight: 700; font-size: 1rem; line-height: 1.5; }
+        html body .menu-list .menu-item::after { content: "\f053"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 0.95rem; color: var(--gold); opacity: 0.85; flex-shrink: 0; }
     </style>
 </head>
 <body>
 
 <script>
-/* تطبيق الوضع الليلي/الرمضاني فورًا لمنع وميض الألوان قبل تحميل باقي التطبيق */
 try {
     if (localStorage.getItem('nightModeEnabled') === 'true') document.body.classList.add('night-mode');
     if (localStorage.getItem('ramadanModeEnabled') === 'true') document.body.classList.add('ramadan-mode');
@@ -688,7 +566,6 @@ try {
     var MIN_MS = 5000, PROBE_MS = 8000, runId = 0, done = false;
 
     document.addEventListener('DOMContentLoaded', function () {
-        /* نفس صورة التطبيق الموجودة في "لمحة عن التطبيق" (بدون تكرار الملف) */
         var logo = document.getElementById('splashLogo');
         var src = document.querySelector('#aboutAppScreen .about-dev-photo-wrap img');
         if (src && src.src) logo.src = src.src;
@@ -737,7 +614,6 @@ try {
 })();
 </script>
 
-
 <div class="app-container">
     <div class="top-nav">
         <div class="nav-btn-group">
@@ -780,17 +656,7 @@ try {
         </div>
 
         <div class="menu-list">
-            <div class="menu-item ai-hero" onclick="openScreen('aiScreen')">
-                <span class="ai-hero-icon"><i class="fas fa-robot"></i></span>
-                <span class="ai-hero-text">
-                    <span class="ai-hero-tag">ذكاء اصطناعي</span>
-                    <strong>المساعد الديني</strong>
-                    <small>اسأل أي سؤال في أمور دينك واحصل على إجابة فورية</small>
-                </span>
-                <i class="fas fa-chevron-left ai-hero-arrow"></i>
-            </div>
             <div class="menu-item" onclick="playRadioDirect()"><i class="fas fa-broadcast-tower"></i><span>إذاعة القرآن الكريم</span></div>
-            <!-- الزرار بيشغل مشغّل الصوت الداخلي، وده بيختار تلقائيًا حلقة تلاوة مسجلة من مجموعة حلقات ويبدّل بينها -->
             <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن بالصوت</span></div>
             <div class="menu-item" onclick="openTaTabSmart()"><i class="fas fa-closed-captioning"></i><span>القرآن بالنص والصوت</span></div>
             <div class="menu-item" onclick="openScreen('hifzScreen')"><i class="fas fa-repeat"></i><span>وضع حفظ القرآن</span></div>
@@ -1241,26 +1107,6 @@ try {
         <div id="afterPrayerList" style="display: flex; flex-direction: column; gap: 0.9375rem; padding-bottom: 1.875rem;"></div>
     </div>
 
-    <div id="aiScreen" class="content-screen">
-        <div class="ai-header">
-            <div class="ai-emblem"><i class="fas fa-robot" aria-hidden="true"></i></div>
-            <div><h2>المساعد الديني</h2><p>البنا الإسلامي</p></div>
-            <button type="button" class="ai-new" onclick="aiNewChat()" title="محادثة جديدة" aria-label="محادثة جديدة"><i class="fas fa-plus" aria-hidden="true"></i><span>محادثة جديدة</span></button>
-        </div>
-        <div class="ai-layout">
-            <aside class="ai-sidebar"><h3><i class="fas fa-clock-rotate-left" aria-hidden="true"></i> المحادثات</h3><div id="aiChatList"></div></aside>
-            <div class="ai-main">
-                <div id="aiMessages" role="log" aria-label="رسائل المحادثة" aria-live="polite"></div>
-                <form id="aiForm" onsubmit="aiSend(event)">
-                    <textarea id="aiInput" rows="2" aria-label="سؤالك" placeholder="اكتب سؤالك الديني..." onkeydown="if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();aiSend(event);}"></textarea>
-                    <button id="aiSendBtn" type="submit" title="إرسال السؤال" aria-label="إرسال السؤال"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
-                </form>
-                <p id="aiSaveStatus" role="status"></p>
-                <p class="ai-note"><i class="fas fa-circle-info" aria-hidden="true"></i> للفتاوى الشخصية الدقيقة، ارجع لدار الإفتاء أو عالم موثوق.</p>
-            </div>
-        </div>
-    </div>
-
     <div id="tasbihScreen" class="content-screen">
         <div class="screen-header-flex" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
             <h2 style="color:var(--gold);"><i class="fas fa-circle-notch"></i> السبحة</h2>
@@ -1441,14 +1287,6 @@ try {
 </div>
 
 <script>
-    /* ============================================================
-       محرك الأصوات العام للتطبيق (Web Audio API بدون أي ملفات صوت
-       خارجية). يشمل:
-       1) صوت ضغطة "نقطة الماء" على أي عنصر قابل للضغط في التطبيق كله
-       2) صوت مخصوص للإجابة الصحيحة وصوت مخصوص للإجابة الخاطئة
-          في تحدي الأسئلة
-       ============================================================ */
-    /* إعداد تشغيل/إيقاف التأثيرات الصوتية فقط (لا يؤثر على تلاوة القرآن أو الإذاعة) */
     let soundEffectsEnabled = localStorage.getItem('soundEffectsEnabled') !== 'false';
 
     function toggleSoundEffects(enabled) {
@@ -1464,7 +1302,6 @@ try {
     }
     document.addEventListener('DOMContentLoaded', initSoundEffectsToggleUI);
 
-    /* إعداد تشغيل/إيقاف الوضع الليلي مع التخزين المحلي */
     let nightModeEnabled = localStorage.getItem('nightModeEnabled') === 'true';
 
     function applyNightMode(enabled) {
@@ -1484,7 +1321,6 @@ try {
     }
     document.addEventListener('DOMContentLoaded', initNightModeUI);
 
-    /* ==== الوضع الرمضاني: ثيم رمضاني (فوانيس وهلال ونجوم) متجاوب مع كل الأجهزة، ومحفوظ في المتصفح ==== */
     let ramadanModeEnabled = localStorage.getItem('ramadanModeEnabled') === 'true';
 
     function lanternSvg(uid, tall) {
@@ -1544,7 +1380,6 @@ try {
         else { const d = document.getElementById('ramadanDeco'); if (d) d.remove(); }
         const toggle = document.getElementById('ramadanModeToggle');
         if (toggle) toggle.checked = ramadanModeEnabled;
-        // لون شريط المتصفح على الموبايل
         let meta = document.querySelector('meta[name="theme-color"]');
         if (ramadanModeEnabled) {
             if (!meta) { meta = document.createElement('meta'); meta.name = 'theme-color'; meta.dataset.rd = '1'; document.head.appendChild(meta); }
@@ -1556,10 +1391,6 @@ try {
     function toggleRamadanModeSetting(enabled) { applyRamadanMode(enabled); }
     document.addEventListener('DOMContentLoaded', () => applyRamadanMode(ramadanModeEnabled));
 
-    /* إظهار خيار "لوحة المطور" داخل الإعدادات بشكل مخفي على مرحلتين، من غير أي عداد ظاهر على الشاشة:
-       1) تضغط على ترس الإعدادات 5 مرات ورا بعض.
-       2) بعدين تفعّل/تقفل مفتاح "التأثيرات الصوتية" 5 مرات ورا بعض.
-       وبيختفي كل ده تاني تلقائيًا أول ما تخرج من شاشة الإعدادات. */
     let devPanelTapCount = 0;
     let devPanelTapResetTimer = null;
     let devPanelStage1Done = false;
@@ -1569,7 +1400,6 @@ try {
     function trackDevPanelTap() {
         devPanelTapCount++;
         clearTimeout(devPanelTapResetTimer);
-        // لو استنى أكتر من ثانيتين بين ضغطة وتانية، يتصفر العداد ولازم يبدأ من الأول
         devPanelTapResetTimer = setTimeout(() => { devPanelTapCount = 0; }, 2000);
         if (devPanelTapCount >= 5) {
             devPanelTapCount = 0;
@@ -1579,7 +1409,6 @@ try {
     }
 
     function trackDevPanelSoundToggle() {
-        // العداد ده بيشتغل بس بعد ما مرحلة الترس (5 ضغطات) تتم
         if (!devPanelStage1Done) return;
         devPanelSoundToggleCount++;
         clearTimeout(devPanelSoundToggleResetTimer);
@@ -1619,7 +1448,6 @@ try {
             const ctx = getAppAudioCtx();
             const now = ctx.currentTime;
 
-            // النغمة الأساسية: نزول سريع من تردد عالي لواطي، زي رنة نقطة الماء
             const osc = ctx.createOscillator();
             const oscGain = ctx.createGain();
             osc.type = 'sine';
@@ -1632,7 +1460,6 @@ try {
             osc.start(now);
             osc.stop(now + 0.2);
 
-            // نغمة خفيفة عالية إضافية تدي إحساس "الرنة" اللامعة
             const osc2 = ctx.createOscillator();
             const osc2Gain = ctx.createGain();
             osc2.type = 'sine';
@@ -1647,7 +1474,6 @@ try {
         } catch (e) { /* الجهاز مش داعم Web Audio - نتجاهل بهدوء */ }
     }
 
-    // صوت الإجابة الصحيحة: نغمتين صاعدتين لطيفتين (إحساس نجاح)
     function playQuizCorrectSound() {
         if (!soundEffectsEnabled) return;
         try {
@@ -1672,7 +1498,6 @@ try {
         } catch (e) { /* تجاهل بهدوء */ }
     }
 
-    // صوت الإجابة الخاطئة: نغمة هابطة قصيرة (إحساس خطأ لطيف بدون إزعاج)
     function playQuizWrongSound() {
         if (!soundEffectsEnabled) return;
         try {
@@ -1707,13 +1532,6 @@ try {
         }, true);
     })();
 
-    /* ============================================================
-       نظام مراقبة الاتصال بالإنترنت (أساسي وعام لكل التطبيق)
-       - يشتغل تلقائيًا مع أي fetch حالي أو مستقبلي (تم عمل override لـ window.fetch)
-       - يراقب أحداث online/offline من المتصفح
-       - يراقب أخطاء تشغيل الصوت (القرآن + الإذاعة) الناتجة عن مشاكل الشبكة
-       - أي كود جديد يتفعل معاه تلقائيًا من غير أي تعديل إضافي
-       ============================================================ */
     (function () {
         let bannerEl, hideTimer;
 
@@ -1783,7 +1601,6 @@ try {
         window.showPlayerOffline = showPlayerOffline;
         window.hidePlayerOffline = hidePlayerOffline;
 
-        // نفس فكرة showPlayerOffline/hidePlayerOffline لكن لمشغّل "القرآن بالنص والصوت"
         function showTaPlayerOffline(message) {
             const msg = message || 'لا يوجد اتصال بالإنترنت';
             const box = document.getElementById('taPlayerLoading');
@@ -1823,7 +1640,6 @@ try {
         window.showTaPlayerOffline = showTaPlayerOffline;
         window.hideTaPlayerOffline = hideTaPlayerOffline;
 
-        // مؤشر التحميل عند بطء الشبكة (نفس فكرة setPlayerLoading لمشغّل القرآن الكريم)
         function setTaLoadingState(isLoading) {
             const box = document.getElementById('taPlayerLoading');
             const mpIcon = document.getElementById('taMpIcon');
@@ -1849,7 +1665,6 @@ try {
             showPlayerOffline();
             const radioAudioEl = document.getElementById('radioAudio');
             if (radioAudioEl && !radioAudioEl.paused) radioAudioEl.pause();
-            // نظهر حالة الأوفلاين على شريط الإذاعة فقط لو كان ظاهر أصلًا (الإذاعة اتشغّلت قبل كده)
             const radioMp = document.getElementById('radioMiniPlayer');
             if (window.showRadioOffline && radioMp && radioMp.classList.contains('show')) window.showRadioOffline();
             if (window.pauseTextAudio) window.pauseTextAudio();
@@ -1863,7 +1678,6 @@ try {
             hideTaPlayerOffline();
         });
 
-        // اعتراض كل نداءات fetch (الحالية والمستقبلية) لإظهار رسالة موحّدة عند فشل الشبكة
         const originalFetch = window.fetch.bind(window);
         window.fetch = function (...args) {
             return originalFetch(...args).catch((err) => {
@@ -1876,7 +1690,6 @@ try {
             });
         };
 
-        // مراقبة أخطاء تشغيل الصوت (القرآن الكريم وإذاعة القرآن) الناتجة عن مشاكل شبكة
         function watchAudioNetworkErrors(audioEl, label, onOffline) {
             if (!audioEl) return;
             audioEl.addEventListener('error', () => {
@@ -1914,7 +1727,6 @@ try {
     let selectedReciter = localStorage.getItem('quranReciter') || 'minsh';
     if (!RECITERS[selectedReciter]) selectedReciter = 'minsh';
 
-    // بيرجّع الشاشة الحالية لأولها (بيتنادى عند تغيير أي تبويب)
     function scrollActiveScreenToTop() {
         const go = () => {
             const scr = document.querySelector('.content-screen.active');
@@ -2225,8 +2037,6 @@ try {
     function normalizeArabic(text) { if (!text) return ""; return text.replace(/[\u064B-\u0652]/g, "").replace(/[أإآا]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي"); }
 
     let currentScreenId = 'homeScreen';
-    let currentStoryIndex = -1;
-    let currentProphetStoryIndex = -1;
     let currentFullStoryIndex = -1;
     let currentGlimpseIndex = -1;
 
@@ -2264,12 +2074,6 @@ try {
         });
     }
 
-    // ==== Back-button / navigation history handling ====
-    // Every "forward" navigation pushes one history entry so the device/browser
-    // back button steps back one level at a time instead of exiting the app.
-    // When already on the home screen, a "guard" entry traps the first back
-    // press (shows a confirmation toast); a second press within the time
-    // window actually exits the app.
     let historyDepth = 0;
     let exitArmed = false;
     let exitArmTimeout = null;
@@ -2321,7 +2125,6 @@ try {
         if (currentScreenId === 'settingsScreen' && screenId !== 'settingsScreen') {
             hideDevPanelMenuItem();
         }
-        // زر "اذهب إلى الآية الحالية" لازم يفضل مخفي في أي شاشة غير شاشة القرآن بالنص والصوت
         if (screenId !== 'quranTextAudioScreen') {
             const jumpBtn = document.getElementById('taJumpToCurrentBtn');
             if (jumpBtn) jumpBtn.classList.remove('show');
@@ -2536,8 +2339,6 @@ try {
         if (soundEffectsEnabled) playDropTapSound();
         historyDepth = Math.max(0, historyDepth - 1);
 
-        // اقفل أي نافذة منبثقة (زي نافذة كلمة مرور لوحة المطور أو نافذة التأكيد)
-        // فورًا مع أي ضغطة رجوع، عشان متفضلش ظاهرة فوق الشاشة بعد الرجوع.
         const devPassOverlayEl = document.getElementById('devPassOverlay');
         if (devPassOverlayEl) devPassOverlayEl.classList.remove('active');
         const confirmModalOverlayEl = document.getElementById('confirmModalOverlay');
@@ -2547,7 +2348,6 @@ try {
         const isHomeState = !state || !state.screen || state.screen === 'home';
 
         if (isHomeState && currentScreenId === 'homeScreen') {
-            // Already on the home screen: require a second back press to actually exit.
             if (exitArmed) {
                 clearTimeout(exitArmTimeout);
                 exitArmed = false;
@@ -2590,7 +2390,6 @@ try {
         updateMiniPlayer();
     }
 
-    // حلقات تلاوة مسجلة تتبدّل بينها الإذاعة تلقائيًا (بدل بث لايف واحد ثابت)
     const radioEpisodes = [
         "https://archive.org/download/Mobasher-Ezaa/12-Yusuf-1-34-High-Quality.mp3",
         "https://archive.org/download/Mobasher-Ezaa/AbdelBaset-AlAnam-126-135.mp3",
@@ -2602,7 +2401,6 @@ try {
     ];
     let currentRadioEpisode = -1;
 
-    // بيختار حلقة عشوائية غير الحلقة الحالية (عشان مايكررش نفس الكلام على طول)
     function pickNextRadioEpisode() {
         if (radioEpisodes.length <= 1) return 0;
         let idx;
@@ -2622,13 +2420,11 @@ try {
         const audio = document.getElementById('radioAudio');
         if (!audio) return;
         if (!navigator.onLine) { showRadioOffline(); return; }
-        // أول مرة (أو بعد إغلاق المشغّل) بيختار حلقة جديدة عشان يحس إنه بث متجدد
         if (currentRadioEpisode === -1) loadRadioEpisode(pickNextRadioEpisode());
         audio.play().catch(() => {});
         updateRadioMiniPlayer();
     }
 
-    // لما الحلقة الحالية تخلص، يبدأ يشغل حلقة تانية على طول عشان يفضل حاسس إنه بث مستمر
     document.getElementById('radioAudio').addEventListener('ended', () => {
         loadRadioEpisode(pickNextRadioEpisode());
         document.getElementById('radioAudio').play().catch(() => {});
@@ -2656,7 +2452,6 @@ try {
         updateRadioMiniPlayer();
     }
 
-    // حالة عدم الاتصال بالإنترنت الخاصة بشريط إذاعة القرآن الكريم المصغّر
     function showRadioOffline(message) {
         const mp = document.getElementById('radioMiniPlayer');
         const icon = document.getElementById('radioMpIcon');
@@ -2750,7 +2545,6 @@ try {
                     res = await fetch(apiUrl);
                     if (!res.ok) throw new Error('bad status');
                 } catch (e) {
-                    // لو الـ CDN فشل لأي سبب، ارجع للمصدر الأصلي على GitHub كخطة بديلة
                     if (bookType === 'muslim' || bookType === 'bukhari') {
                         const fallbackUrl = `https://raw.githubusercontent.com/AhmedBaset/hadith-json/v1.2.0/db/by_book/the_9_books/${bookType}.json`;
                         res = await fetch(fallbackUrl);
@@ -2837,8 +2631,6 @@ try {
         return card;
     }
 
-    // ==== تفسير مبسط لأحاديث الأربعين النووية (42 حديثًا) ====
-    // مكتوب مسبقًا يدويًا وبيتعرض تحت كل حديث مباشرة، من غير أي اتصال بأي API
     const nawawiTafsir = {
         1: "كل عمل يفعله الإنسان يُقاس بنيته، فلو عمل خيرًا يقصد به وجه الله كُتب له أجره كاملًا، ولو عمل نفس العمل يقصد به الدنيا فقط لم ينفعه عند الله. فالنية هي التي تُفرّق بين العبادة والعادة.",
         2: "هذا الحديث يشرح أركان الإسلام (الشهادتان والصلاة والزكاة والصوم والحج)، وأركان الإيمان (الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر)، ومعنى الإحسان وهو أن تعبد الله كأنك تراه.",
@@ -2983,7 +2775,6 @@ try {
     }
 
     function openSettings() {
-        // لو أصلاً في شاشة الإعدادات، مفيش داعي نفتحها تاني ونزود التاريخ (ده كان سبب احتياج ضغط زرار الرجوع أكتر من مرة بعد ضغط الترس كذا مرة ورا بعض)
         if (currentScreenId !== 'settingsScreen') {
             openScreen('settingsScreen');
         }
@@ -3052,7 +2843,6 @@ try {
         const container = document.getElementById('suraTextIndex');
         container.innerHTML = "";
 
-        // تبويب ثابت لدعاء ختم القرآن، يظهر دائمًا قبل سورة الفاتحة
         const khatmCard = document.createElement('div');
         khatmCard.className = 'sura-card khatm-dua-card';
         khatmCard.setAttribute('data-name', 'دعاء ختم القرآن');
@@ -3128,7 +2918,6 @@ try {
         pushNav({ screen: 'quranTextScreen', view: 'khatm' });
     }
 
-    // ==== علامة حفظ موضع القراءة في المصحف والتفسير ====
     function getBookmark() {
         try { return JSON.parse(localStorage.getItem('quranReadingBookmark') || 'null'); } catch (e) { return null; }
     }
@@ -3295,9 +3084,6 @@ try {
         if (historyDepth > 0) { history.back(); } else { _showSuraIndexUI(); }
     }
 
-    /* ============================================================
-       القرآن بالنص والصوت: قراءة الآيات مع الاستماع لها آية آية
-       ============================================================ */
     const EVERYAYAH_RECITERS = {
         afs:   { name: "مشاري راشد العفاسي",  folder: "Alafasy_128kbps" },
         minsh: { name: "محمد صديق المنشاوي",  folder: "Minshawy_Murattal_128kbps" },
@@ -3317,14 +3103,9 @@ try {
     let currentTaAyahIndex = -1;
     let taIsPlaying = false;
     let taRepeatMode = 'off'; // 'off' | 'ayah' | 'sura'
-    // السورة المعروضة على الشاشة دلوقتي (ممكن تختلف عن السورة اللي بتتشغل صوتها فعليًا
-    // لو المستخدم فتح سورة تانية من الفهرس من غير ما يوقف اللي شغالة)
     let taViewSuraNumber = 0;
     let taViewAyahsData = [];
 
-    // بيرجّع المستخدم لنفس السورة والمكان اللي كان واقف فيه، من غير ما يقاطع الصوت الشغال أو يعيد تحميل السورة تاني
-    // بيفتح تبويب القرآن بالنص والصوت: لو فيه سورة شغالة يرجّعك لها على طول (مع تسجيل صحيح في تاريخ التصفح
-    // عشان زرار "العودة للفهرس" يشتغل صح)، ولو مفيش سورة شغالة يفتح الفهرس عادي
     function openTaTabSmart() {
         if (currentTaSuraNumber && currentTaAyahsData.length) {
             openScreen('quranTextAudioScreen');
@@ -3336,7 +3117,6 @@ try {
         }
     }
 
-    // بيفتح شاشة القرآن بالنص والصوت وياخد المستخدم على طول للآية اللي بتتقرأ دلوقتي
     function openTaFromMiniPlayer() {
         openTaTabSmart();
         setTimeout(scrollToCurrentTaAyah, 50);
@@ -3347,8 +3127,6 @@ try {
         const readingArea = document.getElementById('taReadingArea');
         readingArea.style.display = 'block';
         switchTaTab('reading');
-        // لو الشاشة كانت واقفة على سورة تانية غير اللي شغالة فعليًا (لأن المستخدم كان بيقرا فيها)،
-        // ارجع اعرض نص السورة الشغالة نفسها عشان الاسكرول للآية الحالية يشتغل صح
         if (taViewSuraNumber !== currentTaSuraNumber) {
             taViewSuraNumber = currentTaSuraNumber;
             taViewAyahsData = currentTaAyahsData;
@@ -3375,7 +3153,6 @@ try {
         const jumpBtn = document.getElementById('taJumpToCurrentBtn');
         if (jumpBtn) jumpBtn.classList.remove('show');
         if (!document.getElementById('taSuraIndex').children.length) buildTextAudioSuraIndex();
-        // لو فيه آية شغالة، نرفّع نفس شريط التحكم الكبير (بكل خواصه حتى حالة النت) لأعلى الفهرس
         if (currentTaAyahIndex >= 0 && currentTaAyahsData[currentTaAyahIndex]) {
             const bar = document.getElementById('taPlayerBar');
             const header = document.getElementById('textAudioHeader');
@@ -3457,8 +3234,6 @@ try {
         const list = document.getElementById('taReciterFullList');
         if (!list) return;
         list.classList.toggle('offline-locked', !navigator.onLine);
-        // امنع تغيير القارئ لو المستخدم واقف بيقرا سورة غير اللي شغالة فعليًا،
-        // عشان مايغيّرش قارئ سورة تانية عن اللي شايفها قدامه
         const viewingDifferentPlayingSura = !!(currentTaSuraNumber && taViewSuraNumber && taViewSuraNumber !== currentTaSuraNumber);
         list.classList.toggle('reciter-locked-diff-sura', viewingDifferentPlayingSura);
     }
@@ -3475,15 +3250,9 @@ try {
         });
     }
 
-    // رقم تسلسلي لكل عملية "فتح سورة" عشان لو المستخدم فتح أكتر من سورة بسرعة (أو حصل انتقال
-    // تلقائي لسورة تانية) قبل ما التحميل الأول يخلص، أقدم طلب لو رجع متأخر يتجاهل نفسه
-    // بدل ما يكتب فوق بيانات/صوت السورة الأحدث اللي المستخدم فاتحها فعلاً (ده اللي كان بيسبب
-    // اختلاط آل عمران بالبقرة).
     let __taLoadToken = 0;
 
     async function _showTextAudioReadingUI(suraNum, name, autoPlay) {
-        // ملحوظة: مبقيناش نوقف الصوت الشغال هنا؛ فتح سورة من الفهرس بقى مجرد "عرض" لنصها،
-        // والسورة اللي شغالة فعليًا فاضلة شغالة لحد ما المستخدم يضغط استماع/تشغيل في السورة الجديدة
         const myLoadToken = ++__taLoadToken;
         const audioEl = document.getElementById('taAudio');
         const somethingElseIsPlaying = currentTaSuraNumber && currentTaSuraNumber !== suraNum && audioEl && !audioEl.paused;
@@ -3516,14 +3285,11 @@ try {
                 try { localStorage.setItem(suraCacheKey, JSON.stringify(ayahs)); } catch (e) { /* تجاهل امتلاء المساحة */ }
             }
 
-            // لو حصل فتح سورة تانية بعدنا (طلب أحدث) واحنا لسه بنستنى التحميل، بلاش نكمل:
-            // نسيب الطلب الأحدث هو اللي يتحكم في الشاشة عشان منخلطش بين السورتين
             if (myLoadToken !== __taLoadToken) return;
 
             taViewAyahsData = ayahs;
 
             if (!somethingElseIsPlaying) {
-                // مفيش سورة تانية شغالة (أو إحنا بنفتح نفس السورة الشغالة): زي القديم، خلي التشغيل يتزامن مع العرض
                 currentTaSuraNumber = suraNum;
                 currentTaAyahsData = ayahs;
                 if (!(currentTaSuraNumber === suraNum && taIsPlaying)) currentTaAyahIndex = -1;
@@ -3532,12 +3298,10 @@ try {
             renderTextAudioAyahs(ayahs, suraNum);
             if (currentTaSuraNumber === suraNum && currentTaAyahIndex >= 0) highlightTaAyah(currentTaAyahIndex);
             if (autoPlay) startPlaybackFromView(0);
-            // الزرار ده معناه "اذهب للآية الشغالة"، فمن المفروض يظهر بس لو السورة المعروضة دلوقتي هي فعلاً السورة الشغالة
             if (jumpBtn) jumpBtn.classList.toggle('show', currentTaSuraNumber === suraNum && currentTaAyahIndex >= 0);
         } catch (e) { if (myLoadToken === __taLoadToken) viewer.innerHTML = "خطأ في التحميل."; }
     }
 
-    // بيبدأ تشغيل السورة المعروضة على الشاشة دلوقتي، وبيوقف أي سورة تانية شغالة الأول لو مختلفة عنها
     function startPlaybackFromView(ayahIndex) {
         if (taViewSuraNumber !== currentTaSuraNumber) {
             pauseTextAudio();
@@ -3548,7 +3312,6 @@ try {
         playAyahAudio(ayahIndex);
     }
 
-    // بينتقل تلقائيًا للسورة اللي بعدها ويبدأ تشغيلها، لما السورة الحالية تخلص وميكونش وضع التكرار مفعّل
     function playNextTaSuraAuto() {
         const nextSuraNum = currentTaSuraNumber >= 114 ? 1 : currentTaSuraNumber + 1;
         const nextName = suras[nextSuraNum - 1];
@@ -3570,7 +3333,6 @@ try {
         toast._hideTimer = setTimeout(() => toast.classList.remove('show'), duration || 2600);
     }
 
-    // بيبدّل بين 3 أوضاع: بدون تكرار → تكرار نفس الآية → تكرار السورة كاملة → وهكذا
     function toggleTaRepeatMode() {
         const order = ['off', 'ayah', 'sura'];
         taRepeatMode = order[(order.indexOf(taRepeatMode) + 1) % order.length];
@@ -3651,18 +3413,15 @@ try {
                 bar.classList.add('ta-bar-move');
             }
         }
-        // لو المستخدم واقف في الفهرس وقت ما الآية اتغيرت، نتأكد إن الشريط يفضل فوق الفهرس مش يختفي جوه شاشة القراءة المخفية
         if (bar && !isReadingVisible && currentScreenId === 'quranTextAudioScreen') {
             const header = document.getElementById('textAudioHeader');
             const searchBox = document.getElementById('taSuraSearch');
             if (header && searchBox) header.insertBefore(bar, searchBox);
         }
-        // زر "اذهب إلى الآية الحالية" يظهر بس وإحنا فعليًا واقفين في شاشة قراءة السورة الشغالة نفسها (مش سورة تانية بنقرا فيها)
         const jumpBtn = document.getElementById('taJumpToCurrentBtn');
         if (jumpBtn) jumpBtn.classList.toggle('show', currentScreenId === 'quranTextAudioScreen' && isReadingVisible && taViewSuraNumber === currentTaSuraNumber);
     }
 
-    // بيودّي المستخدم للآية اللي بتتقرأ دلوقتي، من غير ما يضطر يوقف تقليبه في السورة كل مرة تتغير فيها الآية
     function scrollToCurrentTaAyah() {
         let ayah = currentTaAyahsData[currentTaAyahIndex];
         if (!ayah) ayah = currentTaAyahsData[0]; // لسه ملحدش تشغيل: نودّيه لأول آية في السورة
@@ -3729,8 +3488,6 @@ try {
     }
 
     function toggleTextAudioPlay() {
-        // لو المستخدم واقف بيقرا سورة مختلفة عن اللي شغالة فعليًا، ضغطه على زرار التشغيل معناه
-        // "استماع" للسورة الجديدة دي، فنوقف القديمة ونبدأ الجديدة من أول آية
         if (taViewSuraNumber && taViewSuraNumber !== currentTaSuraNumber) { startPlaybackFromView(0); return; }
         const audio = document.getElementById('taAudio');
         if (currentTaAyahIndex === -1) { playAyahAudio(0); return; }
@@ -3819,9 +3576,6 @@ try {
         }
     });
 
-
-
-    // ==== شاشة حفظ القرآن بالتكرار: بتكرر كل آية في مقطع محدد عدد مرات، وبعدها بتعيد المقطع كله ====
     (function () {
         const SAVE_KEY = 'hifzSettings';
         const PROG_KEY = 'hifzProgress';
@@ -3845,7 +3599,6 @@ try {
         const reduceMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const isOffline = () => !navigator.onLine;
 
-        // ---------- حفظ مكان التوقف (لكل سورة) عشان نكمّل منه بدل ما نبدأ من الأول ----------
         function readProgressMap() { try { return JSON.parse(localStorage.getItem(PROG_KEY) || '{}') || {}; } catch (e) { return {}; } }
         function persistProgress() {
             if (!hz.sura) return;
@@ -3868,13 +3621,11 @@ try {
                 hz.resume = null;
             }
         }
-        // هل نقطة التوقف لسه مناسبة للإعدادات الحالية؟ (لو غيّر المقطع/التكرار/القارئ نبدأ من جديد)
         function canResume() {
             const r = hz.resume;
             return !!r && r.from === hz.selFrom && r.to === hz.selTo && r.per === hz.per && r.rounds === hz.rounds && r.reciter === hz.reciter;
         }
 
-        // ---------- الفهرس ----------
         function buildIndex() {
             const box = $('hzSuraIndex');
             box.innerHTML = '';
@@ -3921,7 +3672,6 @@ try {
             if (historyDepth > 0) { history.back(); } else { showIndex(); }
         };
 
-        // بيعرض شاشة الإعدادات أو شاشة الحفظ لسورة معيّنة، وبيحمّل نص السورة لو لسه مش محمّل
         async function showView(view, num, name) {
             hz.leaving = false;
             pauseSession();
@@ -4001,7 +3751,6 @@ try {
             return n + ' آية';
         }
 
-        // التعديل ممنوع لو الحفظ شغّال أو مفيش نت
         const rangeLocked = () => hz.active || hz.offline;
 
         function updateRange() {
@@ -4013,7 +3762,6 @@ try {
             const whole = n > 0 && count === n;
             $('hzRangeSummary').innerText = n ? (whole ? `السورة كاملة (${countWord(n)})` : countWord(count)) : '';
             $('hzWholeBtn').classList.toggle('active', whole);
-            // الاختيار حر: أي آية من 1 لآخر السورة، ولو تعارض الطرفين بيتحرك الطرف التاني معاه
             const lock = rangeLocked();
             $('hzFromDec').disabled = lock || !n || hz.selFrom <= 0;
             $('hzFromInc').disabled = lock || !n || hz.selFrom >= n - 1;
@@ -4044,7 +3792,6 @@ try {
             updateRange(); updateUI();
         };
 
-        // ---------- النافذة السفلية ----------
         let sheetEl = null;
         function closeSheet() {
             if (sheetEl) { sheetEl.remove(); sheetEl = null; }
@@ -4087,7 +3834,6 @@ try {
             const grid = document.createElement('div');
             grid.className = 'hz-ayah-grid';
             const cur = which === 'from' ? hz.selFrom : hz.selTo;
-            // كل الآيات متاحة من آية 1 لآخر آية (مفيش آيات معطّلة)
             grid.innerHTML = hz.ayahs.map((a, i) =>
                 `<button type="button" class="hz-ayah-cell${i === cur ? ' selected' : ''}" data-i="${i}">${a.numberInSurah}</button>`
             ).join('');
@@ -4130,7 +3876,6 @@ try {
             hz.pause = $('hzPause').checked;
             hz.hide = $('hzHide').checked;
             save(); applyHide();
-            // لو قفلت مهلة الترديد وإحنا في وسط المهلة: نلغيها فورًا وننتقل للتكرار التالي
             if (!hz.pause && hz.waitInfo) {
                 if (hz.active) {
                     const go = hz.waitInfo.proceed;
@@ -4142,7 +3887,6 @@ try {
             }
         };
 
-        // ---------- قفل التعديل عند انقطاع النت ----------
         function applyOfflineLock() {
             hz.offline = isOffline();
             const view = $('hzSessionView');
@@ -4156,7 +3900,6 @@ try {
         function onWentOffline() {
             const wasActive = hz.active;
             if (wasActive) { hz.autoResume = true; pauseSession(); }
-            // لو الإنترنت فصل أثناء الحفظ، نبدأ الآية الحالية من أولها عند الرجوع
             if (wasActive) { hz.phase = hz.waitInfo ? 'wait' : 'restart'; }
             applyOfflineLock();
             if (wasActive && currentScreenId === 'hifzScreen') toast('انقطع الإنترنت، تم إيقاف الحفظ مؤقتًا');
@@ -4172,7 +3915,6 @@ try {
             }
         }
 
-        // ---------- التشغيل ----------
         function ayahUrl(i) {
             const a = hz.ayahs[i];
             const r = EVERYAYAH_RECITERS[hz.reciter];
@@ -4204,7 +3946,6 @@ try {
             return Math.min(100, Math.round(done / total * 100));
         }
 
-        // زر "اذهب إلى الآية الحالية": يظهر وإحنا في شاشة الحفظ والحفظ شغّال أو متوقف مؤقتًا
         function currentIdx() {
             if (hz.active) return hz.idx;
             if (canResume()) return hz.resume.idx;
@@ -4256,7 +3997,6 @@ try {
             $('hzTopFill').style.width = '0%';
         }
 
-        // إيقاف نهائي (بينهي الجلسة ويمسح نقطة الاستئناف): بنستخدمه عند الانتهاء أو الخطأ
         function endSession(message, clearProgress) {
             clearTimeout(hz.timer); hz.timer = null; hz.waitInfo = null;
             const was = hz.active;
@@ -4269,7 +4009,6 @@ try {
             if (message) toast(message);
         }
 
-        // إيقاف مؤقت: بيحافظ على مكان التوقف عشان نقدر نكمّل منه
         function pauseSession(message) {
             if (!hz.active) return;
             const audio = $('hzAudio');
@@ -4377,7 +4116,6 @@ try {
             hz.resume = null; persistProgress();
             begin();
         };
-        // بيستدعيه باقي التطبيق عند الخروج من الشاشة: بيوقف مؤقتًا ويحتفظ بالمكان
         window.hifzStop = function (userAction) { pauseSession(userAction ? 'تم إيقاف وضع الحفظ' : undefined); hz.leaving = true; updateJump(); };
         window.hifzShowIndex = showIndex;
         window.hifzShowView = showView;
@@ -4392,7 +4130,6 @@ try {
                 hz.phase = 'restart';
                 pauseSession('تعذّر تحميل الصوت، تم إيقاف وضع الحفظ');
             });
-            // لو أي صوت تاني اشتغل (إذاعة/مشغّل القرآن)، نوقف وضع الحفظ مؤقتًا بدل ما يتداخلوا
             document.addEventListener('play', e => { if (hz.active && e.target !== audio) pauseSession(); }, true);
             window.addEventListener('offline', onWentOffline);
             window.addEventListener('online', onBackOnline);
@@ -4401,7 +4138,6 @@ try {
                 if (b.parentElement.dataset.hzGroup === 'per') hz.per = Number(b.dataset.v); else hz.rounds = Number(b.dataset.v);
                 save(); syncControls(); updateUI();
             }));
-            // الضغط على رقم الآية بيظهر/بيخفي الآية (في وضع الإخفاء)
             const toggleAyah = e => {
                 if (!hz.hide || hz.offline) return;
                 const c = e.target.closest('.ayah-circle');
@@ -4416,7 +4152,6 @@ try {
         });
     })();
 
-    // ==== خلفية متحركة: جسيمات ذهبية عائمة خفيفة خلف التطبيق ====
     function initStarfield() {
         if (document.querySelector('.stars-bg')) return;
         const bg = document.createElement('div');
@@ -4435,7 +4170,6 @@ try {
         document.body.insertBefore(bg, document.body.firstChild);
     }
 
-    // ==== قصاصات احتفال عند إتمام هدف (أذكار، رقية...) ====
     function launchConfetti(durationMs = 1600, count = 40) {
         const layer = document.createElement('div');
         layer.className = 'confetti-layer';
@@ -4454,7 +4188,6 @@ try {
         setTimeout(() => layer.remove(), durationMs + 800);
     }
 
-    // ==== محرك الأصوات العام (نقرة عند كل ضغطة، وتصفيقة عند إتمام الذكر) ====
     let sharedAudioCtx = null;
     function getAudioCtx() {
         if (!sharedAudioCtx) {
@@ -5076,7 +4809,6 @@ try {
         if (tab === 'qibla') { enableLiveCompass(); } else { disableLiveCompass(); }
     }
 
-    // إحداثيات القاهرة (عاصمة مصر) والكعبة المشرفة، لحساب اتجاه القبلة بشكل ثابت دون طلب صلاحية الموقع
     const CAIRO_COORDS = { lat: 30.0444, lng: 31.2357 };
     const KAABA_COORDS = { lat: 21.4225, lng: 39.8262 };
 
@@ -5168,7 +4900,6 @@ try {
     }
 
     function onRelativeOrientation(event) {
-        // لو وصلتنا قراءة مطلقة (deviceorientationabsolute) بنفضّلها ونتجاهل النسبية عشان نتفادى تعارض القراءات
         if (compassHasAbsolute) return;
         let heading;
         if (typeof event.webkitCompassHeading === 'number') {
@@ -5243,7 +4974,6 @@ try {
         const resultBox = document.getElementById(`countryResult-${index}`);
         if (!resultBox) return;
 
-        // لو نفس الدولة متفتوحة بالفعل، اقفلها (توجل)
         if (selectedCountryIndex === index && resultBox.innerHTML.trim() !== '') {
             resultBox.innerHTML = '';
             stopCountdown(`country-${index}`);
@@ -5251,7 +4981,6 @@ try {
             return;
         }
 
-        // اقفل أي نتيجة تانية مفتوحة قبل كده
         document.querySelectorAll('[id^="countryResult-"]').forEach(el => { el.innerHTML = ''; });
         Object.keys(activeCountdowns).filter(k => k.startsWith('country-')).forEach(stopCountdown);
 
@@ -5269,7 +4998,6 @@ try {
         } catch(e) { resultBox.innerHTML = `<p style="text-align:center;">خطأ في التحميل</p>`; }
     }
 
-    // نفس قائمة الدول المستخدمة في مواقيت الصلاة، باستثناء إسرائيل صراحة كإجراء احترازي
     const qiblaCountries = worldCountries.filter(loc => loc.en !== 'Israel' && loc.ar !== 'إسرائيل');
     let selectedQiblaCountryIndex = null;
 
@@ -5298,7 +5026,6 @@ try {
         const resultBox = document.getElementById(`qiblaResult-${index}`);
         if (!resultBox) return;
 
-        // لو نفس الدولة متفتوحة بالفعل، اقفلها (توجل)
         if (selectedQiblaCountryIndex === index && resultBox.innerHTML.trim() !== '') {
             resultBox.innerHTML = '';
             selectedQiblaCountryIndex = null;
@@ -6477,7 +6204,6 @@ try {
     prophetsFullStories.forEach((item, i) => fullStoriesFlatList.push({ kind: 'prophet', localIndex: i, name: item.name, story: item.story }));
     companionsFullStories.forEach((item, i) => fullStoriesFlatList.push({ kind: 'companion', localIndex: i, name: item.name, story: item.story }));
 
-    // ===== تحدي الأسئلة الدينية (سؤالان في كل صفحة) =====
     let quizCurrentPair = null;      // [index1, index2] فهرس السؤالين المعروضين حاليًا
     let quizPairLocked = [false, false];
 
@@ -6517,7 +6243,6 @@ try {
         document.getElementById('quizCycleMsg').style.display = 'none';
 
         if (state.history.length > 0 && state.historyPos >= 0) {
-            // أعد عرض آخر زوج أسئلة كان معروضًا (رجوع للشاشة أو إعادة تحميل الصفحة)
             renderQuizPair(state);
         } else {
             saveQuizState(state);
@@ -6529,7 +6254,6 @@ try {
         let state = getQuizState();
         if (!state) state = freshQuizState();
 
-        // لو فيه أزواج أسئلة تالية محفوظة بالفعل في السجل (كان رجع للخلف)، انتقل إليها فقط بدون سحب أسئلة جديدة
         if (state.historyPos < state.history.length - 1) {
             state.historyPos += 1;
             saveQuizState(state);
@@ -6539,7 +6263,6 @@ try {
         }
 
         if (state.queue.length === 0) {
-            // انتهت كل الأسئلة المتاحة: أعد تعبئة البنك بترتيب عشوائي جديد قبل المتابعة
             state.queue = buildFreshQuizQueue();
             document.getElementById('quizCycleMsg').style.display = 'block';
         } else {
@@ -6591,7 +6314,6 @@ try {
         });
         document.getElementById('quizPairWrap').innerHTML = html;
 
-        // إعادة تلوين الإجابات إن كانت الأسئلة قد أُجيبت بالفعل
         quizCurrentPair.forEach((qIdx, pos) => {
             if (qIdx === null) return;
             const sel = entry.selectedIndex[pos];
@@ -6868,8 +6590,6 @@ try {
     function resetQuizSession() {
         let state = getQuizState();
         if (!state) state = freshQuizState();
-        // نبدأ عرضًا جديدًا من الصفر (تصفير النتيجة وسجل الأسئلة المعروضة)
-        // مع الإبقاء على قائمة الأسئلة المتبقية (queue) كما هي، بحيث لا تظهر إلا أسئلة لم يرها المستخدم من قبل
         state.history = [];
         state.historyPos = -1;
         state.score = 0;
@@ -6950,94 +6670,6 @@ try {
     }
 
     window.onload = initApp;
-</script>
-
-<script>
-    const AI_ENDPOINT = (location.hostname.endsWith('lovable.app') || location.hostname==='localhost' ? '' : 'https://file-opinion-exchange.lovable.app') + '/api/public/ask';
-    const AI_STORAGE_KEY = 'elbanna.religious.chats.v1';
-    let aiChats=[], aiActiveId=null, aiBusy=false, aiCtrl=null;
-    function aiCurrent(){ return aiChats.find(c=>c.id===aiActiveId); }
-    function aiSave(){
-        try { localStorage.setItem(AI_STORAGE_KEY,JSON.stringify({chats:aiChats,activeId:aiActiveId})); document.getElementById('aiSaveStatus').textContent=''; }
-        catch { document.getElementById('aiSaveStatus').textContent='تعذّر حفظ المحادثات على الجهاز. تأكد من وجود مساحة كافية والسماح بالتخزين.'; }
-    }
-    function aiRestore(){
-        try {
-            const data=JSON.parse(localStorage.getItem(AI_STORAGE_KEY)||'null');
-            if(data && Array.isArray(data.chats)) aiChats=data.chats.filter(c=>c && typeof c.id==='string' && typeof c.title==='string' && Array.isArray(c.messages)).map(c=>({...c,messages:c.messages.filter(m=>m && ['user','assistant'].includes(m.role) && typeof m.content==='string')}));
-            aiActiveId=aiChats.some(c=>c.id===data?.activeId)?data.activeId:aiChats[0]?.id||null;
-        } catch { aiChats=[]; aiActiveId=null; }
-        aiRender();
-    }
-    function aiRenderList(){
-        const list=document.getElementById('aiChatList'); list.replaceChildren();
-        if(!aiChats.length){const p=document.createElement('p');p.className='ai-note';p.textContent='لا توجد محادثات بعد';list.appendChild(p);return;}
-        aiChats.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).forEach(chat=>{
-            const row=document.createElement('div');row.className='ai-chat-row'+(chat.id===aiActiveId?' active':'');
-            const open=document.createElement('button');open.type='button';open.className='ai-chat-open';open.onclick=()=>aiOpenChat(chat.id);open.setAttribute('aria-pressed',String(chat.id===aiActiveId));
-            const title=document.createElement('span');title.textContent=chat.title;open.appendChild(title);
-            const date=document.createElement('small');date.textContent=new Date(chat.updatedAt||Date.now()).toLocaleDateString('ar-EG',{day:'numeric',month:'short'});open.appendChild(date);
-            const del=document.createElement('button');del.type='button';del.className='ai-icon-btn';del.title='مسح المحادثة';del.setAttribute('aria-label','مسح المحادثة: '+chat.title);del.innerHTML='<i class="fas fa-trash-can" aria-hidden="true"></i>';del.onclick=()=>aiDeleteChat(chat.id);
-            row.append(open,del);list.appendChild(row);
-        });
-    }
-    function aiBubble(role,text){
-        const row=document.createElement('div');row.className='ai-message'+(role==='user'?' ai-message-user':'');
-        const label=document.createElement('div');label.className='ai-message-label';const ic=document.createElement('i');ic.className='fas '+(role==='user'?'fa-user':'fa-robot');ic.setAttribute('aria-hidden','true');label.append(ic,document.createTextNode(role==='user'?'أنت':'المساعد الديني'));
-        const body=document.createElement('div');body.className='ai-message-text';body.textContent=text;row.append(label,body);document.getElementById('aiMessages').appendChild(row);aiScroll();return body;
-    }
-    function aiScroll(){const box=document.getElementById('aiMessages');box.scrollTop=box.scrollHeight;}
-    function aiRender(){
-        aiRenderList();const box=document.getElementById('aiMessages');box.replaceChildren();const chat=aiCurrent();
-        if(chat?.messages.length)chat.messages.forEach(m=>aiBubble(m.role,m.content));
-        else {
-            const empty=document.createElement('div');empty.className='ai-empty';empty.innerHTML='<div class="ai-empty-badge"><i class="fas fa-book-open" aria-hidden="true"></i></div><h3>بماذا تحب أن تسأل اليوم؟</h3><p>اكتب سؤالك أو اختر واحدًا من الاقتراحات</p><div class="ai-suggestions"></div>';
-            [['fa-sun','ما فضل أذكار الصباح؟'],['fa-person-praying','كيف أصلي صلاة الوتر؟'],['fa-kaaba','ما أركان الإسلام؟'],['fa-hand-holding-heart','ما شروط قبول التوبة؟']].forEach(([ico,q])=>{const btn=document.createElement('button');btn.type='button';const bi=document.createElement('i');bi.className='fas '+ico;bi.setAttribute('aria-hidden','true');btn.append(bi,document.createTextNode(q));btn.onclick=()=>{document.getElementById('aiInput').value=q;document.getElementById('aiInput').focus();};empty.querySelector('.ai-suggestions').appendChild(btn);});box.appendChild(empty);
-        }
-    }
-    function aiStop(){if(aiCtrl)aiCtrl.abort();aiCtrl=null;aiBusy=false;document.getElementById('aiSendBtn').disabled=false;aiSave();}
-    function aiNewChat(){
-        aiStop();const empty=aiChats.find(c=>!c.messages.length);
-        if(empty)aiActiveId=empty.id;
-        else {const chat={id:crypto.randomUUID(),title:'محادثة جديدة',messages:[],updatedAt:Date.now()};aiChats.unshift(chat);aiActiveId=chat.id;}
-        aiSave();aiRender();document.getElementById('aiInput').value='';document.getElementById('aiInput').focus();
-    }
-    function aiOpenChat(id){aiStop();aiActiveId=id;aiSave();aiRender();document.getElementById('aiInput').value='';}
-    function aiDeleteChat(id){
-        const chat=aiChats.find(c=>c.id===id);if(!chat)return;
-        const overlay=document.getElementById('confirmModalOverlay');
-        const t=chat.title.length>40?chat.title.slice(0,40)+'…':chat.title;
-        document.getElementById('confirmModalTitle').innerText='مسح المحادثة';
-        document.getElementById('confirmModalText').innerText='هل تريد مسح محادثة «'+t+'» نهائيًا؟ لا يمكن التراجع عن هذا الإجراء.';
-        document.getElementById('confirmModalDeleteBtn').onclick=function(){
-            if(id===aiActiveId)aiStop();aiChats=aiChats.filter(c=>c.id!==id);
-            if(id===aiActiveId)aiActiveId=aiChats[0]?.id||null;
-            aiSave();aiRender();closeConfirmModal();
-            if('vibrate' in navigator)navigator.vibrate([50,30,50]);
-        };
-        overlay.classList.add('active');
-        if('vibrate' in navigator)navigator.vibrate(30);
-    }
-    async function aiSend(e){
-        if(e)e.preventDefault();if(aiBusy)return;
-        const inp=document.getElementById('aiInput');const q=inp.value.trim();if(!q)return;
-        if(!aiCurrent())aiNewChat();const chat=aiCurrent();if(!chat)return;
-        inp.value='';aiBusy=true;document.getElementById('aiSendBtn').disabled=true;
-        if(!chat.messages.length){chat.title=q.slice(0,70);document.getElementById('aiMessages').replaceChildren();}
-        chat.messages.push({role:'user',content:q});chat.updatedAt=Date.now();aiSave();aiRenderList();aiBubble('user',q);
-        const b=aiBubble('assistant','جاري التفكير…');b.classList.add('ai-thinking');const ctrl=new AbortController();aiCtrl=ctrl;let answer=null;
-        try {
-            const r=await fetch(AI_ENDPOINT,{signal:ctrl.signal,method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chat.messages})});
-            if(!r.ok){let m='حصل خطأ، حاول مرة أخرى لاحقًا.';if(r.status===429)m='ضغط كبير على الخدمة، استنى شوية وجرب تاني.';if(r.status===402)m='رصيد الذكاء الاصطناعي خلص.';try{const j=await r.json();if(j.error)m=j.error;}catch{}throw new Error(m);}
-            if(!r.body)throw new Error('لم يصل رد، حاول مرة أخرى.');
-            const rd=r.body.getReader();const dec=new TextDecoder();
-            while(true){const {done,value}=await rd.read();if(ctrl.signal.aborted)return;if(done)break;const chunk=dec.decode(value,{stream:true});if(!chunk)continue;b.classList.remove('ai-thinking');if(!answer){answer={role:'assistant',content:''};chat.messages.push(answer);}answer.content+=chunk;b.textContent=answer.content;aiSave();aiScroll();}
-            if(answer){answer.content+=dec.decode();b.textContent=answer.content;aiSave();}
-            else throw new Error('لم يصل رد، حاول مرة أخرى.');
-        } catch(err){b.classList.remove('ai-thinking');if(ctrl.signal.aborted)return;b.textContent=err.message||'تعذر الاتصال، تأكد من الإنترنت.';}
-        finally {if(aiCtrl===ctrl){aiCtrl=null;aiBusy=false;document.getElementById('aiSendBtn').disabled=false;aiSave();aiRenderList();}}
-    }
-    aiRestore();
 </script>
 </body>
 </html>
