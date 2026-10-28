@@ -657,6 +657,7 @@ try {
 
         <div class="menu-list">
             <div class="menu-item" onclick="playRadioDirect()"><i class="fas fa-broadcast-tower"></i><span>إذاعة القرآن الكريم</span></div>
+            <div class="menu-item" onclick="openCairoRadioExternal()"><i class="fas fa-external-link-alt"></i><span>إذاعة القاهرة في المتصفح</span></div>
             <div class="menu-item" onclick="openScreen('quranScreen')"><i class="fas fa-book-quran"></i><span>القرآن بالصوت</span></div>
             <div class="menu-item" onclick="openTaTabSmart()"><i class="fas fa-closed-captioning"></i><span>القرآن بالنص والصوت</span></div>
             <div class="menu-item" onclick="openScreen('hifzScreen')"><i class="fas fa-repeat"></i><span>وضع حفظ القرآن</span></div>
@@ -2480,6 +2481,17 @@ try {
             if (isFinite(audio.duration) && audio.duration > 0) tryNextRadioStream();
         });
     })();
+
+
+    // فتح بث إذاعة القاهرة برّه التطبيق (في المتصفح/مشغل الصوت) لو متصفح التطبيق رفضه
+    function openCairoRadioExternal() {
+        const url = radioLiveStreams[0];
+        const intentUrl = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;action=android.intent.action.VIEW;end';
+        try { const a = document.getElementById('radioAudio'); if (a && !a.paused) a.pause(); } catch (e) {}
+        try { window.open(url, '_system'); } catch (e) {}
+        setTimeout(() => { try { window.location.href = intentUrl; } catch (e) {} }, 400);
+    }
+    window.openCairoRadioExternal = openCairoRadioExternal;
 
     function updateRadioMiniPlayer() {
         const mp = document.getElementById('radioMiniPlayer');
