@@ -2422,6 +2422,12 @@ try {
         // cache-buster عشان نرجع على آخر نقطة في البث المباشر مش مكان قديم
         audio.src = radioLiveStreams[idx];
         audio.load();
+        const subEl = document.getElementById('radioMpSub');
+        if (subEl) {
+            const isAlt = idx === radioLiveStreams.length - 1;
+            subEl.dataset.original = isAlt ? 'بث بديل (مش إذاعة القاهرة)' : 'بث مباشر';
+            if (!subEl.classList.contains('offline-text')) subEl.innerText = subEl.dataset.original;
+        }
     }
 
     function tryNextRadioStream() {
@@ -2464,6 +2470,7 @@ try {
         audio.addEventListener('ended', scheduleRadioReconnect);
         audio.addEventListener('stalled', scheduleRadioReconnect);
         audio.addEventListener('error', () => {
+            if (currentRadioStream < 0 || (audio.src || '').indexOf(radioLiveStreams[currentRadioStream]) === -1) return;
             const c = audio.error ? audio.error.code : '?';
             radioErrLog.push((currentRadioStream + 1) + ':' + c);
             if (radioStarted) tryNextRadioStream();
