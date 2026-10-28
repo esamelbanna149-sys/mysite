@@ -1706,7 +1706,7 @@ try {
         }
 
         watchAudioNetworkErrors(document.getElementById('mainAudio'), 'القرآن الكريم');
-        watchAudioNetworkErrors(document.getElementById('radioAudio'), 'إذاعة القرآن الكريم', () => { if (window.showRadioOffline) window.showRadioOffline(); });
+        document.getElementById('radioAudio').addEventListener('error', () => { if (!navigator.onLine && window.showRadioOffline) window.showRadioOffline(); });
         watchAudioNetworkErrors(document.getElementById('taAudio'), 'القرآن بالنص والصوت', () => showTaPlayerOffline());
         window.watchAudioNetworkErrors = watchAudioNetworkErrors;
     })();
@@ -2407,17 +2407,20 @@ try {
     const radioLiveStreams = [
         "https://stream.radiojar.com/8s5u5tpdtwzuv",
         "https://n12.radiojar.com/8s5u5tpdtwzuv",
-        "https://n05.radiojar.com/8s5u5tpdtwzuv"
+        "https://n05.radiojar.com/8s5u5tpdtwzuv",
+        "http://n12.radiojar.com/8s5u5tpdtwzuv",
+        "https://backup.qurango.net/radio/mix"
     ];
     let currentRadioStream = -1;
     let radioRetryTimer = null;
+    let radioErrLog = [];
 
     function loadRadioStream(idx) {
         const audio = document.getElementById('radioAudio');
         if (!audio) return;
         currentRadioStream = idx;
         // cache-buster عشان نرجع على آخر نقطة في البث المباشر مش مكان قديم
-        audio.src = radioLiveStreams[idx] + (radioLiveStreams[idx].includes('?') ? '&' : '?') + 't=' + Date.now();
+        audio.src = radioLiveStreams[idx];
         audio.load();
     }
 
@@ -2425,7 +2428,9 @@ try {
         const next = currentRadioStream + 1;
         if (next >= radioLiveStreams.length) {
             currentRadioStream = -1;
-            if (window.showRadioOffline) window.showRadioOffline('تعذر الاتصال بالبث، جرّب بعد قليل');
+            if (window.showRadioOffline) window.showRadioOffline('تعذر الاتصال بالبث (' + radioErrLog.join(' | ') + ')');
+            if (window.showConnectionBanner) window.showConnectionBanner('تعذر الاتصال ببث الإذاعة، الأكواد: ' + radioErrLog.join(' | '), false);
+            radioErrLog = [];
             return;
         }
         loadRadioStream(next);
@@ -2458,7 +2463,11 @@ try {
         const audio = document.getElementById('radioAudio');
         audio.addEventListener('ended', scheduleRadioReconnect);
         audio.addEventListener('stalled', scheduleRadioReconnect);
-        audio.addEventListener('error', () => { if (radioStarted) tryNextRadioStream(); });
+        audio.addEventListener('error', () => {
+            const c = audio.error ? audio.error.code : '?';
+            radioErrLog.push((currentRadioStream + 1) + ':' + c);
+            if (radioStarted) tryNextRadioStream();
+        });
         // تأكيد إنه بث لايف: المدة في البث المباشر بتكون Infinity، لو رقم محدد يبقى ده ملف مسجّل
         audio.addEventListener('playing', () => {
             if (isFinite(audio.duration) && audio.duration > 0) tryNextRadioStream();
