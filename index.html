@@ -1060,9 +1060,7 @@ try {
         <div id="eveningAzkarList" style="display: flex; flex-direction: column; gap: 0.9375rem; padding-bottom: 1.875rem;"></div>
     </div>
 
-    <audio id="radioAudio" style="display:none;" preload="none">
-        <source src="https://archive.org/download/Mobasher-Ezaa/12-Yusuf-1-34-High-Quality.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="radioAudio" style="display:none;" preload="none"></audio>
 
     <div id="quranScreen" class="content-screen">
         <div class="quran-tabs">
@@ -1722,7 +1720,22 @@ try {
         sds:   { name: "عبدالرحمن السديس",    server: "https://server11.mp3quran.net/sds/" },
         yasser: { name: "ياسر الدوسري",       server: "https://server11.mp3quran.net/yasser/" },
         tblawi: { name: "محمد محمود الطبلاوي", server: "https://server12.mp3quran.net/tblawi/" },
-        jbr: { name: "علي جابر",              server: "https://server11.mp3quran.net/a_jbr/" }
+        jbr: { name: "علي جابر",              server: "https://server11.mp3quran.net/a_jbr/" },
+        ghamdi: { name: "سعد الغامدي", server: "https://server7.mp3quran.net/s_gmd/" },
+        shuraim: { name: "سعود الشريم", server: "https://server7.mp3quran.net/shur/" },
+        ajmi: { name: "أحمد العجمي", server: "https://server10.mp3quran.net/ajm/" },
+        hudhaify: { name: "علي الحذيفي", server: "https://server9.mp3quran.net/hthfi/" },
+        shatri: { name: "أبو بكر الشاطري", server: "https://server11.mp3quran.net/shatri/" },
+        hani: { name: "هاني الرفاعي", server: "https://server8.mp3quran.net/hani/" },
+        qatami: { name: "ناصر القطامي", server: "https://server6.mp3quran.net/qtm/" },
+        fares: { name: "فارس عباد", server: "https://server8.mp3quran.net/frs_a/" },
+        basfar: { name: "عبدالله بصفر", server: "https://server6.mp3quran.net/bsfr/" },
+        ayyub: { name: "محمد أيوب", server: "https://server8.mp3quran.net/ayyub/" },
+        jibreel: { name: "محمد جبريل", server: "https://server8.mp3quran.net/jbrl/" },
+        qasim: { name: "عبدالمحسن القاسم", server: "https://server11.mp3quran.net/qasm/" },
+        akhdar: { name: "إبراهيم الأخضر", server: "https://server6.mp3quran.net/akdr/" },
+        mustafa: { name: "مصطفى إسماعيل", server: "https://server8.mp3quran.net/mustafa/" },
+        bukhatir: { name: "صلاح بوخاطر", server: "https://server8.mp3quran.net/bukhatir/" }
     };
     let selectedReciter = localStorage.getItem('quranReciter') || 'minsh';
     if (!RECITERS[selectedReciter]) selectedReciter = 'minsh';
@@ -2390,45 +2403,67 @@ try {
         updateMiniPlayer();
     }
 
-    const radioEpisodes = [
-        "https://archive.org/download/Mobasher-Ezaa/12-Yusuf-1-34-High-Quality.mp3",
-        "https://archive.org/download/Mobasher-Ezaa/AbdelBaset-AlAnam-126-135.mp3",
-        "https://archive.org/download/Mobasher-Ezaa/Abdelbaset-ankaboot-54-69-end.mp3",
-        "https://archive.org/download/Mobasher-Ezaa/Hood-Keama-Abdelbaset.mp3",
-        "https://archive.org/download/Mobasher-Ezaa/%D8%A7%D9%84%D8%B9%D9%84%D9%82%20%D8%A7%D9%84%D9%89%20%D8%AE%D8%AA%D8%A7%D9%85%20%D8%A7%D9%84%D9%82%D8%B1%D8%A7%D9%86%20%D9%85%D8%B9%20%D8%A7%D9%84%D8%AF%D8%B9%D8%A7%D8%A1%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D8%A8%D8%A7%D8%B3%D8%B7_kena.mp3",
-        "https://archive.org/download/Mobasher-Ezaa/%D8%A7%D9%84%D9%81%D8%AA%D8%AD%20%D9%85%D9%86%2027%20%D8%A7%D9%84%D9%89%20%D8%A7%D9%84%D8%A7%D9%8A%D8%A9%2030%20%D8%A7%D9%84%D8%B0%D8%A7%D8%B1%D9%8A%D8%A7%D8%AA%20%D9%85%D8%AD%D9%85%D9%88%D8%AF%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%89.mp3",
-        "https://archive.org/download/Mobasher-Ezaa/%D9%85%D8%A7%20%D8%AA%D9%8A%D8%B3%D8%B1%20%D9%85%D9%86%20%D8%B3%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AD%D8%AF%D9%8A%D8%AF%20%D9%85%D8%AD%D9%85%D9%88%D8%AF%20%D8%B5%D8%AF%D9%8A%D9%82%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%89.mp3"
+    // إذاعة القرآن الكريم من القاهرة - بث مباشر حقيقي (مش تسجيلات)
+    const radioLiveStreams = [
+        "https://stream.radiojar.com/8s5u5tpdtwzuv",
+        "https://n12.radiojar.com/8s5u5tpdtwzuv",
+        "https://n05.radiojar.com/8s5u5tpdtwzuv"
     ];
-    let currentRadioEpisode = -1;
+    let currentRadioStream = -1;
+    let radioRetryTimer = null;
 
-    function pickNextRadioEpisode() {
-        if (radioEpisodes.length <= 1) return 0;
-        let idx;
-        do { idx = Math.floor(Math.random() * radioEpisodes.length); } while (idx === currentRadioEpisode);
-        return idx;
-    }
-
-    function loadRadioEpisode(idx) {
+    function loadRadioStream(idx) {
         const audio = document.getElementById('radioAudio');
         if (!audio) return;
-        currentRadioEpisode = idx;
-        audio.src = radioEpisodes[idx];
+        currentRadioStream = idx;
+        // cache-buster عشان نرجع على آخر نقطة في البث المباشر مش مكان قديم
+        audio.src = radioLiveStreams[idx] + (radioLiveStreams[idx].includes('?') ? '&' : '?') + 't=' + Date.now();
         audio.load();
+    }
+
+    function tryNextRadioStream() {
+        const next = currentRadioStream + 1;
+        if (next >= radioLiveStreams.length) {
+            currentRadioStream = -1;
+            if (window.showRadioOffline) window.showRadioOffline('تعذر الاتصال بالبث، جرّب بعد قليل');
+            return;
+        }
+        loadRadioStream(next);
+        const audio = document.getElementById('radioAudio');
+        audio.play().catch(() => {});
     }
 
     function playRadioDirect() {
         const audio = document.getElementById('radioAudio');
         if (!audio) return;
         if (!navigator.onLine) { showRadioOffline(); return; }
-        if (currentRadioEpisode === -1) loadRadioEpisode(pickNextRadioEpisode());
-        audio.play().catch(() => {});
+        // دايمًا نبدأ من أول البث المباشر
+        loadRadioStream(currentRadioStream === -1 ? 0 : currentRadioStream);
+        audio.play().catch(() => { tryNextRadioStream(); });
         updateRadioMiniPlayer();
     }
 
-    document.getElementById('radioAudio').addEventListener('ended', () => {
-        loadRadioEpisode(pickNextRadioEpisode());
-        document.getElementById('radioAudio').play().catch(() => {});
-    });
+    // لو البث وقف أو اتقطع: نعيد الاتصال تلقائيًا (البث المباشر مفيهوش "نهاية")
+    function scheduleRadioReconnect() {
+        if (!radioStarted || radioRetryTimer) return;
+        radioRetryTimer = setTimeout(() => {
+            radioRetryTimer = null;
+            const audio = document.getElementById('radioAudio');
+            if (!radioStarted || !navigator.onLine) return;
+            loadRadioStream(Math.max(currentRadioStream, 0));
+            audio.play().catch(() => {});
+        }, 3000);
+    }
+    (function () {
+        const audio = document.getElementById('radioAudio');
+        audio.addEventListener('ended', scheduleRadioReconnect);
+        audio.addEventListener('stalled', scheduleRadioReconnect);
+        audio.addEventListener('error', () => { if (radioStarted) tryNextRadioStream(); });
+        // تأكيد إنه بث لايف: المدة في البث المباشر بتكون Infinity، لو رقم محدد يبقى ده ملف مسجّل
+        audio.addEventListener('playing', () => {
+            if (isFinite(audio.duration) && audio.duration > 0) tryNextRadioStream();
+        });
+    })();
 
     function updateRadioMiniPlayer() {
         const mp = document.getElementById('radioMiniPlayer');
@@ -2438,7 +2473,7 @@ try {
     function toggleRadioMiniPlay() {
         const audio = document.getElementById('radioAudio');
         if (!navigator.onLine) { showRadioOffline(); return; }
-        if (audio.paused) audio.play(); else audio.pause();
+        if (audio.paused) { loadRadioStream(Math.max(currentRadioStream, 0)); audio.play().catch(() => {}); } else audio.pause();
     }
 
     function closeRadioMiniPlayer() {
@@ -2446,7 +2481,8 @@ try {
         audio.pause();
         audio.removeAttribute('src');
         audio.load();
-        currentRadioEpisode = -1; // عشان لما يفتح تاني يختار حلقة جديدة
+        currentRadioStream = -1;
+        clearTimeout(radioRetryTimer); radioRetryTimer = null;
         radioStarted = false;
         hideRadioOffline();
         updateRadioMiniPlayer();
@@ -3093,7 +3129,37 @@ try {
         maher: { name: "ماهر المعيقلي",       folder: "MaherAlMuaiqly128kbps" },
         yasser: { name: "ياسر الدوسري",       folder: "Yasser_Ad-Dussary_128kbps" },
         tblawi: { name: "محمد محمود الطبلاوي", folder: "Mohammad_al_Tablaway_128kbps" },
-        jbr: { name: "علي جابر",              folder: "Ali_Jaber_64kbps" }
+        jbr: { name: "علي جابر",              folder: "Ali_Jaber_64kbps" },
+        ghamdi: { name: "سعد الغامدي", folder: "Ghamadi_40kbps" },
+        shuraim: { name: "سعود الشريم", folder: "Saood_ash-Shuraym_128kbps" },
+        ajmi: { name: "أحمد العجمي", folder: "Ahmed_ibn_Ali_al-Ajamy_128kbps_ketaballah.net" },
+        hudhaify: { name: "علي الحذيفي", folder: "Hudhaify_128kbps" },
+        shatri: { name: "أبو بكر الشاطري", folder: "Abu_Bakr_Ash-Shaatree_128kbps" },
+        hani: { name: "هاني الرفاعي", folder: "Hani_Rifai_192kbps" },
+        qatami: { name: "ناصر القطامي", folder: "Nasser_Alqatami_128kbps" },
+        fares: { name: "فارس عباد", folder: "Fares_Abbad_64kbps" },
+        basfar: { name: "عبدالله بصفر", folder: "Abdullah_Basfar_192kbps" },
+        ayyub: { name: "محمد أيوب", folder: "Muhammad_Ayyoub_128kbps" },
+        jibreel: { name: "محمد جبريل", folder: "Muhammad_Jibreel_128kbps" },
+        qasim: { name: "عبدالمحسن القاسم", folder: "Muhsin_Al_Qasim_192kbps" },
+        akhdar: { name: "إبراهيم الأخضر", folder: "Ibrahim_Akhdar_32kbps" },
+        mustafa: { name: "مصطفى إسماعيل", folder: "Mustafa_Ismail_48kbps" },
+        bukhatir: { name: "صلاح بوخاطر", folder: "Salaah_AbdulRahman_Bukhatir_128kbps" },
+        qahtani: { name: "خالد القحطاني", folder: "Khaalid_Abdullaah_al-Qahtaanee_192kbps" },
+        matroud: { name: "عبدالله المطرود", folder: "Abdullah_Matroud_128kbps" },
+        budair: { name: "صلاح البدير", folder: "Salah_Al_Budair_128kbps" },
+        ayman: { name: "أيمن سويد", folder: "Ayman_Sowaid_64kbps" },
+        alili: { name: "عزيز العلي", folder: "aziz_alili_128kbps" },
+        suesy: { name: "علي حجاج السويسي", folder: "Ali_Hajjaj_AlSuesy_128kbps" },
+        sahl: { name: "سهل ياسين", folder: "Sahl_Yassin_128kbps" },
+        neana: { name: "أحمد نعينع", folder: "Ahmed_Neana_128kbps" },
+        tunaiji: { name: "خليفة الطنيجي", folder: "Khalefa_Al_Tunaiji_64kbps" },
+        nabil: { name: "نبيل الرفاعي", folder: "Nabil_Rifa3i_48kbps" },
+        yaser_s: { name: "ياسر سلامة", folder: "Yaser_Salamah_128kbps" },
+        abdulkarim: { name: "محمد عبدالكريم", folder: "Muhammad_AbdulKareem_128kbps" },
+        minsh_m: { name: "المنشاوي (مجوّد)", folder: "Minshawy_Mujawwad_192kbps" },
+        basit_m: { name: "عبدالباسط (مجوّد)", folder: "Abdul_Basit_Mujawwad_128kbps" },
+        husr_m: { name: "الحصري (مجوّد)", folder: "Husary_Mujawwad_128kbps" }
     };
     let selectedTextAudioReciter = localStorage.getItem('taReciter') || 'afs';
     if (!EVERYAYAH_RECITERS[selectedTextAudioReciter]) selectedTextAudioReciter = 'afs';
