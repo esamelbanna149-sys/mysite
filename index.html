@@ -97,6 +97,12 @@
         .quiz-explain { background: rgba(76,175,80,0.14); border: 1px solid rgba(76,175,80,0.4); border-radius: 12px; padding: 0.7rem 0.85rem; margin: -0.4rem 0 0.5rem; font-size: 0.8125rem; line-height: 1.8; color: #dff2e0; }
         .quiz-explain strong { color: #7fd88a; display:block; margin-bottom:0.3rem; }
         .quiz-option:active { transform: scale(0.98); }
+        html body .menu-list .menu-item.quiz-option.correct { background: rgba(76,175,80,0.28); border-color: #4caf50; animation: quizPulse 0.45s ease; }
+        html body .menu-list .menu-item.quiz-option.correct > i:first-child { color: #fff; background: #4caf50; box-shadow: 0 0 0.9rem rgba(76,175,80,0.5); }
+        html body .menu-list .menu-item.quiz-option.wrong { background: rgba(244,67,54,0.26); border-color: #f44336; animation: quizShake 0.4s ease; }
+        html body .menu-list .menu-item.quiz-option.wrong > i:first-child { color: #fff; background: #f44336; box-shadow: 0 0 0.9rem rgba(244,67,54,0.5); }
+        @keyframes quizPulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+        @keyframes quizShake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
 
         .stars-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
         .star-particle { position: absolute; bottom: -1rem; background: var(--gold); border-radius: 50%; opacity: 0; animation: starFloat linear infinite; box-shadow: 0 0 0.375rem 0.0625rem rgba(247,200,115,0.6); }
@@ -1701,22 +1707,7 @@ try {
         sds:   { name: "عبدالرحمن السديس",    server: "https://server11.mp3quran.net/sds/" },
         yasser: { name: "ياسر الدوسري",       server: "https://server11.mp3quran.net/yasser/" },
         tblawi: { name: "محمد محمود الطبلاوي", server: "https://server12.mp3quran.net/tblawi/" },
-        jbr: { name: "علي جابر",              server: "https://server11.mp3quran.net/a_jbr/" },
-        ghamdi: { name: "سعد الغامدي", server: "https://server7.mp3quran.net/s_gmd/" },
-        shuraim: { name: "سعود الشريم", server: "https://server7.mp3quran.net/shur/" },
-        ajmi: { name: "أحمد العجمي", server: "https://server10.mp3quran.net/ajm/" },
-        hudhaify: { name: "علي الحذيفي", server: "https://server9.mp3quran.net/hthfi/" },
-        shatri: { name: "أبو بكر الشاطري", server: "https://server11.mp3quran.net/shatri/" },
-        hani: { name: "هاني الرفاعي", server: "https://server8.mp3quran.net/hani/" },
-        qatami: { name: "ناصر القطامي", server: "https://server6.mp3quran.net/qtm/" },
-        fares: { name: "فارس عباد", server: "https://server8.mp3quran.net/frs_a/" },
-        basfar: { name: "عبدالله بصفر", server: "https://server6.mp3quran.net/bsfr/" },
-        ayyub: { name: "محمد أيوب", server: "https://server8.mp3quran.net/ayyub/" },
-        jibreel: { name: "محمد جبريل", server: "https://server8.mp3quran.net/jbrl/" },
-        qasim: { name: "عبدالمحسن القاسم", server: "https://server11.mp3quran.net/qasm/" },
-        akhdar: { name: "إبراهيم الأخضر", server: "https://server6.mp3quran.net/akdr/" },
-        mustafa: { name: "مصطفى إسماعيل", server: "https://server8.mp3quran.net/mustafa/" },
-        bukhatir: { name: "صلاح بوخاطر", server: "https://server8.mp3quran.net/bukhatir/" }
+        jbr: { name: "علي جابر",              server: "https://server11.mp3quran.net/a_jbr/" }
     };
     let selectedReciter = localStorage.getItem('quranReciter') || 'minsh';
     if (!RECITERS[selectedReciter]) selectedReciter = 'minsh';
@@ -2011,7 +2002,48 @@ try {
         { q: "ما اسم غزوة فتح خيبر التي اشتهر فيها علي بن أبي طالب بأخذ الراية؟", options: ["غزوة خيبر", "غزوة تبوك", "غزوة حنين", "غزوة مؤتة"], correct: 0, explain: `غزوة خيبر كانت سنة 7 هـ ضد يهود خيبر، وفيها أعطى النبي ﷺ الراية لعلي بن أبي طالب بعد أن عجز عنها غيره، ففتح الله على يديه.` },
         { q: "من هو الصحابي الذي جمع القرآن كاملًا في عهد النبي ﷺ من الأنصار؟", options: ["أبي بن كعب", "طلحة بن عبيد الله", "الزبير بن العوام", "سعد بن أبي وقاص"], correct: 0, explain: `أُبي بن كعب رضي الله عنه من الأنصار الذين جمعوا القرآن كاملًا في عهد النبي ﷺ، وكان النبي ﷺ قد أمره أن يقرأ عليه القرآن تكريمًا له.` },
         { q: "ما اسم السورة التي تُسمى 'قلب القرآن'؟", options: ["يس", "الرحمن", "الملك", "الكهف"], correct: 0, explain: `سورة يس تُلقّب بقلب القرآن لما ورد في فضلها من أحاديث، وتشتمل على مقاصد القرآن الكبرى من التوحيد والبعث والرسالة.` },
-        { q: "من هو النبي الذي دعا الله أن يهب له ملكًا لا ينبغي لأحد من بعده؟", options: ["سليمان عليه السلام", "داود عليه السلام", "يوسف عليه السلام", "ذو القرنين"], correct: 0, explain: `سليمان عليه السلام دعا ربه: (رَبِّ اغْفِرْ لِي وَهَبْ لِي مُلْكًا لَّا يَنبَغِي لِأَحَدٍ مِّنْ بَعْدِي)، فاستجاب الله دعاءه وسخّر له الريح والجن والطير.` }
+        { q: "من هو النبي الذي دعا الله أن يهب له ملكًا لا ينبغي لأحد من بعده؟", options: ["سليمان عليه السلام", "داود عليه السلام", "يوسف عليه السلام", "ذو القرنين"], correct: 0, explain: `سليمان عليه السلام دعا ربه: (رَبِّ اغْفِرْ لِي وَهَبْ لِي مُلْكًا لَّا يَنبَغِي لِأَحَدٍ مِّنْ بَعْدِي)، فاستجاب الله دعاءه وسخّر له الريح والجن والطير.` },
+        { q: "كم عدد آيات سورة البقرة؟", options: ["285 آية", "287 آية", "284 آية", "286 آية"], correct: 3, explain: `سورة البقرة عدد آياتها 286 آية، وهي أطول سور القرآن، وتُختم بآيتي (آمَنَ الرَّسُولُ) اللتين ورد في فضلهما أن من قرأهما في ليلة كفتاه.` },
+        { q: "أي سورة وصفها النبي ﷺ بأنها تعدل ثلث القرآن؟", options: ["الإخلاص", "الفاتحة", "الكافرون", "الفلق"], correct: 0, explain: `ورد في الصحيح أن سورة الإخلاص (قل هو الله أحد) تعدل ثلث القرآن؛ لأنها اشتملت على توحيد الله وصفاته، وهو أحد مقاصد القرآن الثلاثة: التوحيد والأحكام والقصص.` },
+        { q: "في أي سورة تكررت آية (فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ) إحدى وثلاثين مرة؟", options: ["الواقعة", "القمر", "الرحمن", "الحديد"], correct: 2, explain: `تكررت هذه الآية في سورة الرحمن 31 مرة، تذكيرًا للثقلين (الإنس والجن) بنعم الله المتنوعة في الخلق والكون والجزاء.` },
+        { q: "في أي سورة تكررت آية (وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ) عشر مرات؟", options: ["المطففين", "المرسلات", "الهمزة", "الحاقة"], correct: 1, explain: `تكررت هذه الآية في سورة المرسلات عشر مرات؛ للتهديد والوعيد الشديد لمن كذّب بيوم القيامة والبعث والجزاء.` },
+        { q: "أي سورة وصفها عبد الله بن مسعود رضي الله عنه بأنها (سورة النساء القصرى)؟", options: ["التحريم", "المجادلة", "النور", "الطلاق"], correct: 3, explain: `سُمّيت سورة الطلاق بسورة النساء القصرى، مقابل سورة النساء الطولى وهي سورة النساء؛ لاشتمالها على أحكام الطلاق والعدّة والنفقة.` },
+        { q: "ما أول سورة نزلت فيها سجدة تلاوة كما ورد عن ابن مسعود رضي الله عنه؟", options: ["العلق", "السجدة", "النجم", "الحج"], correct: 2, explain: `ورد في الصحيح أن النبي ﷺ قرأ سورة النجم وسجد، فسجد معه المسلمون والمشركون الحاضرون، وهي أول سورة أُعلنت فيها سجدة التلاوة.` },
+        { q: "من هو الصحابي الملقب بـ(ذي النورين)؟", options: ["عثمان بن عفان", "علي بن أبي طالب", "طلحة بن عبيد الله", "الزبير بن العوام"], correct: 0, explain: `لُقّب عثمان بن عفان رضي الله عنه بذي النورين لأنه تزوّج ابنتي النبي ﷺ: رقية ثم أم كلثوم رضي الله عنهما.` },
+        { q: "من هو الصحابي الملقب بـ(حبر الأمة وترجمان القرآن)؟", options: ["عبد الله بن عمر", "عبد الله بن عباس", "أبو هريرة", "أنس بن مالك"], correct: 1, explain: `لُقّب عبد الله بن عباس رضي الله عنهما بحبر الأمة وترجمان القرآن؛ لأن النبي ﷺ دعا له بقوله: اللهم فقّهه في الدين وعلّمه التأويل.` },
+        { q: "من هو الصحابي الذي لقّبه النبي ﷺ بـ(حواريّ رسول الله)؟", options: ["سعد بن أبي وقاص", "أبو عبيدة بن الجراح", "عبد الرحمن بن عوف", "الزبير بن العوام"], correct: 3, explain: `قال النبي ﷺ يوم الخندق: إن لكل نبي حواريًّا وحواريي الزبير. والزبير بن العوام من العشرة المبشرين بالجنة وابن عمة النبي ﷺ صفية.` },
+        { q: "من هو القائد الذي فتح مصر في خلافة عمر بن الخطاب رضي الله عنه؟", options: ["عمرو بن العاص", "خالد بن الوليد", "سعد بن أبي وقاص", "أبو عبيدة بن الجراح"], correct: 0, explain: `فتح عمرو بن العاص رضي الله عنه مصر سنة 20 هـ تقريبًا في خلافة عمر بن الخطاب، وأسّس مدينة الفسطاط وبنى فيها أول مسجد في مصر.` },
+        { q: "من هو قائد المسلمين في معركة القادسية التي أسقطت دولة الفرس؟", options: ["خالد بن الوليد", "المثنى بن حارثة", "سعد بن أبي وقاص", "عمرو بن العاص"], correct: 2, explain: `قاد سعد بن أبي وقاص رضي الله عنه جيش المسلمين في معركة القادسية سنة 15 هـ تقريبًا، وانتهت بانتصار حاسم مهّد لفتح العراق وسقوط الدولة الساسانية.` },
+        { q: "من هو قائد المسلمين في معركة حطين التي استُرد بعدها بيت المقدس؟", options: ["نور الدين زنكي", "صلاح الدين الأيوبي", "بيبرس", "سيف الدين قطز"], correct: 1, explain: `قاد صلاح الدين الأيوبي المسلمين في معركة حطين سنة 583 هـ، فانتصروا على الصليبيين، ثم فُتح بيت المقدس في العام نفسه.` },
+        { q: "من هو القائد المسلم الذي انتصر على المغول في معركة عين جالوت؟", options: ["محمد الفاتح", "طارق بن زياد", "عقبة بن نافع", "سيف الدين قطز"], correct: 3, explain: `انتصر سيف الدين قطز مع القائد بيبرس على المغول في عين جالوت بفلسطين في رمضان سنة 658 هـ، وكانت أول هزيمة كبرى لهم.` },
+        { q: "من هو فاتح القسطنطينية سنة 857 هـ؟", options: ["بايزيد الأول", "سليمان القانوني", "محمد الفاتح", "مراد الثاني"], correct: 2, explain: `فتح السلطان العثماني محمد الثاني الملقب بـ(الفاتح) القسطنطينية سنة 857 هـ الموافقة 1453 م، تحقيقًا للبشارة النبوية بفتحها.` },
+        { q: "كم كان عدد المسلمين تقريبًا في غزوة بدر الكبرى؟", options: ["313 رجلًا", "700 رجل", "1000 رجل", "3000 رجل"], correct: 0, explain: `خرج النبي ﷺ في غزوة بدر بنحو 313 رجلًا، بينما بلغ جيش قريش نحو ألف مقاتل، وانتصر المسلمون في السابع عشر من رمضان سنة 2 هـ.` },
+        { q: "في أي سنة هجرية وقعت غزوة أحد؟", options: ["السنة الثانية", "السنة الثالثة", "السنة الرابعة", "السنة الخامسة"], correct: 1, explain: `وقعت غزوة أحد في شوال من السنة الثالثة للهجرة، وكان فيها بلاء عظيم للمسلمين بسبب مخالفة الرماة لموقعهم على الجبل.` },
+        { q: "ما اسم غزوة تبوك التي سُمّيت أيضًا بهذا الاسم لشدة الحر وقلة الزاد؟", options: ["غزوة الفتح", "غزوة مؤتة", "غزوة حنين", "غزوة العسرة"], correct: 3, explain: `سُمّيت غزوة تبوك سنة 9 هـ بغزوة العسرة لما كان فيها من شدة الحر وقلة الزاد والمركب، وفيها نزل قوله تعالى في المخلّفين الثلاثة.` },
+        { q: "من هو أول سفير للإسلام أرسله النبي ﷺ إلى المدينة قبل الهجرة؟", options: ["مصعب بن عمير", "أسعد بن زرارة", "عبد الله بن أم مكتوم", "عمار بن ياسر"], correct: 0, explain: `أرسل النبي ﷺ مصعب بن عمير رضي الله عنه إلى المدينة بعد بيعة العقبة الأولى ليعلّم أهلها القرآن والإسلام، فأسلم على يديه خلق كثير.` },
+        { q: "من هي أول شهيدة في الإسلام؟", options: ["خديجة بنت خويلد", "أسماء بنت أبي بكر", "سمية بنت خياط", "الخنساء"], correct: 2, explain: `سمية بنت خياط رضي الله عنها أم عمار بن ياسر، قتلها أبو جهل بعد تعذيبها لتمسكها بالإسلام، فهي أول شهيدة في الإسلام.` },
+        { q: "من هو ملك الحبشة الذي أحسن استقبال المسلمين المهاجرين؟", options: ["هرقل", "النجاشي أصحمة", "المقوقس", "كسرى"], correct: 1, explain: `استقبل النجاشي أصحمة ملك الحبشة المهاجرين المسلمين وأحسن جوارهم، وصلّى عليه النبي ﷺ صلاة الغائب حين بلغه خبر وفاته.` },
+        { q: "أي أمهات المؤمنين لُقّبت بـ(أم المساكين) لكثرة إطعامها لهم؟", options: ["زينب بنت جحش", "أم سلمة", "جويرية بنت الحارث", "زينب بنت خزيمة"], correct: 3, explain: `زينب بنت خزيمة رضي الله عنها لُقّبت في الجاهلية والإسلام بأم المساكين لجودها وإطعامها الفقراء، وتوفيت في حياة النبي ﷺ.` },
+        { q: "أي أمهات المؤمنين هي ابنة حيي بن أخطب من نسل نبي الله هارون عليه السلام؟", options: ["جويرية بنت الحارث", "ميمونة بنت الحارث", "صفية بنت حيي", "حفصة بنت عمر"], correct: 2, explain: `صفية بنت حيي رضي الله عنها من بني النضير من نسل هارون عليه السلام، أسلمت وتزوجها النبي ﷺ بعد فتح خيبر سنة 7 هـ.` },
+        { q: "من هو الإمام الذي ألّف كتاب (الموطأ) أقدم كتب الحديث والفقه المدوّنة؟", options: ["مالك بن أنس", "أبو حنيفة", "الشافعي", "أحمد بن حنبل"], correct: 0, explain: `ألّف الإمام مالك بن أنس إمام دار الهجرة كتاب الموطأ، وهو من أقدم كتب الحديث والفقه التي وصلتنا، وتوفي سنة 179 هـ في المدينة المنورة.` },
+        { q: "من هو أسبق الأئمة الأربعة وفاة؟", options: ["مالك بن أنس", "أبو حنيفة النعمان", "الشافعي", "أحمد بن حنبل"], correct: 1, explain: `توفي الإمام أبو حنيفة سنة 150 هـ، ثم مالك سنة 179 هـ، ثم الشافعي سنة 204 هـ، ثم أحمد بن حنبل سنة 241 هـ، رحمهم الله جميعًا.` },
+        { q: "من هو مؤلف تفسير (القرآن العظيم) المشهور؟", options: ["الطبري", "القرطبي", "السعدي", "ابن كثير"], correct: 3, explain: `ألّف الإمام ابن كثير الدمشقي المتوفى سنة 774 هـ تفسير القرآن العظيم، ويُعدّ من أشهر كتب التفسير بالمأثور.` },
+        { q: "من هو مؤلف كتاب (إحياء علوم الدين)؟", options: ["أبو حامد الغزالي", "ابن تيمية", "ابن القيم", "النووي"], correct: 0, explain: `ألّف أبو حامد الغزالي المتوفى سنة 505 هـ كتاب إحياء علوم الدين، وهو من أشهر كتب الوعظ والتزكية والسلوك.` },
+        { q: "ما الاسم الآخر لسورة التوبة؟", options: ["الفاتحة", "الأنفال", "براءة", "الحشر"], correct: 2, explain: `تُسمى سورة التوبة أيضًا بسورة براءة؛ لافتتاحها بالبراءة من المشركين، وهي السورة الوحيدة التي لا تبدأ بالبسملة.` },
+        { q: "ما اسم الجبل الذي كلّم الله عليه موسى عليه السلام؟", options: ["جبل أحد", "جبل الطور", "جبل النور", "جبل عرفات"], correct: 1, explain: `كلّم الله موسى عليه السلام عند جبل الطور في سيناء، وورد ذكر الطور في القرآن الكريم، وبه سُميت سورة الطور.` },
+        { q: "من هو النبي الذي ورد اسمه في القرآن الكريم أكثر من غيره من الأنبياء؟", options: ["إبراهيم عليه السلام", "عيسى عليه السلام", "نوح عليه السلام", "موسى عليه السلام"], correct: 3, explain: `ذُكر موسى عليه السلام في القرآن الكريم نحو 136 مرة، وهو أكثر الأنبياء ورودًا فيه، وقصته مفصّلة في سور كثيرة.` },
+        { q: "من هو العبد الصالح الذي رافقه موسى عليه السلام في رحلة طلب العلم؟", options: ["يوشع بن نون", "هارون", "الخضر", "شعيب"], correct: 2, explain: `جاء في الصحيح أن العبد الذي آتاه الله رحمة وعلمًا هو الخضر عليه السلام، وقد صحبه موسى فرأى أمورًا ظاهرها الشر وباطنها الحكمة.` },
+        { q: "ما الاسم الحقيقي لأبي لهب عم النبي ﷺ؟", options: ["عبد العزى بن عبد المطلب", "عبد مناف", "عبد الله", "العباس"], correct: 0, explain: `اسم أبي لهب عبد العزى بن عبد المطلب، وكُني بأبي لهب لإشراق وجهه، وهو الذي نزلت فيه سورة المسد لشدة عداوته للنبي ﷺ.` },
+        { q: "كم سنة أقام النبي ﷺ في المدينة المنورة بعد الهجرة حتى وفاته؟", options: ["8 سنوات", "10 سنوات", "13 سنة", "23 سنة"], correct: 1, explain: `أقام النبي ﷺ في المدينة عشر سنوات بعد الهجرة، وبقي قبلها في مكة نحو ثلاث عشرة سنة بعد البعثة، وتوفي سنة 11 هـ.` },
+        { q: "من هو الصحابي الأعمى الذي كان يؤذّن مع بلال بن رباح رضي الله عنه؟", options: ["أبو محذورة", "سعد القرظ", "زيد بن ثابت", "عبد الله بن أم مكتوم"], correct: 3, explain: `كان عبد الله بن أم مكتوم رضي الله عنه مؤذّنًا ثانيًا للنبي ﷺ، وهو الأعمى الذي نزلت بسببه سورة عبس، واستخلفه النبي على المدينة مرات.` },
+        { q: "ما مقدار الزكاة الواجبة في النقود وعروض التجارة إذا بلغت النصاب وحال عليها الحول؟", options: ["2.5%", "1%", "5%", "10%"], correct: 0, explain: `الواجب في زكاة النقود وعروض التجارة ربع العشر، أي 2.5% من المال إذا بلغ النصاب ومرّ عليه حول هجري كامل.` },
+        { q: "ما الصلاة الوسطى المذكورة في قوله تعالى (حَافِظُوا عَلَى الصَّلَوَاتِ وَالصَّلَاةِ الْوُسْطَى) في الراجح من الأقوال؟", options: ["الفجر", "المغرب", "العصر", "العشاء"], correct: 2, explain: `ثبت في الصحيح عن النبي ﷺ يوم الخندق أنه قال: شغلونا عن الصلاة الوسطى صلاة العصر، فهذا هو الراجح عند جمهور العلماء.` },
+        { q: "أي الأشهر التالية ليس من الأشهر الحرم؟", options: ["رجب", "شعبان", "محرم", "ذو القعدة"], correct: 1, explain: `الأشهر الحرم أربعة: ذو القعدة وذو الحجة ومحرم ورجب، أما شعبان فليس منها، وهو الشهر الذي يسبق رمضان.` },
+        { q: "في أي مكان وزمان نزلت آية (الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ)؟", options: ["في غار حراء", "في المدينة يوم الخندق", "في الحديبية", "في عرفة يوم الجمعة في حجة الوداع"], correct: 3, explain: `نزلت هذه الآية من سورة المائدة والنبي ﷺ واقف بعرفة يوم الجمعة في حجة الوداع سنة 10 هـ، وهي من أواخر ما نزل من القرآن.` },
+        { q: "من هو الصحابي الملقب بـ(ذو الشهادتين) لأن النبي ﷺ جعل شهادته بشهادة رجلين؟", options: ["أبو دجانة", "سعد بن معاذ", "خزيمة بن ثابت", "أبو أيوب الأنصاري"], correct: 2, explain: `جعل النبي ﷺ شهادة خزيمة بن ثابت الأنصاري رضي الله عنه بشهادة رجلين، فلُقّب بذي الشهادتين، وقد كان من الصحابة الذين شهدوا مع علي رضي الله عنه.` },
+        { q: "من هي أم المؤمنين التي تزوجها النبي ﷺ بعد وفاة خديجة رضي الله عنها؟", options: ["سودة بنت زمعة", "عائشة بنت أبي بكر", "حفصة بنت عمر", "أم حبيبة"], correct: 0, explain: `تزوج النبي ﷺ بعد وفاة خديجة رضي الله عنها سودة بنت زمعة، ثم تزوج عائشة رضي الله عنها، ولم يتزوج على خديجة في حياتها.` },
+        { q: "من هو الخليفة الأموي الذي يُعدّ خامس الخلفاء الراشدين عند كثير من العلماء؟", options: ["معاوية بن أبي سفيان", "عمر بن عبد العزيز", "هشام بن عبد الملك", "عبد الملك بن مروان"], correct: 1, explain: `عمر بن عبد العزيز تولى الخلافة سنة 99 هـ، واشتهر بعدله وزهده ورفع المظالم، فلُقّب بخامس الخلفاء الراشدين لسيرته المشابهة لسيرتهم.` },
+        { q: "من هو الخليفة العباسي الذي بنى مدينة بغداد؟", options: ["هارون الرشيد", "المأمون", "المعتصم", "أبو جعفر المنصور"], correct: 3, explain: `بنى أبو جعفر المنصور مدينة بغداد سنة 145 هـ لتكون عاصمة الدولة العباسية، وسمّاها مدينة السلام.` }
     ];
 
     const weeklyHadiths = [{ text: "قال ﷺ: 'خيركم من تعلم القرآن وعلمه'", narrator: "عثمان بن عفان" }, { text: "قال ﷺ: 'من صلى علي واحدة صلى الله عليه بها عشراً'", narrator: "أبو هريرة" }, { text: "قال ﷺ: 'بشر المشائين في الظلم إلى المساجد بالنور التام يوم القيامة'", narrator: "بريدة بن الحصيب" }, { text: "قال ﷺ: 'كلمتان خفيفتان على اللسان، ثقيلتان في الميزان: سبحان الله وبحمده، سبحان الله العظيم'", narrator: "أبو هريرة" }, { text: "قال ﷺ: 'من سلك طريقًا يلتمس فيه علمًا سهل الله له به طريقًا إلى الجنة'", narrator: "أبو هريرة" }, { text: "قال ﷺ: 'أحب الأعمال إلى الله أدومها وإن قل'", narrator: "عائشة" }, { text: "قال ﷺ: 'المسلم من سلم المسلمون من لسانه ويده'", narrator: "عبدالله بن عمرو" }];
@@ -2969,37 +3001,7 @@ try {
         maher: { name: "ماهر المعيقلي",       folder: "MaherAlMuaiqly128kbps" },
         yasser: { name: "ياسر الدوسري",       folder: "Yasser_Ad-Dussary_128kbps" },
         tblawi: { name: "محمد محمود الطبلاوي", folder: "Mohammad_al_Tablaway_128kbps" },
-        jbr: { name: "علي جابر",              folder: "Ali_Jaber_64kbps" },
-        ghamdi: { name: "سعد الغامدي", folder: "Ghamadi_40kbps" },
-        shuraim: { name: "سعود الشريم", folder: "Saood_ash-Shuraym_128kbps" },
-        ajmi: { name: "أحمد العجمي", folder: "Ahmed_ibn_Ali_al-Ajamy_128kbps_ketaballah.net" },
-        hudhaify: { name: "علي الحذيفي", folder: "Hudhaify_128kbps" },
-        shatri: { name: "أبو بكر الشاطري", folder: "Abu_Bakr_Ash-Shaatree_128kbps" },
-        hani: { name: "هاني الرفاعي", folder: "Hani_Rifai_192kbps" },
-        qatami: { name: "ناصر القطامي", folder: "Nasser_Alqatami_128kbps" },
-        fares: { name: "فارس عباد", folder: "Fares_Abbad_64kbps" },
-        basfar: { name: "عبدالله بصفر", folder: "Abdullah_Basfar_192kbps" },
-        ayyub: { name: "محمد أيوب", folder: "Muhammad_Ayyoub_128kbps" },
-        jibreel: { name: "محمد جبريل", folder: "Muhammad_Jibreel_128kbps" },
-        qasim: { name: "عبدالمحسن القاسم", folder: "Muhsin_Al_Qasim_192kbps" },
-        akhdar: { name: "إبراهيم الأخضر", folder: "Ibrahim_Akhdar_32kbps" },
-        mustafa: { name: "مصطفى إسماعيل", folder: "Mustafa_Ismail_48kbps" },
-        bukhatir: { name: "صلاح بوخاطر", folder: "Salaah_AbdulRahman_Bukhatir_128kbps" },
-        qahtani: { name: "خالد القحطاني", folder: "Khaalid_Abdullaah_al-Qahtaanee_192kbps" },
-        matroud: { name: "عبدالله المطرود", folder: "Abdullah_Matroud_128kbps" },
-        budair: { name: "صلاح البدير", folder: "Salah_Al_Budair_128kbps" },
-        ayman: { name: "أيمن سويد", folder: "Ayman_Sowaid_64kbps" },
-        alili: { name: "عزيز العلي", folder: "aziz_alili_128kbps" },
-        suesy: { name: "علي حجاج السويسي", folder: "Ali_Hajjaj_AlSuesy_128kbps" },
-        sahl: { name: "سهل ياسين", folder: "Sahl_Yassin_128kbps" },
-        neana: { name: "أحمد نعينع", folder: "Ahmed_Neana_128kbps" },
-        tunaiji: { name: "خليفة الطنيجي", folder: "Khalefa_Al_Tunaiji_64kbps" },
-        nabil: { name: "نبيل الرفاعي", folder: "Nabil_Rifa3i_48kbps" },
-        yaser_s: { name: "ياسر سلامة", folder: "Yaser_Salamah_128kbps" },
-        abdulkarim: { name: "محمد عبدالكريم", folder: "Muhammad_AbdulKareem_128kbps" },
-        minsh_m: { name: "المنشاوي (مجوّد)", folder: "Minshawy_Mujawwad_192kbps" },
-        basit_m: { name: "عبدالباسط (مجوّد)", folder: "Abdul_Basit_Mujawwad_128kbps" },
-        husr_m: { name: "الحصري (مجوّد)", folder: "Husary_Mujawwad_128kbps" }
+        jbr: { name: "علي جابر",              folder: "Ali_Jaber_64kbps" }
     };
     let selectedTextAudioReciter = localStorage.getItem('taReciter') || 'afs';
     if (!EVERYAYAH_RECITERS[selectedTextAudioReciter]) selectedTextAudioReciter = 'afs';
@@ -6242,8 +6244,16 @@ try {
         options.forEach(opt => {
             opt.classList.add('disabled');
             const idx = parseInt(opt.getAttribute('data-index'), 10);
-            if (idx === correctIndex) { opt.classList.add('correct'); correctEl = opt; }
-            else if (idx === selectedIndex) opt.classList.add('wrong');
+            const icon = opt.querySelector('i');
+            if (idx === correctIndex) {
+                opt.classList.add('correct'); correctEl = opt;
+                opt.style.background = 'rgba(76,175,80,0.28)'; opt.style.borderColor = '#4caf50';
+                if (icon) { icon.className = 'fas fa-check'; icon.style.color = '#fff'; icon.style.background = '#4caf50'; }
+            } else if (idx === selectedIndex) {
+                opt.classList.add('wrong');
+                opt.style.background = 'rgba(244,67,54,0.26)'; opt.style.borderColor = '#f44336';
+                if (icon) { icon.className = 'fas fa-xmark'; icon.style.color = '#fff'; icon.style.background = '#f44336'; }
+            }
         });
         if (selectedIndex !== correctIndex && correctEl && explainText) {
             correctEl.insertAdjacentHTML('afterend', `<div class="quiz-explain"><strong><i class="fas fa-circle-info"></i> التفسير</strong><span>${explainText}</span></div>`);
@@ -6254,18 +6264,24 @@ try {
         if (!quizCurrentPair || quizPairLocked[pos] || quizCurrentPair[pos] === null) return;
         quizPairLocked[pos] = true;
         const question = quizQuestions[quizCurrentPair[pos]];
+        const isRight = Number(selectedIndex) === Number(question.correct);
 
-        let state = getQuizState() || freshQuizState();
-        const entry = state.history[state.historyPos];
-        entry.selectedIndex[pos] = selectedIndex;
-        if (selectedIndex === question.correct) state.score += 1;
-        saveQuizState(state);
-        recordQuizAnswer(quizCurrentPair[pos], selectedIndex === question.correct, selectedIndex);
+        // الأول: أظهر الصح والغلط فورًا
+        try { markQuizAnswerUI(pos, selectedIndex, question.correct, question.explain); } catch (e) {}
 
-        if (selectedIndex === question.correct) playQuizCorrectSound();
-        else playQuizWrongSound();
+        // اهتزاز خفيف + صوت (لو متاحين) من غير ما يعطلوا أي حاجة
+        try { if (navigator.vibrate) navigator.vibrate(isRight ? 30 : [60, 40, 60]); } catch (e) {}
+        try { if (isRight) playQuizCorrectSound(); else playQuizWrongSound(); } catch (e) {}
 
-        markQuizAnswerUI(pos, selectedIndex, question.correct, question.explain);
+        // بعد كده احفظ الحالة والنتيجة
+        try {
+            let state = getQuizState() || freshQuizState();
+            const entry = state.history[state.historyPos];
+            if (entry) entry.selectedIndex[pos] = selectedIndex;
+            if (isRight) state.score += 1;
+            saveQuizState(state);
+            recordQuizAnswer(quizCurrentPair[pos], isRight, selectedIndex);
+        } catch (e) {}
 
         const secondExists = quizCurrentPair[1] !== null;
         if (quizPairLocked[0] && (!secondExists || quizPairLocked[1])) {
